@@ -1,15 +1,16 @@
-import GridCanvas from "@/components/cyber/grid-canvas";
 import Ticker from "@/components/cyber/ticker";
 import Hero from "@/components/cyber/hero";
 import StepsFlow from "@/components/cyber/steps-flow";
 import BottomPanels from "@/components/cyber/bottom-panels";
+import PriceBento from "@/components/cyber/price-bento";
+import PixelBlastBg from "@/components/cyber/pixel-blast-bg";
 import { StatusDot } from "@/components/cyber/hud-frame";
 import { Leaf } from "lucide-react";
 
 export default function Page() {
   return (
-    <main className="scanlines relative min-h-screen overflow-x-hidden text-white">
-      <GridCanvas />
+    <main className="relative min-h-screen overflow-x-hidden text-white">
+      <PixelBlastBg />
 
       {/* fixed faint noise */}
       <div className="cy-noise pointer-events-none fixed inset-0 z-[1] opacity-20" aria-hidden="true" />
@@ -45,11 +46,22 @@ export default function Page() {
 
       <Ticker />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-16">
-        <Hero />
+      {/* HERO — fits one viewport with even margins */}
+      <section className="relative z-10 mx-auto flex w-full max-w-6xl items-center px-4 py-4 md:px-6 md:py-6"
+        style={{ minHeight: "calc(100svh - 110px)" }}>
+        <div className="w-full">
+          <Hero />
+        </div>
+      </section>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-10 md:px-6 md:pb-16">
         <StepsFlow />
         <BottomPanels />
+      </div>
 
+      <PriceBento />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-10 md:px-6">
         <footer className="mt-14 border-t border-[var(--acid)]/15 pt-6 font-mono text-[11px] text-white/40">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-3">
