@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import DecryptedText from "@/components/react-bits/DecryptedText";
-import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
-import { Terminal } from "@/components/ui/terminal";
+import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
+import TerminalFrame from "@/components/cyber/terminal-frame";
 import { Flower2, MapPin } from "lucide-react";
 
 type Step = {
@@ -17,7 +17,7 @@ type Step = {
   icon: ReactNode;
   color: string;
   glow: string;
-  visual?: ReactNode;
+  termTitle: string;
 };
 
 const STEPS: Step[] = [
@@ -35,34 +35,13 @@ const STEPS: Step[] = [
     ),
     tags: ["REDDIT_DMS", "FULLY_REMOTE", "NO_ID"],
     icon: (
-      <div className="relative h-12 w-12">
+      <div className="relative h-10 w-10 sm:h-12 sm:w-12">
         <Image src="/images/reddit.png" alt="Reddit" fill className="object-contain" />
       </div>
     ),
     color: "var(--magenta)",
     glow: "rgba(255,43,214,0.4)",
-    visual: (
-      <Terminal
-        username="u/joeyleq"
-        title="reddit.dm — encrypted"
-        height="h-56 sm:h-64"
-        typingSpeed={38}
-        delayBetweenCommands={700}
-        initialDelay={300}
-        commands={[
-          "ssh reddit.dm --user=u/joeyleq",
-          "send 'yo, need a quote'",
-          "negotiate --terms --no-id",
-          "confirm --next=whish",
-        ]}
-        outputs={{
-          0: ["[OK] secure channel established", "[OK] no phone · no name · no face"],
-          1: ["[..] message delivered", "[OK] reply: 'send the rail'"],
-          2: ["[OK] arrangement locked"],
-          3: ["[->] proceed to NODE-02"],
-        }}
-      />
-    ),
+    termTitle: "reddit.dm — encrypted session",
   },
   {
     num: "02",
@@ -79,12 +58,13 @@ const STEPS: Step[] = [
     ),
     tags: ["PAY_FIRST", "RECEIPT_VERIFIED", "NO_REFUNDS"],
     icon: (
-      <div className="relative h-12 w-12 overflow-hidden">
+      <div className="relative h-10 w-10 overflow-hidden sm:h-12 sm:w-12">
         <Image src="/images/whish.webp" alt="Whish Money" fill className="object-cover" />
       </div>
     ),
     color: "var(--blood)",
     glow: "rgba(255,51,85,0.4)",
+    termTitle: "whish.lb — payment rail",
   },
   {
     num: "03",
@@ -100,9 +80,10 @@ const STEPS: Step[] = [
       </>
     ),
     tags: ["BEKAA_LB", "AAA_GRADE", "ETA_HOURS"],
-    icon: <Flower2 className="h-10 w-10 text-[var(--acid)]" strokeWidth={1.5} />,
+    icon: <Flower2 className="h-9 w-9 text-[var(--acid)] sm:h-10 sm:w-10" strokeWidth={1.5} />,
     color: "var(--acid)",
     glow: "rgba(198,255,58,0.4)",
+    termTitle: "logistics.run — bekaa route",
   },
   {
     num: "04",
@@ -118,9 +99,10 @@ const STEPS: Step[] = [
       </>
     ),
     tags: ["HIDDEN_STASH", "PHOTO_PROOF", "PIN_DROP"],
-    icon: <MapPin className="h-10 w-10 text-[var(--toxic)]" strokeWidth={1.5} />,
+    icon: <MapPin className="h-9 w-9 text-[var(--toxic)] sm:h-10 sm:w-10" strokeWidth={1.5} />,
     color: "var(--toxic)",
     glow: "rgba(0,255,163,0.4)",
+    termTitle: "drop.exec — final node",
   },
 ];
 
@@ -151,80 +133,73 @@ function StepCard({ step, isLast }: { step: Step; isLast: boolean }) {
         )}
       </div>
 
-      {/* card */}
-      <div
-        className="cy-card group relative mb-8 sm:mb-10 px-4 py-5 sm:px-5 sm:py-6 md:px-8 md:py-8"
-        style={{ borderColor: `${step.color}33` }}
-      >
-        <HudCorners />
-        <div className="absolute right-3 top-2.5 sm:right-4 sm:top-3 font-mono text-[9px] tracking-[0.3em] text-white/25 sm:text-[10px]">
-          NODE-{step.num}
-        </div>
-
-        {/* command line */}
-        <div className="mb-4 sm:mb-5 flex items-center gap-2 overflow-x-auto border-b border-white/5 pb-2.5 sm:pb-3 font-mono text-[10px] sm:text-[11px] md:text-xs">
-          <span style={{ color: step.color }}>$</span>
-          <DecryptedText
-            text={step.command}
-            animateOn="view"
-            speed={32}
-            maxIterations={10}
-            className="whitespace-nowrap text-white/70"
-            encryptedClassName="text-white/25"
-          />
-        </div>
-
-        <div className="flex flex-col gap-4 sm:gap-5 md:flex-row md:items-start">
-          {/* icon block */}
-          <div className="flex flex-shrink-0 items-center gap-4">
-            <div
-              className="relative grid h-16 w-16 place-items-center border bg-black/60 sm:h-20 sm:w-20"
-              style={{ borderColor: `${step.color}55` }}
-            >
-              <span className="absolute inset-1 border opacity-30" style={{ borderColor: step.color }} />
-              {step.icon}
+      {/* terminal-framed card */}
+      <div className="mb-8 sm:mb-10">
+        <TerminalFrame
+          title={step.termTitle}
+          badge={`NODE-${step.num}`}
+          accent={step.color}
+        >
+          <div className="relative px-4 py-5 sm:px-5 sm:py-6 md:px-7 md:py-7">
+            {/* command line */}
+            <div className="mb-4 flex items-center gap-2 overflow-x-auto border-b border-white/5 pb-2.5 font-mono text-[10px] sm:mb-5 sm:pb-3 sm:text-[11px] md:text-xs">
+              <span style={{ color: step.color }}>$</span>
+              <DecryptedText
+                text={step.command}
+                animateOn="view"
+                speed={32}
+                maxIterations={10}
+                className="whitespace-nowrap text-white/70"
+                encryptedClassName="text-white/25"
+              />
             </div>
-          </div>
 
-          <div className="flex-1 min-w-0">
-            <HudLabel>
-              <span style={{ color: step.color }}>{step.label}</span>
-            </HudLabel>
-            <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-white sm:text-2xl md:text-3xl">
-              {step.title}
-            </h3>
-            <p className="mt-2 sm:mt-3 font-mono text-[12px] leading-relaxed text-white/65 sm:text-[13px] md:text-sm">
-              {step.body}
-            </p>
-
-            <div className="mt-4 sm:mt-5 flex flex-wrap gap-1.5 sm:gap-2">
-              {step.tags.map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex items-center gap-1.5 border px-2 py-0.5 sm:px-2.5 sm:py-1 font-mono text-[9px] tracking-[0.15em] sm:text-[10px] sm:tracking-[0.18em]"
-                  style={{ borderColor: `${step.color}55`, color: step.color, background: `${step.color}10` }}
+            <div className="flex flex-col gap-4 sm:gap-5 md:flex-row md:items-start">
+              {/* icon block */}
+              <div className="flex flex-shrink-0 items-center gap-4">
+                <div
+                  className="relative grid h-14 w-14 place-items-center border bg-black/60 sm:h-16 sm:w-16 md:h-20 md:w-20"
+                  style={{ borderColor: `${step.color}55` }}
                 >
-                  <span className="h-1 w-1" style={{ background: step.color }} />
-                  {t}
-                </span>
-              ))}
-            </div>
+                  <span className="absolute inset-1 border opacity-30" style={{ borderColor: step.color }} />
+                  {step.icon}
+                </div>
+              </div>
 
-            {/* tiny telemetry per node */}
-            <div className="mt-4 sm:mt-5 flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-1 font-mono text-[9px] sm:text-[10px] text-white/40">
-              <span><span className="text-white/30">PKT:</span> 0x{(parseInt(step.num) * 1337).toString(16).toUpperCase()}</span>
-              <span><span className="text-white/30">HASH:</span> {step.num}a4f{step.num}c2{step.num}9d</span>
-              <span className="flex items-center gap-1.5"><StatusDot color={step.color} /> READY</span>
+              <div className="min-w-0 flex-1">
+                <HudLabel>
+                  <span style={{ color: step.color }}>{step.label}</span>
+                </HudLabel>
+                <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-white sm:text-2xl md:text-3xl">
+                  {step.title}
+                </h3>
+                <p className="mt-2 font-mono text-[12px] leading-relaxed text-white/65 sm:mt-3 sm:text-[13px] md:text-sm">
+                  {step.body}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-1.5 sm:mt-5 sm:gap-2">
+                  {step.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="inline-flex items-center gap-1.5 border px-2 py-0.5 font-mono text-[9px] tracking-[0.15em] sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]"
+                      style={{ borderColor: `${step.color}55`, color: step.color, background: `${step.color}10` }}
+                    >
+                      <span className="h-1 w-1" style={{ background: step.color }} />
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* tiny telemetry per node */}
+                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[9px] text-white/40 sm:mt-5 sm:gap-x-6 sm:text-[10px]">
+                  <span><span className="text-white/30">PKT:</span> 0x{(parseInt(step.num) * 1337).toString(16).toUpperCase()}</span>
+                  <span><span className="text-white/30">HASH:</span> {step.num}a4f{step.num}c2{step.num}9d</span>
+                  <span className="flex items-center gap-1.5"><StatusDot color={step.color} /> READY</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* visual (per-step custom) */}
-        {step.visual && (
-          <div className="mt-5 sm:mt-6 border-t border-white/5 pt-5 sm:pt-6">
-            {step.visual}
-          </div>
-        )}
+        </TerminalFrame>
       </div>
     </div>
   );
@@ -233,7 +208,7 @@ function StepCard({ step, isLast }: { step: Step; isLast: boolean }) {
 export default function StepsFlow() {
   return (
     <section className="relative mt-8 sm:mt-10">
-      <div className="mb-5 sm:mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-5 flex flex-col gap-2 sm:mb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <HudLabel>
             <StatusDot color="var(--acid)" /> <span className="ml-2">SEQUENCE.MAP</span>
