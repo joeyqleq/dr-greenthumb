@@ -1,0 +1,130 @@
+"use client";
+
+import DecryptedText from "@/components/react-bits/DecryptedText";
+import ShinyText from "@/components/react-bits/ShinyText";
+import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
+
+const KPIS = [
+  { k: "FACE_TIME", v: "00:00:00", color: "var(--toxic)" },
+  { k: "DELIVERY", v: "STASH/HIDDEN", color: "var(--acid)" },
+  { k: "ROUTE", v: "RDT → WSH → BKA → DRP", color: "var(--magenta)" },
+  { k: "TRACE", v: "ZERO", color: "var(--amber)" },
+];
+
+export default function Hero() {
+  return (
+    <section className="relative">
+      <div className="relative overflow-hidden border border-[var(--acid)]/20 bg-[var(--ink-2)]/60 backdrop-blur-md">
+        <HudCorners />
+        {/* terminal header bar */}
+        <div className="flex items-center justify-between border-b border-[var(--acid)]/20 bg-black/40 px-4 py-2 font-mono text-[11px]">
+          <div className="flex items-center gap-3">
+            <span className="flex gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-[var(--blood)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[var(--amber)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[var(--toxic)]" />
+            </span>
+            <span className="text-white/40">~/dr-greenthumb/private-drop —</span>
+            <span className="text-[var(--acid)]">protocol.exec</span>
+          </div>
+          <div className="hidden items-center gap-3 md:flex">
+            <StatusDot />
+            <span className="text-[var(--toxic)]">CHANNEL ACTIVE</span>
+            <span className="text-white/30">·</span>
+            <span className="text-white/50">UPTIME 14d:07h:22m</span>
+          </div>
+        </div>
+
+        {/* CRT body */}
+        <div className="cy-grid relative px-6 py-12 md:px-14 md:py-20">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(198,255,58,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(255,43,214,0.10),transparent_55%)]" />
+
+          <div className="relative">
+            <div className="mb-6 inline-flex items-center gap-3 border border-[var(--acid)]/30 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--acid)]">
+              <StatusDot />
+              <span>encrypted · anonymous · ritual</span>
+              <span className="text-white/30">// v4.2</span>
+            </div>
+
+            <div className="mb-2 flex items-center gap-3 font-mono text-xs text-white/40">
+              <span className="text-[var(--magenta)]">$</span>
+              <DecryptedText
+                text="./initiate --mode=stealth --src=reddit --rail=whish"
+                animateOn="view"
+                speed={28}
+                maxIterations={14}
+                className="text-[var(--toxic)]"
+                encryptedClassName="text-white/30"
+              />
+              <span className="cy-caret text-[var(--acid)]">▌</span>
+            </div>
+
+            <h1 className="cy-chrome cy-flicker font-display text-[clamp(2.4rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight text-white">
+              <span className="block">HOW THE</span>
+              <span className="block bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--magenta)] bg-clip-text text-transparent">
+                PRIVATE DROP
+              </span>
+              <span className="cy-glitch-line block" data-text="PROTOCOL RUNS.">
+                PROTOCOL RUNS.
+              </span>
+            </h1>
+
+            <p className="mt-8 max-w-2xl font-mono text-sm leading-relaxed text-white/60 md:text-base">
+              <span className="text-[var(--acid)]">{"// "}</span>
+              A four-step encrypted process — Reddit handshake, Whish Money rail,
+              Bekaa pickup run, then a secluded hidden drop with photo proof and
+              optional GPS pin. No phones. No faces. No paper trail.
+            </p>
+
+            <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
+              {KPIS.map((k) => (
+                <div
+                  key={k.k}
+                  className="group relative border border-[var(--acid)]/15 bg-black/40 p-4 backdrop-blur-sm transition hover:border-[var(--acid)]/50"
+                >
+                  <span className="absolute -top-px -left-px h-2 w-2 border-t border-l" style={{ borderColor: k.color }} />
+                  <span className="absolute -bottom-px -right-px h-2 w-2 border-b border-r" style={{ borderColor: k.color }} />
+                  <HudLabel>{k.k}</HudLabel>
+                  <div
+                    className="mt-2 font-mono text-base font-semibold tracking-tight"
+                    style={{ color: k.color }}
+                  >
+                    <ShinyText
+                      text={k.v}
+                      speed={4}
+                      color={k.color}
+                      shineColor="#ffffff"
+                      spread={130}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* fake telemetry bars */}
+            <div className="mt-10 grid grid-cols-3 gap-4 font-mono text-[10px] text-white/40 md:max-w-md">
+              {[
+                { l: "OPSEC", v: 98, c: "var(--toxic)" },
+                { l: "STEALTH", v: 100, c: "var(--acid)" },
+                { l: "TRUST", v: 87, c: "var(--magenta)" },
+              ].map((b) => (
+                <div key={b.l}>
+                  <div className="flex justify-between">
+                    <span>{b.l}</span>
+                    <span style={{ color: b.c }}>{b.v}%</span>
+                  </div>
+                  <div className="mt-1 h-1 w-full bg-white/5">
+                    <div
+                      className="h-full"
+                      style={{ width: `${b.v}%`, background: b.c, boxShadow: `0 0 8px ${b.c}` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
