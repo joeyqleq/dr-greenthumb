@@ -36,7 +36,7 @@ export default function Hero() {
         </div>
 
         {/* CRT body — sized to fit one viewport when combined with nav+ticker */}
-        <div className="relative px-4 py-5 sm:px-6 sm:py-7 md:px-12 md:py-9 lg:px-14 lg:py-10">
+        <div className="relative px-3 py-4 sm:px-5 sm:py-5 md:px-10 md:py-7 lg:px-12 lg:py-8">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(198,255,58,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(255,43,214,0.10),transparent_55%)]" />
 
           <div className="relative">
@@ -60,7 +60,7 @@ export default function Hero() {
             </div>
 
             {/* MAIN HEADLINE — glitch */}
-            <h1 className="cy-chrome cy-flicker font-display text-[clamp(2rem,8vw,5.25rem)] font-bold leading-[0.95] tracking-tight text-white">
+            <h1 className="cy-chrome cy-flicker font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white">
               <span className="block bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--magenta)] bg-clip-text text-transparent">
                 DR.
               </span>
@@ -75,23 +75,23 @@ export default function Hero() {
               private drop protocol runs
             </p>
 
-            <p className="mt-4 max-w-2xl font-mono text-[12px] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:text-[15px]">
+            <p className="mt-3 max-w-2xl font-mono text-[11.5px] leading-relaxed text-white/55 sm:mt-4 sm:text-[13px] md:text-sm">
               A four-step encrypted process — Reddit handshake, Whish Money rail,
               Bekaa pickup run, then a secluded hidden drop with photo proof and
               optional GPS pin. No phones. No faces. No paper trail.
             </p>
 
-            <div className="mt-5 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-3 md:grid-cols-4">
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-5 sm:gap-3 md:grid-cols-4">
               {KPIS.map((k) => (
                 <div
                   key={k.k}
-                  className="group relative border border-[var(--acid)]/15 bg-black/40 p-2.5 backdrop-blur-sm transition hover:border-[var(--acid)]/50 sm:p-3 md:p-4"
+                  className="group relative border border-[var(--acid)]/15 bg-black/40 p-2 backdrop-blur-sm transition hover:border-[var(--acid)]/50 sm:p-2.5 md:p-3"
                 >
                   <span className="absolute -top-px -left-px h-2 w-2 border-t border-l" style={{ borderColor: k.color }} />
                   <span className="absolute -bottom-px -right-px h-2 w-2 border-b border-r" style={{ borderColor: k.color }} />
                   <HudLabel>{k.k}</HudLabel>
                   <div
-                    className="mt-1.5 font-mono text-[12px] font-semibold tracking-tight sm:mt-2 sm:text-sm md:text-base"
+                    className="mt-1.5 font-mono text-[11.5px] font-semibold tracking-tight sm:text-[13px] md:text-sm"
                     style={{ color: k.color }}
                   >
                     <ShinyText
@@ -106,8 +106,8 @@ export default function Hero() {
               ))}
             </div>
 
-            {/* fake telemetry bars — hidden on small screens to keep one viewport */}
-            <div className="mt-5 hidden grid-cols-3 gap-4 font-mono text-[10px] text-white/40 sm:mt-6 sm:grid md:max-w-md">
+            {/* fake telemetry bars — only on lg+ to keep one viewport */}
+            <div className="mt-5 hidden grid-cols-3 gap-4 font-mono text-[10px] text-white/40 lg:mt-6 lg:grid lg:max-w-md">
               {[
                 { l: "OPSEC", v: 98, c: "var(--toxic)" },
                 { l: "STEALTH", v: 100, c: "var(--acid)" },

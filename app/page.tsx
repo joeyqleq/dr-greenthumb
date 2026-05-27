@@ -46,8 +46,15 @@ export default function Page() {
 
       <Ticker />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-16">
-        <Hero />
+      {/* HERO — fits one viewport with even margins */}
+      <section className="relative z-10 mx-auto flex w-full max-w-6xl items-center px-4 py-4 md:px-6 md:py-6"
+        style={{ minHeight: "calc(100svh - 110px)" }}>
+        <div className="w-full">
+          <Hero />
+        </div>
+      </section>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-10 md:px-6 md:pb-16">
         <StepsFlow />
         <BottomPanels />
       </div>
