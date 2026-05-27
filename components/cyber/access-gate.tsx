@@ -28,23 +28,23 @@ async function sha256Hex(s: string) {
 }
 
 const BOOT_COMMANDS = [
-  "ssh root@dr-greenthumb.private --port=2222",
-  "verify --cipher=aes256-gcm --kx=curve25519",
-  "auth challenge --token",
+  "ssh root@vault.dgt",
+  "verify --cipher aes256",
+  "auth --token",
 ];
 const BOOT_OUTPUTS: Record<number, string[]> = {
   0: [
-    "[*] resolving vault.dr-greenthumb.private ...",
-    "[*] negotiating channel ... ok",
+    "[*] resolving vault.dgt ...",
+    "[*] channel ok",
   ],
   1: [
     "[*] cipher: AES-256-GCM",
-    "[*] host fingerprint: 4f:9b:2e:1a:7c:88:de:33",
+    "[*] fp: 4f:9b:2e:1a:7c:88",
     "[ok] handshake complete",
   ],
   2: [
-    "[!] authorized clients only — sessions are logged",
-    "[?] awaiting access token ...",
+    "[!] authorized clients only",
+    "[?] awaiting token ...",
   ],
 };
 
@@ -108,59 +108,65 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
   if (unlocked) return <>{children}</>;
 
   return (
-    <div className="fixed inset-0 z-[200] grid place-items-center overflow-y-auto bg-[var(--ink)] px-4 py-8">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center overflow-x-hidden overflow-y-auto bg-[var(--ink)] px-3 py-6 sm:px-4 sm:py-8">
       <div className="cy-noise pointer-events-none absolute inset-0 opacity-25" />
-      <div className="relative w-full max-w-2xl">
+      <div className="relative mx-auto w-full max-w-[min(640px,100%)] break-words">
         <Terminal
           commands={BOOT_COMMANDS}
           outputs={BOOT_OUTPUTS}
           username="root"
-          title="vault.dr-greenthumb — secure shell"
+          title="vault.dgt"
           typingSpeed={28}
           delayBetweenCommands={500}
           initialDelay={300}
-          height="h-72 sm:h-80"
+          height="h-56 xs:h-64 sm:h-72"
+          className="text-[10px] sm:text-xs"
         />
 
         <form
           onSubmit={handleSubmit}
           className={cn(
-            "mt-3 overflow-hidden border border-emerald-500/30 bg-[#070809] px-4 py-3 font-mono text-[12px] transition-opacity sm:text-[13px]",
+            "mt-3 w-full overflow-hidden border border-emerald-500/30 bg-[#070809] px-3 py-3 font-mono text-[11px] transition-opacity sm:px-4 sm:text-[13px]",
             showInput ? "opacity-100" : "opacity-0 pointer-events-none"
           )}
           aria-hidden={!showInput}
         >
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          {/* Prompt line — always wraps cleanly */}
+          <div className="flex flex-wrap items-baseline gap-x-1 leading-relaxed">
             <span className="text-emerald-400">root</span>
             <span className="text-emerald-600">@</span>
             <span className="text-sky-400">vault</span>
             <span className="text-neutral-500">:~$</span>
-            <span className="text-neutral-300">enter access token:</span>
+            <span className="text-neutral-300">token:</span>
+          </div>
+          {/* Input + button row stacks under prompt on mobile */}
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
             <input
               ref={inputRef}
               type="password"
               disabled={checking || !targetHash}
               autoComplete="off"
               spellCheck={false}
-              className="min-w-0 flex-1 border-0 bg-transparent font-mono text-[12px] text-emerald-300 caret-emerald-400 outline-none placeholder:text-neutral-700 sm:text-[13px]"
+              inputMode="numeric"
+              className="w-full min-w-0 border border-emerald-500/20 bg-black/40 px-2 py-1.5 font-mono text-[12px] text-emerald-300 caret-emerald-400 outline-none placeholder:text-neutral-700 focus:border-emerald-400/60 sm:flex-1 sm:text-[13px]"
               placeholder="••••••"
               aria-label="Access token"
             />
             <button
               type="submit"
               disabled={checking || !targetHash}
-              className="border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-emerald-300 transition hover:bg-emerald-500/20 disabled:opacity-40"
+              className="w-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-emerald-300 transition hover:bg-emerald-500/20 disabled:opacity-40 sm:w-auto"
             >
               {checking ? "verifying" : "submit"}
             </button>
           </div>
           {error && (
-            <div className="mt-2 text-red-400">{error}</div>
+            <div className="mt-2 break-words text-red-400">{error}</div>
           )}
         </form>
 
-        <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
-          {"// "}restricted area · authorized clients only
+        <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.25em] text-white/35 sm:text-[10px] sm:tracking-[0.3em]">
+          {"// "}restricted · authorized only
         </p>
       </div>
     </div>
