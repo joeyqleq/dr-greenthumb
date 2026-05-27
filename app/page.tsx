@@ -3,6 +3,7 @@ import Ticker from "@/components/cyber/ticker";
 import Hero from "@/components/cyber/hero";
 import StepsFlow from "@/components/cyber/steps-flow";
 import BottomPanels from "@/components/cyber/bottom-panels";
+import PriceBento from "@/components/cyber/price-bento";
 import { StatusDot } from "@/components/cyber/hud-frame";
 import { Leaf } from "lucide-react";
 
@@ -49,7 +50,11 @@ export default function Page() {
         <Hero />
         <StepsFlow />
         <BottomPanels />
+      </div>
 
+      <PriceBento />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-10 md:px-6">
         <footer className="mt-14 border-t border-[var(--acid)]/15 pt-6 font-mono text-[11px] text-white/40">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-3">
