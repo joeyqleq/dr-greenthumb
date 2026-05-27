@@ -8,8 +8,8 @@ const PRICES: BentoCardProps[] = [
   { color: "#0d1014", label: "// SKU_01", title: "Hash / Bezre", description: "Pressed · imported", weight: "30 g", price: "$50" },
   { color: "#0d1014", label: "// SKU_02", title: "Bubble Hash", description: "Cannabis extract · solventless", weight: "30 g", price: "$60" },
   { color: "#0d1014", label: "// SKU_03", title: "Weed / Marie", description: "Hand-trimmed reserve", weight: "20 g", price: "$100" },
-  { color: "#0d1014", label: "// SKU_04", title: "Coke (90% Pure)", description: "Concentrate · solventless", weight: "0.5 g", price: "$120" },
-  { color: "#0d1014", label: "// SKU_05", title: "Freebase Cocaine (Bazz)", description: "Concentrate · live", weight: "0.5 g", price: "$120" },
+  { color: "#0d1014", label: "// SKU_04", title: "Coke (90% Pure)", description: "Concentrate · solventless", weight: "1 g", price: "$120" },
+  { color: "#0d1014", label: "// SKU_05", title: "Freebase Cocaine (Bazz)", description: "Concentrate · live", weight: "1 g", price: "$120" },
   { color: "#0d1014", label: "// SKU_06", title: "Other products available on demand", description: "Limited drop", weight: "—", price: "" },
 ];
 
