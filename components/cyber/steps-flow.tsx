@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import DecryptedText from "@/components/react-bits/DecryptedText";
 import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
+import { Terminal } from "@/components/ui/terminal";
 import { Flower2, MapPin } from "lucide-react";
 
 type Step = {
@@ -16,6 +17,7 @@ type Step = {
   icon: ReactNode;
   color: string;
   glow: string;
+  visual?: ReactNode;
 };
 
 const STEPS: Step[] = [
@@ -34,16 +36,33 @@ const STEPS: Step[] = [
     tags: ["REDDIT_DMS", "FULLY_REMOTE", "NO_ID"],
     icon: (
       <div className="relative h-12 w-12">
-        <Image
-          src="/images/reddit.png"
-          alt="Reddit"
-          fill
-          className="object-contain"
-        />
+        <Image src="/images/reddit.png" alt="Reddit" fill className="object-contain" />
       </div>
     ),
     color: "var(--magenta)",
     glow: "rgba(255,43,214,0.4)",
+    visual: (
+      <Terminal
+        username="u/joeyleq"
+        title="reddit.dm — encrypted"
+        height="h-56 sm:h-64"
+        typingSpeed={38}
+        delayBetweenCommands={700}
+        initialDelay={300}
+        commands={[
+          "ssh reddit.dm --user=u/joeyleq",
+          "send 'yo, need a quote'",
+          "negotiate --terms --no-id",
+          "confirm --next=whish",
+        ]}
+        outputs={{
+          0: ["[OK] secure channel established", "[OK] no phone · no name · no face"],
+          1: ["[..] message delivered", "[OK] reply: 'send the rail'"],
+          2: ["[OK] arrangement locked"],
+          3: ["[->] proceed to NODE-02"],
+        }}
+      />
+    ),
   },
   {
     num: "02",
@@ -60,13 +79,8 @@ const STEPS: Step[] = [
     ),
     tags: ["PAY_FIRST", "RECEIPT_VERIFIED", "NO_REFUNDS"],
     icon: (
-      <div className="relative h-12 w-12 overflow-hidden rounded-sm">
-        <Image
-          src="/images/whish.webp"
-          alt="Whish Money"
-          fill
-          className="object-cover"
-        />
+      <div className="relative h-12 w-12 overflow-hidden">
+        <Image src="/images/whish.webp" alt="Whish Money" fill className="object-cover" />
       </div>
     ),
     color: "var(--blood)",
@@ -86,9 +100,7 @@ const STEPS: Step[] = [
       </>
     ),
     tags: ["BEKAA_LB", "AAA_GRADE", "ETA_HOURS"],
-    icon: (
-      <Flower2 className="h-10 w-10 text-[var(--acid)]" strokeWidth={1.5} />
-    ),
+    icon: <Flower2 className="h-10 w-10 text-[var(--acid)]" strokeWidth={1.5} />,
     color: "var(--acid)",
     glow: "rgba(198,255,58,0.4)",
   },
@@ -106,59 +118,67 @@ const STEPS: Step[] = [
       </>
     ),
     tags: ["HIDDEN_STASH", "PHOTO_PROOF", "PIN_DROP"],
-    icon: (
-      <MapPin className="h-10 w-10 text-[var(--toxic)]" strokeWidth={1.5} />
-    ),
+    icon: <MapPin className="h-10 w-10 text-[var(--toxic)]" strokeWidth={1.5} />,
     color: "var(--toxic)",
     glow: "rgba(0,255,163,0.4)",
   },
 ];
 
-function StepCard({ step, index }: { step: Step; index: number }) {
-  const isReverse = index % 2 === 1;
+function StepCard({ step, isLast }: { step: Step; isLast: boolean }) {
   return (
-    <div className="relative grid grid-cols-[44px_1fr] gap-4 md:grid-cols-[80px_1fr] md:gap-6">
+    <div className="relative grid grid-cols-[36px_1fr] gap-3 sm:grid-cols-[44px_1fr] sm:gap-4 md:grid-cols-[80px_1fr] md:gap-6">
       {/* left rail */}
-      <div className="flex flex-col items-center">
+      <div className="relative flex flex-col items-center">
         <div
-          className="relative grid h-11 w-11 place-items-center border-2 font-mono text-sm font-bold md:h-14 md:w-14 md:text-base"
+          className="relative z-10 grid h-9 w-9 place-items-center border-2 bg-[var(--ink)] font-mono text-xs font-bold sm:h-11 sm:w-11 sm:text-sm md:h-14 md:w-14 md:text-base"
           style={{ borderColor: step.color, color: step.color, boxShadow: `0 0 20px -2px ${step.glow}` }}
         >
           {step.num}
           <span className="absolute -inset-1 border border-dashed opacity-40" style={{ borderColor: step.color }} />
         </div>
-        <div className="cy-connector-v mt-2 flex-1" style={{ ["--acid" as string]: step.color }} />
+        {/* full-height connector (skips on last) */}
+        {!isLast && (
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 -translate-x-1/2 top-9 sm:top-11 md:top-14 bottom-0 w-[2px]"
+            style={{
+              backgroundImage: `linear-gradient(180deg, ${step.color} 0 10px, transparent 10px 22px)`,
+              backgroundSize: "2px 22px",
+              backgroundRepeat: "repeat-y",
+              animation: "cy-flow-v 1.4s linear infinite",
+            }}
+          />
+        )}
       </div>
 
       {/* card */}
       <div
-        className="cy-card group relative mb-10 px-5 py-6 md:px-8 md:py-8"
+        className="cy-card group relative mb-8 sm:mb-10 px-4 py-5 sm:px-5 sm:py-6 md:px-8 md:py-8"
         style={{ borderColor: `${step.color}33` }}
       >
         <HudCorners />
-        {/* faint corner ID */}
-        <div className="absolute right-4 top-3 font-mono text-[10px] tracking-[0.3em] text-white/25">
+        <div className="absolute right-3 top-2.5 sm:right-4 sm:top-3 font-mono text-[9px] tracking-[0.3em] text-white/25 sm:text-[10px]">
           NODE-{step.num}
         </div>
 
         {/* command line */}
-        <div className="mb-5 flex items-center gap-2 border-b border-white/5 pb-3 font-mono text-[11px] md:text-xs">
+        <div className="mb-4 sm:mb-5 flex items-center gap-2 overflow-x-auto border-b border-white/5 pb-2.5 sm:pb-3 font-mono text-[10px] sm:text-[11px] md:text-xs">
           <span style={{ color: step.color }}>$</span>
           <DecryptedText
             text={step.command}
             animateOn="view"
             speed={32}
             maxIterations={10}
-            className="text-white/70"
+            className="whitespace-nowrap text-white/70"
             encryptedClassName="text-white/25"
           />
         </div>
 
-        <div className={`flex flex-col gap-5 md:flex-row md:items-start ${isReverse ? "md:flex-row-reverse" : ""}`}>
+        <div className="flex flex-col gap-4 sm:gap-5 md:flex-row md:items-start">
           {/* icon block */}
           <div className="flex flex-shrink-0 items-center gap-4">
             <div
-              className="relative grid h-20 w-20 place-items-center border bg-black/60"
+              className="relative grid h-16 w-16 place-items-center border bg-black/60 sm:h-20 sm:w-20"
               style={{ borderColor: `${step.color}55` }}
             >
               <span className="absolute inset-1 border opacity-30" style={{ borderColor: step.color }} />
@@ -166,22 +186,22 @@ function StepCard({ step, index }: { step: Step; index: number }) {
             </div>
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <HudLabel>
               <span style={{ color: step.color }}>{step.label}</span>
             </HudLabel>
-            <h3 className="mt-1 font-display text-2xl font-semibold leading-tight text-white md:text-3xl">
+            <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-white sm:text-2xl md:text-3xl">
               {step.title}
             </h3>
-            <p className="mt-3 font-mono text-[13px] leading-relaxed text-white/65 md:text-sm">
+            <p className="mt-2 sm:mt-3 font-mono text-[12px] leading-relaxed text-white/65 sm:text-[13px] md:text-sm">
               {step.body}
             </p>
 
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-4 sm:mt-5 flex flex-wrap gap-1.5 sm:gap-2">
               {step.tags.map((t) => (
                 <span
                   key={t}
-                  className="inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[10px] tracking-[0.18em]"
+                  className="inline-flex items-center gap-1.5 border px-2 py-0.5 sm:px-2.5 sm:py-1 font-mono text-[9px] tracking-[0.15em] sm:text-[10px] sm:tracking-[0.18em]"
                   style={{ borderColor: `${step.color}55`, color: step.color, background: `${step.color}10` }}
                 >
                   <span className="h-1 w-1" style={{ background: step.color }} />
@@ -191,7 +211,7 @@ function StepCard({ step, index }: { step: Step; index: number }) {
             </div>
 
             {/* tiny telemetry per node */}
-            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-1 font-mono text-[10px] text-white/40">
+            <div className="mt-4 sm:mt-5 flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-1 font-mono text-[9px] sm:text-[10px] text-white/40">
               <span><span className="text-white/30">PKT:</span> 0x{(parseInt(step.num) * 1337).toString(16).toUpperCase()}</span>
               <span><span className="text-white/30">HASH:</span> {step.num}a4f{step.num}c2{step.num}9d</span>
               <span className="flex items-center gap-1.5"><StatusDot color={step.color} /> READY</span>
@@ -199,10 +219,12 @@ function StepCard({ step, index }: { step: Step; index: number }) {
           </div>
         </div>
 
-        {/* sweeping shimmer */}
-        <div
-          className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent transition-transform duration-1000 group-hover:translate-x-full"
-        />
+        {/* visual (per-step custom) */}
+        {step.visual && (
+          <div className="mt-5 sm:mt-6 border-t border-white/5 pt-5 sm:pt-6">
+            {step.visual}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -210,24 +232,24 @@ function StepCard({ step, index }: { step: Step; index: number }) {
 
 export default function StepsFlow() {
   return (
-    <section className="relative mt-10">
-      <div className="mb-6 flex items-end justify-between">
+    <section className="relative mt-8 sm:mt-10">
+      <div className="mb-5 sm:mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <HudLabel>
             <StatusDot color="var(--acid)" /> <span className="ml-2">SEQUENCE.MAP</span>
           </HudLabel>
-          <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">
             Four nodes. <span className="text-[var(--acid)]">One handshake.</span>
           </h2>
         </div>
-        <div className="hidden font-mono text-[10px] text-white/40 md:block">
+        <div className="font-mono text-[10px] text-white/40">
           [{STEPS.length}/{STEPS.length}] NODES SYNCED
         </div>
       </div>
 
       <div>
         {STEPS.map((s, i) => (
-          <StepCard key={s.num} step={s} index={i} />
+          <StepCard key={s.num} step={s} isLast={i === STEPS.length - 1} />
         ))}
       </div>
     </section>

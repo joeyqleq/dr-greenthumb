@@ -1,16 +1,16 @@
-import GridCanvas from "@/components/cyber/grid-canvas";
 import Ticker from "@/components/cyber/ticker";
 import Hero from "@/components/cyber/hero";
 import StepsFlow from "@/components/cyber/steps-flow";
 import BottomPanels from "@/components/cyber/bottom-panels";
 import PriceBento from "@/components/cyber/price-bento";
+import PixelBlastBg from "@/components/cyber/pixel-blast-bg";
 import { StatusDot } from "@/components/cyber/hud-frame";
 import { Leaf } from "lucide-react";
 
 export default function Page() {
   return (
-    <main className="scanlines relative min-h-screen overflow-x-hidden text-white">
-      <GridCanvas />
+    <main className="relative min-h-screen overflow-x-hidden text-white">
+      <PixelBlastBg />
 
       {/* fixed faint noise */}
       <div className="cy-noise pointer-events-none fixed inset-0 z-[1] opacity-20" aria-hidden="true" />

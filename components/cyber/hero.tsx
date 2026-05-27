@@ -2,6 +2,7 @@
 
 import DecryptedText from "@/components/react-bits/DecryptedText";
 import ShinyText from "@/components/react-bits/ShinyText";
+import AsciiHero from "@/components/cyber/ascii-hero";
 import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 
 const KPIS = [
@@ -36,7 +37,7 @@ export default function Hero() {
         </div>
 
         {/* CRT body */}
-        <div className="cy-grid relative px-6 py-12 md:px-14 md:py-20">
+        <div className="relative px-4 py-8 sm:px-6 sm:py-12 md:px-14 md:py-16 lg:py-20">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(198,255,58,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(255,43,214,0.10),transparent_55%)]" />
 
           <div className="relative">
@@ -59,15 +60,31 @@ export default function Hero() {
               <span className="cy-caret text-[var(--acid)]">▌</span>
             </div>
 
-            <h1 className="cy-chrome cy-flicker font-display text-[clamp(2.4rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight text-white">
-              <span className="block">HOW THE</span>
+            <div className="my-2 sm:my-4 w-full overflow-hidden">
+              {/* Mobile: 2 lines, Desktop: 1 line */}
+              <div className="block sm:hidden">
+                <AsciiHero
+                  lines={["DR.", "GREENTHUMB"]}
+                  text="DR. GREENTHUMB"
+                  className="text-[clamp(6px,2.6vw,14px)]"
+                />
+              </div>
+              <div className="hidden sm:block">
+                <AsciiHero
+                  text="DR. GREENTHUMB"
+                  className="text-[clamp(7px,1.45vw,17px)]"
+                />
+              </div>
+            </div>
+
+            <h2 className="cy-chrome cy-flicker font-display text-[clamp(1.4rem,4.5vw,3rem)] font-bold leading-[0.95] tracking-tight text-white">
               <span className="block bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--magenta)] bg-clip-text text-transparent">
                 PRIVATE DROP
               </span>
               <span className="cy-glitch-line block" data-text="PROTOCOL RUNS.">
                 PROTOCOL RUNS.
               </span>
-            </h1>
+            </h2>
 
             <p className="mt-8 max-w-2xl font-mono text-sm leading-relaxed text-white/60 md:text-base">
               <span className="text-[var(--acid)]">{"// "}</span>

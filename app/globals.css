@@ -176,26 +176,10 @@ html, body {
   color: #e8ffe0;
 }
 
-/* CRT scanlines */
-.scanlines::before {
-  content: "";
-  position: fixed; inset: 0; z-index: 60; pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 0px,
-    rgba(0,0,0,0) 2px,
-    rgba(0,255,163,0.035) 3px,
-    rgba(0,0,0,0) 4px
-  );
-  mix-blend-mode: overlay;
-}
-.scanlines::after {
-  content: "";
-  position: fixed; inset: 0; z-index: 61; pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.65) 100%);
-}
+/* scanlines disabled */
+.scanlines::before, .scanlines::after { content: none !important; display: none !important; }
 
-/* terminal vignette grid (no matrix rain) */
+/* terminal vignette grid (no matrix rain) — kept available but not applied to main */
 .cy-grid {
   background-image:
     linear-gradient(rgba(198,255,58,0.06) 1px, transparent 1px),
