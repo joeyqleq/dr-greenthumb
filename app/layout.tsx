@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { Analytics } from '@vercel/analytics/next'
 import SiteAnalytics from '@/components/cyber/analytics'
+import AccessGate from '@/components/cyber/access-gate'
 import './globals.css'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 
@@ -39,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} bg-[#070809]`}>
       <body className="font-sans antialiased">
-        {children}
+        <AccessGate>{children}</AccessGate>
         <SiteAnalytics />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

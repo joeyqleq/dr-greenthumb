@@ -1,6 +1,7 @@
 "use client";
 
-import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
+import TerminalFrame from "@/components/cyber/terminal-frame";
+import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 import { Shield, Lock, Eye, Camera, Clock, AlertOctagon } from "lucide-react";
 
 const FEATURES = [
@@ -22,100 +23,110 @@ const RULES = [
 
 export default function BottomPanels() {
   return (
-    <section className="mt-10 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+    <section className="mt-8 grid gap-5 sm:mt-10 sm:gap-6 lg:grid-cols-[1.4fr_1fr]">
       {/* WHY panel */}
-      <div className="cy-card relative overflow-hidden p-6 md:p-8">
-        <HudCorners />
-        <div className="mb-6 flex items-start gap-4">
-          <div className="grid h-14 w-14 flex-shrink-0 place-items-center border border-[var(--toxic)]/50 bg-[var(--toxic)]/10">
-            <Shield className="h-7 w-7 text-[var(--toxic)]" strokeWidth={1.5} />
-          </div>
-          <div>
-            <HudLabel>WHY/THIS_EXISTS</HudLabel>
-            <h3 className="mt-1 font-display text-2xl font-semibold leading-tight text-white md:text-3xl">
-              Built around{" "}
-              <span className="text-[var(--toxic)]">privacy</span> &amp;{" "}
-              <span className="text-[var(--acid)]">safety</span>.
-            </h3>
-          </div>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-2">
-          {FEATURES.map((f) => (
-            <div
-              key={f.title}
-              className="group relative border border-white/10 bg-black/40 p-4 transition hover:border-white/30"
-            >
-              <span
-                className="absolute -top-px -left-px h-2 w-2 border-t border-l"
-                style={{ borderColor: f.color }}
-              />
-              <span
-                className="absolute -bottom-px -right-px h-2 w-2 border-b border-r"
-                style={{ borderColor: f.color }}
-              />
-              <div className="mb-3 flex items-center justify-between">
-                <f.icon className="h-5 w-5" style={{ color: f.color }} strokeWidth={1.6} />
-                <StatusDot color={f.color} />
-              </div>
-              <h4 className="font-display text-base font-semibold text-white">
-                {f.title}
-              </h4>
-              <p className="mt-1.5 font-mono text-[12px] leading-relaxed text-white/55">
-                {f.body}
-              </p>
+      <TerminalFrame
+        title="~/why-this-exists.md"
+        badge="DOC · WHY"
+        accent="var(--toxic)"
+      >
+        <div className="p-4 sm:p-6 md:p-7">
+          <div className="mb-5 flex items-start gap-3 sm:mb-6 sm:gap-4">
+            <div className="grid h-12 w-12 flex-shrink-0 place-items-center border border-[var(--toxic)]/50 bg-[var(--toxic)]/10 sm:h-14 sm:w-14">
+              <Shield className="h-6 w-6 text-[var(--toxic)] sm:h-7 sm:w-7" strokeWidth={1.5} />
             </div>
-          ))}
+            <div>
+              <HudLabel>WHY/THIS_EXISTS</HudLabel>
+              <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-white sm:text-2xl md:text-3xl">
+                Built around{" "}
+                <span className="text-[var(--toxic)]">privacy</span> &amp;{" "}
+                <span className="text-[var(--acid)]">safety</span>.
+              </h3>
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="group relative border border-white/10 bg-black/40 p-3 transition hover:border-white/30 sm:p-4"
+              >
+                <span
+                  className="absolute -top-px -left-px h-2 w-2 border-t border-l"
+                  style={{ borderColor: f.color }}
+                />
+                <span
+                  className="absolute -bottom-px -right-px h-2 w-2 border-b border-r"
+                  style={{ borderColor: f.color }}
+                />
+                <div className="mb-2 flex items-center justify-between sm:mb-3">
+                  <f.icon className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: f.color }} strokeWidth={1.6} />
+                  <StatusDot color={f.color} />
+                </div>
+                <h4 className="font-display text-sm font-semibold text-white sm:text-base">
+                  {f.title}
+                </h4>
+                <p className="mt-1.5 font-mono text-[11px] leading-relaxed text-white/55 sm:text-[12px]">
+                  {f.body}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </TerminalFrame>
 
       {/* RULES panel */}
-      <div className="cy-card relative overflow-hidden p-6 md:p-8">
-        <HudCorners />
-        <div className="mb-5 flex items-start gap-4">
-          <div className="grid h-14 w-14 flex-shrink-0 place-items-center border border-[var(--amber)]/50 bg-[var(--amber)]/10">
-            <AlertOctagon className="h-7 w-7 text-[var(--amber)]" strokeWidth={1.5} />
+      <TerminalFrame
+        title="~/rules.lock"
+        badge="LOCK · 07 RULES"
+        accent="var(--amber)"
+      >
+        <div className="p-4 sm:p-6 md:p-7">
+          <div className="mb-4 flex items-start gap-3 sm:mb-5 sm:gap-4">
+            <div className="grid h-12 w-12 flex-shrink-0 place-items-center border border-[var(--amber)]/50 bg-[var(--amber)]/10 sm:h-14 sm:w-14">
+              <AlertOctagon className="h-6 w-6 text-[var(--amber)] sm:h-7 sm:w-7" strokeWidth={1.5} />
+            </div>
+            <div>
+              <HudLabel>RULES.LOCK</HudLabel>
+              <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-white sm:text-2xl md:text-3xl">
+                Strict <span className="text-[var(--amber)]">for a reason</span>.
+              </h3>
+            </div>
           </div>
-          <div>
-            <HudLabel>RULES.LOCK</HudLabel>
-            <h3 className="mt-1 font-display text-2xl font-semibold leading-tight text-white md:text-3xl">
-              Strict <span className="text-[var(--amber)]">for a reason</span>.
-            </h3>
+
+          <div className="border border-[var(--amber)]/30 bg-[var(--amber)]/5 p-3 font-mono text-[11px] leading-relaxed text-[#f3d8a0] sm:p-4 sm:text-[12px]">
+            <span className="text-[var(--amber)]">{"// WARN:"}</span> The protocol
+            is non-negotiable. Every step exists to protect both sides. Skip a
+            step and the channel terminates.
+          </div>
+
+          <div className="mt-4 sm:mt-5">
+            <HudLabel>PROTOCOL.RULES</HudLabel>
+            <ol className="mt-3 space-y-1.5 font-mono text-[11px] leading-relaxed sm:space-y-2 sm:text-[12px]">
+              {RULES.map((r, i) => {
+                const [num, ...rest] = r.split("::");
+                return (
+                  <li
+                    key={i}
+                    className="group flex items-start gap-2 border-l-2 border-[var(--amber)]/30 bg-black/30 px-2.5 py-1.5 transition hover:border-[var(--amber)] hover:bg-[var(--amber)]/5 sm:gap-3 sm:px-3 sm:py-2"
+                  >
+                    <span className="font-bold text-[var(--amber)]">{num.trim()}</span>
+                    <span className="text-white/60">::</span>
+                    <span className="text-white/80">{rest.join("::").trim()}</span>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+
+          <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 font-mono text-[10px] text-white/40 sm:pt-4">
+            <span className="flex items-center gap-2">
+              <StatusDot color="var(--blood)" /> NON-NEGOTIABLE
+            </span>
+            <span>SIG: 0xDR-GREEN</span>
           </div>
         </div>
-
-        <div className="border border-[var(--amber)]/30 bg-[var(--amber)]/5 p-4 font-mono text-[12px] leading-relaxed text-[#f3d8a0]">
-          <span className="text-[var(--amber)]">{"// WARN:"}</span> The protocol
-          is non-negotiable. Every step exists to protect both sides. Skip a
-          step and the channel terminates.
-        </div>
-
-        <div className="mt-5">
-          <HudLabel>PROTOCOL.RULES</HudLabel>
-          <ol className="mt-3 space-y-2 font-mono text-[12px] leading-relaxed">
-            {RULES.map((r, i) => {
-              const [num, ...rest] = r.split("::");
-              return (
-                <li
-                  key={i}
-                  className="group flex items-start gap-3 border-l-2 border-[var(--amber)]/30 bg-black/30 px-3 py-2 transition hover:border-[var(--amber)] hover:bg-[var(--amber)]/5"
-                >
-                  <span className="font-bold text-[var(--amber)]">{num.trim()}</span>
-                  <span className="text-white/60">::</span>
-                  <span className="text-white/80">{rest.join("::").trim()}</span>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-
-        <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 font-mono text-[10px] text-white/40">
-          <span className="flex items-center gap-2">
-            <StatusDot color="var(--blood)" /> NON-NEGOTIABLE
-          </span>
-          <span>SIG: 0xDR-GREEN</span>
-        </div>
-      </div>
+      </TerminalFrame>
     </section>
   );
 }

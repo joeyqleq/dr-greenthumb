@@ -1,12 +1,13 @@
 "use client";
 
 import MagicBento, { type BentoCardProps } from "@/components/react-bits/MagicBento";
+import TerminalFrame from "@/components/cyber/terminal-frame";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 
 const PRICES: BentoCardProps[] = [
-  { color: "#0d1014", label: "// SKU_01", title: "xxx", description: "Indoor cured · top shelf", weight: "30 g", price: "$50" },
-  { color: "#0d1014", label: "// SKU_02", title: "xxx", description: "Premium hybrid", weight: "30 g", price: "$60" },
-  { color: "#0d1014", label: "// SKU_03", title: "xxx", description: "Hand-trimmed reserve", weight: "20 g", price: "$100" },
+  { color: "#0d1014", label: "// SKU_01", title: "Hash / Bezre", description: "Pressed · imported", weight: "30 g", price: "$50" },
+  { color: "#0d1014", label: "// SKU_02", title: "Bubble Hash", description: "Cannabis extract · solventless", weight: "30 g", price: "$60" },
+  { color: "#0d1014", label: "// SKU_03", title: "Weed / Marie", description: "Hand-trimmed reserve", weight: "20 g", price: "$100" },
   { color: "#0d1014", label: "// SKU_04", title: "xxx", description: "Concentrate · solventless", weight: "0.5 g", price: "$120" },
   { color: "#0d1014", label: "// SKU_05", title: "xxx", description: "Concentrate · live", weight: "0.5 g", price: "$120" },
   { color: "#0d1014", label: "// SKU_06", title: "xxx", description: "Limited drop", weight: "0.7 g", price: "$60" },
@@ -64,44 +65,51 @@ export default function PriceBento() {
 
         {/* footer / contact */}
         <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="cy-card relative p-5">
-            <HudLabel>// FREEBIE.POLICY</HudLabel>
-            <p className="mt-3 font-mono text-[13px] leading-relaxed text-white/75">
-              Volume = <span className="text-[var(--acid)]">samples</span>, not slashed prices. We protect floor pricing for everyone in the network.
-            </p>
-          </div>
+          <TerminalFrame title="~/freebie.policy" accent="var(--acid)">
+            <div className="p-4 sm:p-5">
+              <HudLabel>// FREEBIE.POLICY</HudLabel>
+              <p className="mt-3 font-mono text-[12px] leading-relaxed text-white/75 sm:text-[13px]">
+                Volume = <span className="text-[var(--acid)]">samples</span>, not slashed prices. We protect floor pricing for everyone in the network.
+              </p>
+            </div>
+          </TerminalFrame>
 
-          <div className="cy-card relative p-5">
-            <HudLabel>// PACKAGING</HudLabel>
-            <p className="mt-3 font-mono text-[13px] leading-relaxed text-white/75">
-              Every gram leaves the source <span className="text-[var(--toxic)]">vacuum-sealed</span>. Tamper evident. Smell-tight. No re-bagging in transit.
-            </p>
-          </div>
+          <TerminalFrame title="~/packaging.spec" accent="var(--toxic)">
+            <div className="p-4 sm:p-5">
+              <HudLabel>// PACKAGING</HudLabel>
+              <p className="mt-3 font-mono text-[12px] leading-relaxed text-white/75 sm:text-[13px]">
+                Every gram leaves the source <span className="text-[var(--toxic)]">vacuum-sealed</span>. Tamper evident. Smell-tight. No re-bagging in transit.
+              </p>
+            </div>
+          </TerminalFrame>
 
           <a
             href="https://www.reddit.com/user/joeyleq"
             target="_blank"
             rel="noopener noreferrer"
-            className="cy-card group relative flex flex-col justify-between p-5 transition hover:border-[var(--magenta)]/60"
+            className="group block transition hover:translate-y-[-2px]"
           >
-            <HudLabel>// CONTACT.HANDLE</HudLabel>
-            <div className="mt-3 flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-sm bg-[#FF4500]/15 ring-1 ring-[#FF4500]/40">
-                {/* Reddit mark */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/reddit.png" alt="Reddit" className="h-6 w-6" />
-              </span>
-              <div>
-                <div className="font-mono text-[11px] text-white/45">REDDIT.PRIVATE_MSG</div>
-                <div className="font-display text-lg font-semibold text-white group-hover:text-[var(--magenta)]">
-                  u/joeyleq
+            <TerminalFrame title="~/contact.handle" accent="var(--magenta)" badge="OPEN">
+              <div className="p-4 sm:p-5">
+                <HudLabel>// CONTACT.HANDLE</HudLabel>
+                <div className="mt-3 flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-sm bg-[#FF4500]/15 ring-1 ring-[#FF4500]/40">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/images/reddit.png" alt="Reddit" className="h-6 w-6" />
+                  </span>
+                  <div>
+                    <div className="font-mono text-[11px] text-white/45">REDDIT.PRIVATE_MSG</div>
+                    <div className="font-display text-base font-semibold text-white group-hover:text-[var(--magenta)] sm:text-lg">
+                      u/joeyleq
+                    </div>
+                  </div>
+                  <span className="ml-auto font-mono text-[var(--acid)] transition group-hover:translate-x-1">→</span>
                 </div>
+                <p className="mt-3 font-mono text-[11px] leading-relaxed text-white/50">
+                  Other SKUs and prices on demand. Encrypted DM only.
+                </p>
               </div>
-              <span className="ml-auto font-mono text-[var(--acid)] transition group-hover:translate-x-1">→</span>
-            </div>
-            <p className="mt-4 font-mono text-[11px] leading-relaxed text-white/50">
-              Other SKUs (xxx, xxx, xxx) and prices on demand. Encrypted DM only.
-            </p>
+            </TerminalFrame>
           </a>
         </div>
       </div>
