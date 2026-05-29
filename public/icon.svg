@@ -1,26 +1,41 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    @media (prefers-color-scheme: light) {
-      .background { fill: black; }
-      .foreground { fill: white; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .background { fill: white; }
-      .foreground { fill: black; }
-    }
-  </style>
-  <g clip-path="url(#clip0_7960_43945)">
-    <rect class="background" width="180" height="180" rx="37" />
-    <g style="transform: scale(95%); transform-origin: center">
-      <path class="foreground"
-        d="M101.141 53H136.632C151.023 53 162.689 64.6662 162.689 79.0573V112.904H148.112V79.0573C148.112 78.7105 148.098 78.3662 148.072 78.0251L112.581 112.898C112.701 112.902 112.821 112.904 112.941 112.904H148.112V126.672H112.941C98.5504 126.672 86.5638 114.891 86.5638 100.5V66.7434H101.141V100.5C101.141 101.15 101.191 101.792 101.289 102.422L137.56 66.7816C137.255 66.7563 136.945 66.7434 136.632 66.7434H101.141V53Z" />
-      <path class="foreground"
-        d="M65.2926 124.136L14 66.7372H34.6355L64.7495 100.436V66.7372H80.1365V118.47C80.1365 126.278 70.4953 129.958 65.2926 124.136Z" />
-    </g>
-  </g>
   <defs>
-    <clipPath id="clip0_7960_43945">
-      <rect width="180" height="180" fill="white" />
-    </clipPath>
+    <linearGradient id="leafGrad" x1="45" y1="20" x2="135" y2="160" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399" /> <!-- emerald-400 -->
+      <stop offset="50%" stop-color="#10b981" /> <!-- emerald-500 -->
+      <stop offset="100%" stop-color="#059669" /> <!-- emerald-600 -->
+    </linearGradient>
+    <linearGradient id="stemGrad" x1="90" y1="20" x2="90" y2="165" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a7f3d0" /> <!-- emerald-200 -->
+      <stop offset="100%" stop-color="#064e3b" /> <!-- emerald-900 -->
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#064e3b" flood-opacity="0.25"/>
+    </filter>
   </defs>
+  
+  <g filter="url(#shadow)">
+    <!-- Sleek, organic curved leaf shape -->
+    <!-- Right side of leaf -->
+    <path d="M90 20 C140 50 160 100 135 145 C115 160 100 162 90 165 Z" fill="url(#leafGrad)" />
+    <!-- Left side of leaf (slightly darker overlay for shading/depth) -->
+    <path d="M90 20 C40 50 20 100 45 145 C65 160 80 162 90 165 Z" fill="url(#leafGrad)" />
+    <!-- Dark overlay for left side to give 3D depth -->
+    <path d="M90 20 C40 50 20 100 45 145 C65 160 80 162 90 165 Z" fill="#047857" opacity="0.2" />
+
+    <!-- Stem / Central Vein -->
+    <path d="M90 20 Q90 95 90 165" stroke="url(#stemGrad)" stroke-width="4.5" stroke-linecap="round" />
+    
+    <!-- Left side veins -->
+    <path d="M90 55 Q72 50 60 44" stroke="#a7f3d0" stroke-width="2.5" stroke-linecap="round" opacity="0.4" />
+    <path d="M90 80 Q67 75 52 66" stroke="#a7f3d0" stroke-width="2.5" stroke-linecap="round" opacity="0.4" />
+    <path d="M90 105 Q67 100 54 88" stroke="#a7f3d0" stroke-width="2.5" stroke-linecap="round" opacity="0.4" />
+    <path d="M90 130 Q72 124 62 112" stroke="#a7f3d0" stroke-width="2.5" stroke-linecap="round" opacity="0.4" />
+
+    <!-- Right side veins -->
+    <path d="M90 55 Q108 50 120 44" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.3" />
+    <path d="M90 80 Q113 75 128 66" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.3" />
+    <path d="M90 105 Q113 100 126 88" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.3" />
+    <path d="M90 130 Q108 124 118 112" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.3" />
+  </g>
 </svg>
