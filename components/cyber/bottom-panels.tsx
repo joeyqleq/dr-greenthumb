@@ -3,6 +3,7 @@
 import TerminalFrame from "@/components/cyber/terminal-frame";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 import { Shield, Lock, Eye, Camera, Clock, AlertOctagon } from "lucide-react";
+import DecryptedText from "@/components/react-bits/DecryptedText";
 
 const FEATURES = [
   { icon: Eye, title: "Mutual anonymity", body: "No face-to-face, ever. Both parties stay completely distant throughout the whole process.", color: "var(--toxic)" },
@@ -12,7 +13,7 @@ const FEATURES = [
 ];
 
 const RULES = [
-  "01 :: Reddit DMs only — no phones, no other apps.",
+  "01 :: Reddit/Telegram only — no phones, no other apps.",
   "02 :: Whish settles before sourcing begins.",
   "03 :: Bekaa run = real hours. Plan accordingly.",
   "04 :: Photo proof on every drop.",
@@ -37,10 +38,14 @@ export default function BottomPanels() {
             </div>
             <div>
               <HudLabel>WHY/THIS_EXISTS</HudLabel>
-              <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-white sm:text-2xl md:text-3xl">
-                Built around{" "}
-                <span className="text-[var(--toxic)]">privacy</span> &amp;{" "}
-                <span className="text-[var(--acid)]">safety</span>.
+              <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-[var(--acid)] sm:text-2xl md:text-3xl">
+                <DecryptedText
+                  text="Built around privacy & safety."
+                  animateOn="view"
+                  speed={40}
+                  maxIterations={15}
+                  useOriginalCharsOnly={true}
+                />
               </h3>
             </div>
           </div>
@@ -88,8 +93,14 @@ export default function BottomPanels() {
             </div>
             <div>
               <HudLabel>RULES.LOCK</HudLabel>
-              <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-white sm:text-2xl md:text-3xl">
-                Strict <span className="text-[var(--amber)]">for a reason</span>.
+              <h3 className="mt-1 font-display text-xl font-semibold leading-tight text-[var(--amber)] sm:text-2xl md:text-3xl">
+                <DecryptedText
+                  text="Strict for a reason."
+                  animateOn="view"
+                  speed={40}
+                  maxIterations={15}
+                  useOriginalCharsOnly={true}
+                />
               </h3>
             </div>
           </div>

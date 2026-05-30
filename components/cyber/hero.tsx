@@ -1,9 +1,15 @@
 "use client";
 
-import DecryptedText from "@/components/react-bits/DecryptedText";
+import dynamic from "next/dynamic";
 import ShinyText from "@/components/react-bits/ShinyText";
-import AsciiHero from "@/components/cyber/ascii-hero";
+import DecryptedText from "@/components/react-bits/DecryptedText";
+import Shuffle from "@/components/react-bits/Shuffle";
 import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
+
+const FaultyTerminal = dynamic(
+  () => import("@/components/react-bits/FaultyTerminal"),
+  { ssr: false }
+);
 
 const KPIS = [
   { k: "FACE_TIME", v: "00:00:00", color: "var(--toxic)" },
@@ -17,8 +23,32 @@ export default function Hero() {
     <section className="relative">
       <div className="relative overflow-hidden border border-[var(--acid)]/20 bg-[var(--ink-2)]/60 backdrop-blur-md">
         <HudCorners />
+
+        {/* FaultyTerminal Background */}
+        <div className="absolute inset-0 z-0 opacity-40">
+          <FaultyTerminal
+            scale={1.2}
+            gridMul={[2, 1]}
+            digitSize={1.2}
+            timeScale={2}
+            pause={false}
+            scanlineIntensity={0.5}
+            glitchAmount={1}
+            flickerAmount={1}
+            noiseAmp={1}
+            chromaticAberration={0}
+            dither={0}
+            curvature={0.1}
+            tint="#5ad94a"
+            mouseReact
+            mouseStrength={0.5}
+            pageLoadAnimation
+            brightness={0.4}
+          />
+        </div>
+
         {/* terminal header bar */}
-        <div className="flex items-center justify-between border-b border-[var(--acid)]/20 bg-black/40 px-3 py-1.5 font-mono text-[10px] sm:px-4 sm:py-2 sm:text-[11px]">
+        <div className="relative z-10 flex items-center justify-between border-b border-[var(--acid)]/20 bg-black/40 px-3 py-1.5 font-mono text-[10px] sm:px-4 sm:py-2 sm:text-[11px]">
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="flex gap-1 sm:gap-1.5">
               <span className="h-2 w-2 rounded-full bg-[var(--blood)] sm:h-2.5 sm:w-2.5" />
@@ -37,13 +67,8 @@ export default function Hero() {
         </div>
 
         {/* CRT body — tight on mobile, roomy on desktop */}
-        <div className="relative px-3 py-2 sm:px-5 sm:py-4 md:px-10 md:py-7 lg:px-12 lg:py-8">
+        <div className="relative z-10 px-3 py-2 sm:px-5 sm:py-4 md:px-10 md:py-7 lg:px-12 lg:py-8">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(198,255,58,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(255,43,214,0.10),transparent_55%)]" />
-
-          {/* ASCII leaf animation */}
-          <div className="relative mb-2 flex items-center justify-center py-2 sm:mb-4 sm:py-4 md:py-8">
-            <AsciiHero className="w-full max-w-xl" />
-          </div>
 
           <div className="relative">
             <div className="mb-3 inline-flex items-center gap-2 border border-[var(--acid)]/30 bg-black/50 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--acid)] sm:mb-4 sm:gap-3 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-[0.3em]">
@@ -65,13 +90,47 @@ export default function Hero() {
               <span className="cy-caret text-[var(--acid)]">▌</span>
             </div>
 
-            {/* MAIN HEADLINE — glitch */}
-            <h1 className="cy-chrome cy-flicker font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white">
+            {/* MAIN HEADLINE — Shuffle animation */}
+            <h1 className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white">
               <span className="block bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--magenta)] bg-clip-text text-transparent">
-                DR.
+                <Shuffle
+                  text="DR."
+                  shuffleDirection="right"
+                  duration={0.2}
+                  animationMode="evenodd"
+                  shuffleTimes={1}
+                  ease="back.out(1.1)"
+                  stagger={0.01}
+                  threshold={0.1}
+                  triggerOnce={true}
+                  triggerOnHover
+                  respectReducedMotion={true}
+                  loop
+                  loopDelay={0.4}
+                  tag="span"
+                  className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--magenta)] bg-clip-text text-transparent"
+                  style={{ textAlign: "left" }}
+                />
               </span>
               <span className="cy-glitch-line block" data-text="GREENTHUMB.">
-                GREENTHUMB.
+                <Shuffle
+                  text="GREENTHUMB."
+                  shuffleDirection="right"
+                  duration={0.2}
+                  animationMode="evenodd"
+                  shuffleTimes={1}
+                  ease="back.out(1.1)"
+                  stagger={0.01}
+                  threshold={0.1}
+                  triggerOnce={true}
+                  triggerOnHover
+                  respectReducedMotion={true}
+                  loop
+                  loopDelay={0.4}
+                  tag="span"
+                  className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight"
+                  style={{ textAlign: "left" }}
+                />
               </span>
             </h1>
 
@@ -82,7 +141,7 @@ export default function Hero() {
             </p>
 
             <p className="mt-3 max-w-2xl font-mono text-[11.5px] leading-relaxed text-white/55 sm:mt-4 sm:text-[13px] md:text-sm">
-              A four-step encrypted process — Reddit handshake, Whish Money rail,
+              A four-step encrypted process — Reddit or Telegram handshake, Whish Money rail,
               Bekaa pickup run, then a secluded hidden drop with photo proof and
               optional GPS pin. No phones. No faces. No paper trail.
             </p>

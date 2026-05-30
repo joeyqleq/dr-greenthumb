@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import DecryptedText from "@/components/react-bits/DecryptedText";
+import LetterGlitch from "@/components/react-bits/LetterGlitch";
+import Shuffle from "@/components/react-bits/Shuffle";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 import TerminalFrame from "@/components/cyber/terminal-frame";
 import { Flower2, MapPin } from "lucide-react";
@@ -24,16 +26,16 @@ const STEPS: Step[] = [
   {
     num: "01",
     label: "INGRESS // SOCIAL_LAYER",
-    title: "Customer pings on Reddit",
-    command: "open --channel=reddit.dm",
+    title: "Customer pings on Reddit or Telegram",
+    command: "open --channel=secure.dm",
     body: (
       <>
-        Customer messages first on Reddit. Everything is discussed there — what
+        Customer messages first on Reddit or Telegram. Everything is discussed there — what
         is needed, the arrangement, all comms. No phone numbers. No identity
         required. Stay remote from the very first packet.
       </>
     ),
-    tags: ["REDDIT_DMS", "FULLY_REMOTE", "NO_ID"],
+    tags: ["SECURE_DMS", "FULLY_REMOTE", "NO_ID"],
     icon: (
       <div className="relative h-9 w-9 sm:h-12 sm:w-12">
         <Image src="/images/reddit.png" alt="Reddit" fill className="object-contain" />
@@ -41,7 +43,7 @@ const STEPS: Step[] = [
     ),
     color: "var(--magenta)",
     glow: "rgba(255,43,214,0.4)",
-    termTitle: "reddit.dm",
+    termTitle: "secure.dm",
   },
   {
     num: "02",
@@ -177,71 +179,91 @@ function CardBody({ step, compact = false }: { step: Step; compact?: boolean }) 
       badge={`NODE-${step.num}`}
       accent={step.color}
     >
-      <div className={compact ? "px-3 py-4" : "px-4 py-5 sm:px-5 sm:py-6 md:px-7 md:py-7"}>
-        {/* command line */}
-        <div className={`mb-3 flex items-center gap-2 overflow-x-auto border-b border-white/5 pb-2 font-mono text-[10px] sm:mb-4 sm:pb-3 sm:text-[11px] md:text-xs ${compact ? "" : ""}`}>
-          <span style={{ color: step.color }}>$</span>
-          <DecryptedText
-            text={step.command}
-            animateOn="view"
-            speed={32}
-            maxIterations={10}
-            className="whitespace-nowrap text-white/70"
-            encryptedClassName="text-white/25"
+      <div className="relative overflow-hidden">
+        {/* LetterGlitch Background */}
+        <div className="absolute inset-0 z-0 opacity-20">
+          <LetterGlitch
+            glitchSpeed={50}
+            centerVignette={true}
+            outerVignette={false}
+            glitchColors={["var(--acid)", "var(--toxic)", "var(--magenta)"]}
           />
         </div>
 
-        <div className={`flex flex-col gap-3 sm:gap-4 ${compact ? "" : "md:flex-row md:items-start md:gap-5"}`}>
-          {/* icon block */}
-          <div className="flex flex-shrink-0 items-center gap-3">
-            <div
-              className={`relative grid place-items-center border bg-black/60 ${
-                compact ? "h-12 w-12" : "h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20"
-              }`}
-              style={{ borderColor: `${step.color}55` }}
-            >
-              <span className="absolute inset-1 border opacity-30" style={{ borderColor: step.color }} />
-              {step.icon}
-            </div>
+        <div className={`relative z-10 ${compact ? "px-3 py-4" : "px-4 py-5 sm:px-5 sm:py-6 md:px-7 md:py-7"}`}>
+          {/* command line */}
+          <div className={`mb-3 flex items-center gap-2 overflow-x-auto border-b border-white/5 pb-2 font-mono text-[10px] sm:mb-4 sm:pb-3 sm:text-[11px] md:text-xs ${compact ? "" : ""}`}>
+            <span style={{ color: step.color }}>$</span>
+            <DecryptedText
+              text={step.command}
+              animateOn="view"
+              speed={32}
+              maxIterations={10}
+              className="whitespace-nowrap text-white/70"
+              encryptedClassName="text-white/25"
+            />
           </div>
 
-          <div className="min-w-0 flex-1">
-            <HudLabel>
-              <span className="break-words" style={{ color: step.color }}>{step.label}</span>
-            </HudLabel>
-            <h3
-              className={`mt-1 font-display font-semibold leading-tight text-white break-words ${
-                compact ? "text-lg" : "text-xl sm:text-2xl md:text-3xl"
-              }`}
-            >
-              {step.title}
-            </h3>
-            <p
-              className={`mt-2 font-mono leading-relaxed text-white/65 ${
-                compact ? "text-[12px]" : "text-[12px] sm:mt-3 sm:text-[13px] md:text-sm"
-              }`}
-            >
-              {step.body}
-            </p>
-
-            <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
-              {step.tags.map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex max-w-full items-center gap-1.5 break-all border px-1.5 py-0.5 font-mono text-[9px] tracking-[0.12em] sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]"
-                  style={{ borderColor: `${step.color}55`, color: step.color, background: `${step.color}10` }}
-                >
-                  <span className="h-1 w-1 flex-shrink-0" style={{ background: step.color }} />
-                  {t}
-                </span>
-              ))}
+          <div className={`flex flex-col gap-3 sm:gap-4 ${compact ? "" : "md:flex-row md:items-start md:gap-5"}`}>
+            {/* icon block */}
+            <div className="flex flex-shrink-0 items-center gap-3">
+              <div
+                className={`relative grid place-items-center border bg-black/60 ${
+                  compact ? "h-12 w-12" : "h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20"
+                }`}
+                style={{ borderColor: `${step.color}55` }}
+              >
+                <span className="absolute inset-1 border opacity-30" style={{ borderColor: step.color }} />
+                {step.icon}
+              </div>
             </div>
 
-            {/* telemetry — wraps cleanly */}
-            <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[9px] text-white/40 sm:mt-4 sm:gap-x-6 sm:text-[10px]">
-              <span><span className="text-white/30">PKT:</span> 0x{(parseInt(step.num) * 1337).toString(16).toUpperCase()}</span>
-              <span><span className="text-white/30">HASH:</span> {step.num}a4f{step.num}c2</span>
-              <span className="flex items-center gap-1.5"><StatusDot color={step.color} /> READY</span>
+            <div className="min-w-0 flex-1">
+              <HudLabel>
+                <span className="break-words" style={{ color: step.color }}>{step.label}</span>
+              </HudLabel>
+              <h3
+                className={`mt-1 font-display font-semibold leading-tight text-white break-words ${
+                  compact ? "text-lg" : "text-xl sm:text-2xl md:text-3xl"
+                }`}
+              >
+                <DecryptedText
+                  text={step.title}
+                  animateOn="inViewHover"
+                  speed={40}
+                  maxIterations={12}
+                  className="text-white"
+                  encryptedClassName="text-white/30"
+                  useOriginalCharsOnly={true}
+                />
+              </h3>
+              <p
+                className={`mt-2 font-mono leading-relaxed text-white/65 ${
+                  compact ? "text-[12px]" : "text-[12px] sm:mt-3 sm:text-[13px] md:text-sm"
+                }`}
+              >
+                {step.body}
+              </p>
+
+              <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
+                {step.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="inline-flex max-w-full items-center gap-1.5 break-all border px-1.5 py-0.5 font-mono text-[9px] tracking-[0.12em] sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]"
+                    style={{ borderColor: `${step.color}55`, color: step.color, background: `${step.color}10` }}
+                  >
+                    <span className="h-1 w-1 flex-shrink-0" style={{ background: step.color }} />
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* telemetry — wraps cleanly */}
+              <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[9px] text-white/40 sm:mt-4 sm:gap-x-6 sm:text-[10px]">
+                <span><span className="text-white/30">PKT:</span> 0x{(parseInt(step.num) * 1337).toString(16).toUpperCase()}</span>
+                <span><span className="text-white/30">HASH:</span> {step.num}a4f{step.num}c2</span>
+                <span className="flex items-center gap-1.5"><StatusDot color={step.color} /> READY</span>
+              </div>
             </div>
           </div>
         </div>
@@ -259,7 +281,43 @@ export default function StepsFlow() {
             <StatusDot color="var(--acid)" /> <span className="ml-2">SEQUENCE.MAP</span>
           </HudLabel>
           <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">
-            Four nodes. <span className="text-[var(--acid)]">One handshake.</span>
+            <Shuffle
+              text="Four nodes."
+              shuffleDirection="right"
+              duration={0.2}
+              animationMode="evenodd"
+              shuffleTimes={1}
+              ease="back.out(1.1)"
+              stagger={0.01}
+              threshold={0.1}
+              triggerOnce={true}
+              triggerOnHover
+              respectReducedMotion={true}
+              loop
+              loopDelay={0.4}
+              tag="span"
+              className="inline-block"
+              style={{ textAlign: "left" }}
+            />
+            {" "}
+            <Shuffle
+              text="One handshake."
+              shuffleDirection="right"
+              duration={0.2}
+              animationMode="evenodd"
+              shuffleTimes={1}
+              ease="back.out(1.1)"
+              stagger={0.01}
+              threshold={0.1}
+              triggerOnce={true}
+              triggerOnHover
+              respectReducedMotion={true}
+              loop
+              loopDelay={0.4}
+              tag="span"
+              className="inline-block text-[var(--acid)]"
+              style={{ textAlign: "left" }}
+            />
           </h2>
         </div>
         <div className="font-mono text-[10px] text-white/40">
