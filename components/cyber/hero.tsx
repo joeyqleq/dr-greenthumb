@@ -2,6 +2,7 @@
 
 import DecryptedText from "@/components/react-bits/DecryptedText";
 import ShinyText from "@/components/react-bits/ShinyText";
+import AsciiHero from "@/components/cyber/ascii-hero";
 import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 
 const KPIS = [
@@ -35,9 +36,14 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* CRT body — sized to fit one viewport when combined with nav+ticker */}
-        <div className="relative px-3 py-4 sm:px-5 sm:py-5 md:px-10 md:py-7 lg:px-12 lg:py-8">
+        {/* CRT body — tight on mobile, roomy on desktop */}
+        <div className="relative px-3 py-2 sm:px-5 sm:py-4 md:px-10 md:py-7 lg:px-12 lg:py-8">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(198,255,58,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(255,43,214,0.10),transparent_55%)]" />
+
+          {/* ASCII leaf animation */}
+          <div className="relative mb-2 flex items-center justify-center py-2 sm:mb-4 sm:py-4 md:py-8">
+            <AsciiHero className="w-full max-w-xl" />
+          </div>
 
           <div className="relative">
             <div className="mb-3 inline-flex items-center gap-2 border border-[var(--acid)]/30 bg-black/50 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--acid)] sm:mb-4 sm:gap-3 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-[0.3em]">

@@ -46,9 +46,11 @@ export default function Page() {
 
       <Ticker />
 
-      {/* HERO — fits one viewport with even margins */}
-      <section className="relative z-10 mx-auto flex w-full max-w-6xl items-center px-4 py-4 md:px-6 md:py-6"
-        style={{ minHeight: "calc(100svh - 110px)" }}>
+      {/* HERO — fills one viewport flush on every mobile browser */}
+      <section
+        className="relative z-10 mx-auto flex w-full max-w-6xl flex-col justify-center px-3 py-2 sm:px-4 sm:py-4 md:px-6 md:py-6"
+        style={{ minHeight: "calc(100dvh - var(--hero-offset, 110px))" }}
+      >
         <div className="w-full">
           <Hero />
         </div>

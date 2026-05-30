@@ -169,11 +169,30 @@
   --blood: #ff3355;
   --ink: #070809;
   --ink-2: #0d1014;
+  /* hero offset = nav (~56px) + ticker (~36px) + border (2px) */
+  --hero-offset: 94px;
 }
 
 html, body {
   background: var(--ink);
   color: #e8ffe0;
+  /* kill default margins/padding that cause gaps on mobile browsers */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Mobile viewport height normalization — 
+   iOS Safari, Firefox iOS, Chrome iOS all report different viewport heights.
+   dvh (dynamic viewport height) adjusts for disappearing/appearing toolbars.
+   We also use -webkit-fill-available as a fallback for older iOS Safari. */
+@supports (-webkit-touch-callout: none) {
+  html {
+    height: -webkit-fill-available;
+  }
+  body {
+    min-height: -webkit-fill-available;
+  }
 }
 
 /* scanlines disabled */

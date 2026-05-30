@@ -5,12 +5,13 @@ import TerminalFrame from "@/components/cyber/terminal-frame";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 
 const PRICES: BentoCardProps[] = [
-  { color: "#0d1014", label: "// SKU_01", title: "Hash / Bezre", description: "Pressed · imported", weight: "30 g", price: "$50" },
-  { color: "#0d1014", label: "// SKU_02", title: "Bubble Hash", description: "Cannabis extract · solventless", weight: "30 g", price: "$60" },
-  { color: "#0d1014", label: "// SKU_03", title: "Weed / Marie", description: "Hand-trimmed reserve", weight: "20 g", price: "$100" },
-  { color: "#0d1014", label: "// SKU_04", title: "Coke (90% Pure)", description: "Concentrate · solventless", weight: "1 g", price: "$120" },
-  { color: "#0d1014", label: "// SKU_05", title: "Freebase Cocaine (Bazz)", description: "Concentrate · live", weight: "1 g", price: "$120" },
-  { color: "#0d1014", label: "// SKU_06", title: "Other products available on demand", description: "Limited drop", weight: "—", price: "" },
+  { color: "#0d1014", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "30 g", price: "$50" },
+  { color: "#0d1014", label: "// SKU_02", title: "Bubble Hash", description: "Weed Resin Extract — Bekaa Valley", weight: "30 g", price: "$60" },
+  { color: "#0d1014", label: "// SKU_03", title: "Weed / Marie", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "20 g", price: "$100" },
+  { color: "#0d1014", label: "// SKU_04", title: "Coke (90% Pure)", description: "90% Pure Bolivian Cocaine Hydrochloride", weight: "0.5 g", price: "$100" },
+  { color: "#0d1014", label: "// SKU_05", title: "Freebase Cocaine (Bazz)", description: "90% Pure Bolivian Freebase Cocaine Hydrochloride", weight: "0.5 g", price: "$100" },
+  { color: "#0d1014", label: "// SKU_06", title: "Crystal Meth", description: "Imported", weight: "1 g", price: "$60" },
+  { color: "#0d1014", label: "// SKU_07", title: "Other products available on demand", description: "Limited drop", weight: "—", price: "" },
 ];
 
 export default function PriceBento() {
@@ -35,7 +36,7 @@ export default function PriceBento() {
 
           <div className="flex flex-col gap-2 font-mono text-[11px] text-white/55">
             <span className="flex items-center gap-2">
-              <StatusDot color="var(--acid)" /> 6 SKU live · more on request
+              <StatusDot color="var(--acid)" /> 7 SKU live · more on request
             </span>
             <span className="flex items-center gap-2">
               <StatusDot color="var(--amber)" /> Bigger orders → freebies, never discounts
