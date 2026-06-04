@@ -87,10 +87,10 @@ export default function Hero() {
               </div>
 
               {/* MAIN HEADLINE — Shuffle animation */}
-              <h1 className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white">
+              <div className="font-display text-[clamp(1.75rem,5vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white whitespace-nowrap">
                 <span className="cy-glitch-line block" data-text="DR. GREENTHUMB.">
                   <motion.h1
-                    className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight"
+                    className="font-display text-[clamp(1.75rem,5vw,4.5rem)] font-bold leading-[0.95] tracking-tight"
                   >
                     <Shuffle
                       text="DR. GREENTHUMB."
@@ -105,7 +105,7 @@ export default function Hero() {
                     />
                   </motion.h1>
                 </span>
-              </h1>
+              </div>
 
               {/* DEMOTED subhead */}
               <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-white/55 sm:mt-4 sm:text-[12px] md:text-[13px]">

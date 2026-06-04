@@ -21,9 +21,8 @@ export default function Page() {
       <header className="relative z-10 border-b border-[var(--acid)]/15 bg-black/50 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
           <div className="flex items-center gap-3">
-            <div className="relative grid h-9 w-9 place-items-center border border-[var(--acid)] bg-[var(--acid)]/10 overflow-hidden">
+            <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden">
               <img src="/images/gt_logo.png" alt="Dr. Greenthumb Logo" className="h-full w-full object-cover" />
-              <span className="absolute -inset-1 border border-[var(--acid)]/30" />
             </div>
             <div className="leading-tight">
               <div className="font-display text-base font-bold tracking-tight text-white">
