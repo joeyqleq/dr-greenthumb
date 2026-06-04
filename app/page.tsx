@@ -1,5 +1,7 @@
-import Ticker from "@/components/cyber/ticker";
+import HexMarquee from "@/components/cyber/hex-marquee";
 import Hero from "@/components/cyber/hero";
+import Philosophy from "@/components/cyber/philosophy";
+import Ticker from "@/components/cyber/ticker";
 import StepsFlow from "@/components/cyber/steps-flow";
 import BottomPanels from "@/components/cyber/bottom-panels";
 import PriceBento from "@/components/cyber/price-bento";
@@ -19,8 +21,8 @@ export default function Page() {
       <header className="relative z-10 border-b border-[var(--acid)]/15 bg-black/50 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
           <div className="flex items-center gap-3">
-            <div className="relative grid h-9 w-9 place-items-center border border-[var(--acid)] bg-[var(--acid)]/10">
-              <Leaf className="h-5 w-5 text-[var(--acid)]" strokeWidth={2} />
+            <div className="relative grid h-9 w-9 place-items-center border border-[var(--acid)] bg-[var(--acid)]/10 overflow-hidden">
+              <img src="/images/gt_logo.png" alt="Dr. Greenthumb Logo" className="h-full w-full object-cover" />
               <span className="absolute -inset-1 border border-[var(--acid)]/30" />
             </div>
             <div className="leading-tight">
@@ -44,7 +46,7 @@ export default function Page() {
         </div>
       </header>
 
-      <Ticker />
+      <HexMarquee />
 
       {/* HERO — fills one viewport flush on every mobile browser */}
       <section
@@ -53,6 +55,8 @@ export default function Page() {
       >
         <div className="w-full">
           <Hero />
+          <Philosophy />
+          <Ticker />
         </div>
       </section>
 

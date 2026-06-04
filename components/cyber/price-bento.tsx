@@ -1,24 +1,50 @@
 "use client";
 
-import MagicBento, { type BentoCardProps } from "@/components/react-bits/MagicBento";
+import DitherCard from "@/components/ui/dither-card";
 import TerminalFrame from "@/components/cyber/terminal-frame";
 import Shuffle from "@/components/react-bits/Shuffle";
 import { Send } from "lucide-react";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
+import { useState } from "react";
 
-const PRICES: BentoCardProps[] = [
-  { color: "#0d1014", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "30 g", price: "$50" },
-  { color: "#0d1014", label: "// SKU_02", title: "Bubble Hash", description: "Weed Resin Extract — Bekaa Valley", weight: "30 g", price: "$60" },
-  { color: "#0d1014", label: "// SKU_03", title: "Weed / Marie", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "20 g", price: "$100" },
-  { color: "#0d1014", label: "// SKU_04", title: "Coke (90% Pure)", description: "90% Pure Bolivian Cocaine Hydrochloride", weight: "0.5 g", price: "$100" },
-  { color: "#0d1014", label: "// SKU_05", title: "Freebase Cocaine (Bazz)", description: "90% Pure Bolivian Freebase Cocaine Hydrochloride", weight: "0.5 g", price: "$100" },
-  { color: "#0d1014", label: "// SKU_06", title: "Crystal Meth", description: "Imported", weight: "1 g", price: "$60" },
-  { color: "#0d1014", label: "// SKU_07", title: "Other products available on demand", description: "Limited drop", weight: "—", price: "" },
+const PRICES = [
+  { color: "var(--toxic)", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "30 g", price: "$50", image: "/images/hash.jpeg" },
+  { color: "var(--acid)", label: "// SKU_02", title: "Bubble Hash", description: "Weed Resin Extract — Bekaa Valley", weight: "30 g", price: "$60", image: "/images/bubble_hash.png" },
+  { color: "var(--magenta)", label: "// SKU_03", title: "Weed / Marie", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "20 g", price: "$100", image: "/images/weed_buds.jpg" },
+  { color: "#00E8ED", label: "// SKU_04", title: "Coke (90% Pure)", description: "90% Pure Bolivian Cocaine Hydrochloride", weight: "0.5 g", price: "$100", image: "/images/cocaine.jpg" },
+  { color: "#FFD800", label: "// SKU_05", title: "Freebase Cocaine (Bazz)", description: "90% Pure Bolivian Freebase Cocaine Hydrochloride", weight: "0.5 g", price: "$100", image: "/images/freebase.jpg" },
+  { color: "var(--amber)", label: "// SKU_06", title: "Crystal Meth", description: "Imported", weight: "1 g", price: "$60", image: "/images/crystal.jpg" },
+  { color: "#FF4500", label: "// SKU_07", title: "Buprenorphine", description: "Sublingual tablets", weight: "8 mg", price: "$25", image: "/images/bup.png" },
+  { color: "#8A2BE2", label: "// SKU_08", title: "Ketamine", description: "Liquid Vial", weight: "1 vial", price: "TBD", image: "/images/ketamine.jpg" },
+  { color: "#888888", label: "// SKU_09", title: "Available on demand", description: "Limited drop", weight: "—", price: "TBD", isCustomExplainer: true },
 ];
 
 export default function PriceBento() {
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
+
   return (
     <section id="catalog" className="relative border-t border-white/5 bg-[var(--ink)]/40 py-24 backdrop-blur-sm">
+      {expandedImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setExpandedImage(null)}
+        >
+          <div className="relative max-h-full max-w-full">
+            <img 
+              src={expandedImage} 
+              alt="Expanded" 
+              className="max-h-[85vh] max-w-[90vw] rounded-xl object-contain shadow-2xl border border-white/10" 
+            />
+            <button 
+              className="absolute -top-4 -right-4 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--acid)] text-black font-bold hover:scale-110 transition-transform"
+              onClick={() => setExpandedImage(null)}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="pointer-events-none absolute inset-0 cy-grid opacity-30" />
       <div className="relative mx-auto max-w-7xl px-6">
         {/* heading */}
@@ -82,24 +108,14 @@ export default function PriceBento() {
         </div>
 
         {/* the bento itself */}
-        <div className="cy-bento-wrap relative cy-bracket p-2">
-          <MagicBento
-            items={PRICES}
-            textAutoHide={false}
-            enableStars
-            enableSpotlight
-            enableBorderGlow
-            enableTilt
-            clickEffect
-            enableMagnetism
-            spotlightRadius={340}
-            particleCount={10}
-            glowColor="198, 255, 58"
-          />
+        <div className="relative mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {PRICES.map((item, i) => (
+            <DitherCard key={i} {...item} onImageClick={() => item.image && setExpandedImage(item.image)} />
+          ))}
         </div>
 
         {/* footer / contact */}
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <TerminalFrame title="~/freebie.policy" accent="var(--acid)">
             <div className="p-4 sm:p-5">
               <HudLabel>// FREEBIE.POLICY</HudLabel>
@@ -118,62 +134,25 @@ export default function PriceBento() {
             </div>
           </TerminalFrame>
 
-          <a
-            href="https://www.reddit.com/user/joeyleq"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block transition hover:translate-y-[-2px]"
-          >
-            <TerminalFrame title="~/contact.reddit" accent="var(--magenta)" badge="OPEN">
-              <div className="p-4 sm:p-5">
-                <HudLabel>// REDDIT</HudLabel>
-                <div className="mt-3 flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-sm bg-[#FF4500]/15 ring-1 ring-[#FF4500]/40">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/images/reddit.png" alt="Reddit" className="h-6 w-6" />
-                  </span>
-                  <div>
-                    <div className="font-mono text-[11px] text-white/45">REDDIT.PRIVATE_MSG</div>
-                    <div className="font-display text-base font-semibold text-white group-hover:text-[var(--magenta)] sm:text-lg">
-                      u/joeyleq
-                    </div>
+          <TerminalFrame title="~/contact.exec" accent="var(--magenta)" badge="OPEN">
+            <div className="p-4 sm:p-5">
+              <HudLabel>// PRIVATE CHAT</HudLabel>
+              <div className="mt-3 flex items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-sm bg-[var(--magenta)]/15 ring-1 ring-[var(--magenta)]/40">
+                  <span className="text-[var(--magenta)] text-xl font-bold">#</span>
+                </span>
+                <div>
+                  <div className="font-mono text-[11px] text-white/45">SECURE_SERVER</div>
+                  <div className="font-display text-base font-semibold text-white sm:text-lg">
+                    Invite Only
                   </div>
-                  <span className="ml-auto font-mono text-[var(--acid)] transition group-hover:translate-x-1">→</span>
                 </div>
-                <p className="mt-3 font-mono text-[11px] leading-relaxed text-white/50">
-                  Other SKUs and prices on demand. Encrypted DM only.
-                </p>
               </div>
-            </TerminalFrame>
-          </a>
-
-          <a
-            href="https://t.me/drgreenthumb"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block transition hover:translate-y-[-2px]"
-          >
-            <TerminalFrame title="~/contact.tele" accent="#0088cc" badge="OPEN">
-              <div className="p-4 sm:p-5">
-                <HudLabel>// TELEGRAM</HudLabel>
-                <div className="mt-3 flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-sm bg-[#0088cc]/15 ring-1 ring-[#0088cc]/40">
-                    <Send className="h-5 w-5 text-[#0088cc]" />
-                  </span>
-                  <div>
-                    <div className="font-mono text-[11px] text-white/45">SECURE_MSG</div>
-                    <div className="font-display text-base font-semibold text-white group-hover:text-[#0088cc] sm:text-lg">
-                      @drgreenthumb
-                    </div>
-                  </div>
-                  <span className="ml-auto font-mono text-[var(--acid)] transition group-hover:translate-x-1">→</span>
-                </div>
-                <p className="mt-3 font-mono text-[11px] leading-relaxed text-white/50">
-                  Fastest response. Ensure your phone number is hidden.
-                </p>
-              </div>
-            </TerminalFrame>
-          </a>
+              <p className="mt-3 font-mono text-[11px] leading-relaxed text-white/50">
+                Once payment is sent, you receive an invite link to my self-hosted private chat server. Join anonymously and we can chat there.
+              </p>
+            </div>
+          </TerminalFrame>
         </div>
       </div>
     </section>

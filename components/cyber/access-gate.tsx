@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Terminal } from "@/components/ui/terminal";
 import { cn } from "@/lib/utils";
+import VirtualKeyboard from "@/components/ui/virtual-keyboard";
 
 // XOR-obfuscated salt; the literal password "31337" never appears in source.
 const SALT_BYTES = [
@@ -121,23 +122,36 @@ async function sha256Hex(s: string) {
 }
 
 const BOOT_COMMANDS = [
-  "ssh root@vault.dgt",
-  "verify --cipher aes256",
+  "boot --rom dgt-vault --cold",
+  "calibrate crt --phosphor green",
+  "mount /dev/tty0 /vault",
+  "link --peripheral kbd-60 --clicks on",
   "auth --token",
 ];
 const BOOT_OUTPUTS: Record<number, string[]> = {
   0: [
-    "[*] resolving vault.dgt ...",
-    "[*] channel ok",
+    "MEMORY TEST 0000-7FFF .......... OK",
+    "DRUM CLOCK 60HZ ................ LOCKED",
+    "VACUUM TRACE ................... WARM",
   ],
   1: [
-    "[*] cipher: AES-256-GCM",
-    "[*] fp: 4f:9b:2e:1a:7c:88",
-    "[ok] handshake complete",
+    "RASTER BLOOM ................... 92%",
+    "SCANLINE PHASE ................. ++--++--",
+    "GHOST IMAGE PURGE .............. COMPLETE",
   ],
   2: [
-    "[!] authorized clients only",
-    "[?] awaiting token ...",
+    "CARRIER DETECTED ON LINE 04",
+    "VAULT RELAY: BEKAA/NODE-7",
+    "PAPER TAPE HASH: 4F:9B:2E:1A:7C:88",
+  ],
+  3: [
+    "PERIPHERAL HANDSHAKE: KBD-60",
+    "SWITCH NOISE GATE: ARMED",
+    "KEYBED NOW MIRRORS TERMINAL INPUT",
+  ],
+  4: [
+    "[!] AUTHORIZED CLIENTS ONLY",
+    "[?] AWAITING TOKEN ...",
   ],
 };
 
@@ -148,6 +162,8 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
   const [error, setError] = useState<string | null>(null);
   const [targetHash, setTargetHash] = useState<string>("");
   const [showInput, setShowInput] = useState(false);
+  const [showKeyboard, setShowKeyboard] = useState(false);
+  const [showCable, setShowCable] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -173,9 +189,14 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
         console.error("Failed to initialize target hash:", err);
       });
 
-    // reveal prompt after the boot animation has had time to play
-    const t = setTimeout(() => setShowInput(true), 4500);
-    return () => clearTimeout(t);
+    const keyboardTimer = setTimeout(() => setShowKeyboard(true), 2100);
+    const cableTimer = setTimeout(() => setShowCable(true), 3000);
+    const promptTimer = setTimeout(() => setShowInput(true), 7600);
+    return () => {
+      clearTimeout(keyboardTimer);
+      clearTimeout(cableTimer);
+      clearTimeout(promptTimer);
+    };
   }, []);
 
   useEffect(() => {
@@ -184,6 +205,7 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (checking || !targetHash) return;
     if (!inputRef.current) return;
     setChecking(true);
     setError(null);
@@ -205,6 +227,27 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
     }
   }
 
+  const handleVirtualKeyPress = (key: string) => {
+    if (inputRef.current) {
+      inputRef.current.value += key;
+      inputRef.current.focus();
+    }
+  };
+
+  const handleVirtualBackspace = () => {
+    if (inputRef.current) {
+      inputRef.current.value = inputRef.current.value.slice(0, -1);
+      inputRef.current.focus();
+    }
+  };
+
+  const handleVirtualSubmit = () => {
+    if (inputRef.current) {
+      const event = { preventDefault: () => {} } as React.FormEvent;
+      handleSubmit(event);
+    }
+  };
+
   // Avoid hydration flash: render nothing until mounted, then either gate or content.
   if (!mounted) {
     return (
@@ -219,66 +262,108 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
   if (unlocked) return <>{children}</>;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center overflow-x-hidden overflow-y-auto bg-[var(--ink)] px-3 py-6 sm:px-4 sm:py-8">
-      <div className="cy-noise pointer-events-none absolute inset-0 opacity-25" />
-      <div className="relative mx-auto w-full max-w-[min(640px,100%)] break-words">
-        <Terminal
-          commands={BOOT_COMMANDS}
-          outputs={BOOT_OUTPUTS}
-          username="root"
-          title="vault.dgt"
-          typingSpeed={28}
-          delayBetweenCommands={500}
-          initialDelay={300}
-          height="h-56 xs:h-64 sm:h-72"
-          className="text-[10px] sm:text-xs"
-        />
+    <div className="gate-wall fixed inset-0 z-[200] flex items-start justify-center overflow-x-hidden overflow-y-auto bg-[var(--ink)] px-3 py-4 sm:px-4 sm:py-7">
+      <div className="gate-crt-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="cy-noise pointer-events-none absolute inset-0 opacity-20" />
+      <div className="gate-console-shell relative mx-auto w-full max-w-[760px] break-words">
+        <div className="gate-console-rig">
+          <div className="gate-crt-assembly">
+            <div className="gate-monitor-anchor">
+              <Terminal
+                commands={BOOT_COMMANDS}
+                outputs={BOOT_OUTPUTS}
+                username="root"
+                title="vault.dgt"
+                typingSpeed={18}
+                delayBetweenCommands={360}
+                initialDelay={1450}
+                height="h-56 xs:h-64 sm:h-72"
+                className="text-[10px] sm:text-xs"
+              />
+            </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className={cn(
-            "mt-3 w-full overflow-hidden border border-emerald-500/30 bg-[#070809] px-3 py-3 font-mono text-[11px] transition-opacity sm:px-4 sm:text-[13px]",
-            showInput ? "opacity-100" : "opacity-0 pointer-events-none"
-          )}
-          aria-hidden={!showInput}
-        >
-          {/* Prompt line — always wraps cleanly */}
-          <div className="flex flex-wrap items-baseline gap-x-1 leading-relaxed">
-            <span className="text-emerald-400">root</span>
-            <span className="text-emerald-600">@</span>
-            <span className="text-sky-400">vault</span>
-            <span className="text-neutral-500">:~$</span>
-            <span className="text-neutral-300">token:</span>
-          </div>
-          {/* Input + button row stacks under prompt on mobile */}
-          <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
-            <input
-              ref={inputRef}
-              type="password"
-              disabled={checking || !targetHash}
-              autoComplete="off"
-              spellCheck={false}
-              inputMode="numeric"
-              className="w-full min-w-0 border border-emerald-500/20 bg-black/40 px-2 py-1.5 font-mono text-[12px] text-emerald-300 caret-emerald-400 outline-none placeholder:text-neutral-700 focus:border-emerald-400/60 sm:flex-1 sm:text-[13px]"
-              placeholder="••••••"
-              aria-label="Access token"
-            />
-            <button
-              type="submit"
-              disabled={checking || !targetHash}
-              className="w-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-emerald-300 transition hover:bg-emerald-500/20 disabled:opacity-40 sm:w-auto"
+            <form
+              onSubmit={handleSubmit}
+              className={cn(
+                "retro-token-panel w-full overflow-hidden px-3 py-3 font-mono text-[11px] transition-all duration-700 sm:px-4 sm:text-[13px]",
+                showInput ? "is-ready" : "is-standby",
+              )}
             >
-              {checking ? "verifying" : "submit"}
-            </button>
+              <div className="retro-token-badge" aria-hidden="true">
+                AUTH CASSETTE
+              </div>
+              <div className="retro-token-prompt flex flex-wrap items-baseline gap-x-1 leading-relaxed">
+                <span className="text-emerald-400">root</span>
+                <span className="text-emerald-600">@</span>
+                <span className="text-sky-400">vault</span>
+                <span className="text-neutral-500">:~$</span>
+                <span className="text-neutral-300">token:</span>
+              </div>
+              <div className="retro-token-row mt-2 flex flex-col gap-2 sm:flex-row sm:items-stretch">
+                <input
+                  ref={inputRef}
+                  type="password"
+                  disabled={checking || !targetHash || !showInput}
+                  autoComplete="off"
+                  spellCheck={false}
+                  inputMode="numeric"
+                  className="retro-token-input w-full min-w-0 px-2 py-1.5 font-mono text-[12px] text-emerald-300 caret-emerald-300 outline-none placeholder:text-neutral-700 sm:flex-1 sm:text-[13px]"
+                  placeholder="••••••"
+                  aria-label="Access token"
+                />
+                <button
+                  type="submit"
+                  disabled={checking || !targetHash || !showInput}
+                  className="retro-token-submit w-full px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-emerald-300 transition disabled:opacity-40 sm:w-auto"
+                >
+                  {checking ? "verifying" : "submit"}
+                </button>
+              </div>
+              {error && (
+                <div className="mt-2 break-words text-red-400">{error}</div>
+              )}
+            </form>
           </div>
-          {error && (
-            <div className="mt-2 break-words text-red-400">{error}</div>
-          )}
-        </form>
 
-        <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.25em] text-white/35 sm:text-[10px] sm:tracking-[0.3em]">
-          {"// "}restricted · authorized only
-        </p>
+          <div
+            className={cn("retro-coil-cable", showCable && "is-connected")}
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 760 92" preserveAspectRatio="none">
+              <path
+                className="retro-cable-shadow"
+                d="M380 92 C380 80 330 76 330 64 S430 52 430 40 330 28 330 16 380 12 380 0"
+              />
+              <path
+                className="retro-cable-core"
+                d="M380 92 C380 80 330 76 330 64 S430 52 430 40 330 28 330 16 380 12 380 0"
+              />
+              <path
+                className="retro-cable-highlight"
+                d="M380 92 C380 80 330 76 330 64 S430 52 430 40 330 28 330 16 380 12 380 0"
+              />
+            </svg>
+          </div>
+
+          <div
+            className={cn(
+              "retro-keyboard-stage transition-all duration-1000",
+              showKeyboard
+                ? "is-online translate-y-0 opacity-100"
+                : "translate-y-4 opacity-0 pointer-events-none",
+            )}
+          >
+            <VirtualKeyboard
+              onKeyPress={handleVirtualKeyPress}
+              onBackspace={handleVirtualBackspace}
+              onSubmit={handleVirtualSubmit}
+            />
+          </div>
+
+          <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.25em] text-white/35 sm:text-[10px] sm:tracking-[0.3em]">
+            {"// "}restricted · authorized only
+          </p>
+        </div>
       </div>
     </div>
   );

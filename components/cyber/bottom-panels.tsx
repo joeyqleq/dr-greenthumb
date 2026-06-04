@@ -4,6 +4,7 @@ import TerminalFrame from "@/components/cyber/terminal-frame";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 import { Shield, Lock, Eye, Camera, Clock, AlertOctagon } from "lucide-react";
 import DecryptedText from "@/components/react-bits/DecryptedText";
+import LetterGlitch from "@/components/ui/letter-glitch";
 
 const FEATURES = [
   { icon: Eye, title: "Mutual anonymity", body: "No face-to-face, ever. Both parties stay completely distant throughout the whole process.", color: "var(--toxic)" },
@@ -13,7 +14,7 @@ const FEATURES = [
 ];
 
 const RULES = [
-  "01 :: Reddit/Telegram only — no phones, no other apps.",
+  "01 :: Reddit handshake, then Private chat server only — no phones.",
   "02 :: Whish settles before sourcing begins.",
   "03 :: Bekaa run = real hours. Plan accordingly.",
   "04 :: Photo proof on every drop.",
@@ -54,24 +55,32 @@ export default function BottomPanels() {
             {FEATURES.map((f) => (
               <div
                 key={f.title}
-                className="group relative border border-white/10 bg-black/40 p-3 transition hover:border-white/30 sm:p-4"
+                className="group relative border border-white/10 bg-black/40 p-3 transition hover:border-white/30 sm:p-4 overflow-hidden"
               >
+                <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
+                  <LetterGlitch
+                    colors={[f.color, "#333", "#000"]}
+                    speed={20}
+                    glitchSpeed={50}
+                    density={0.8}
+                  />
+                </div>
                 <span
-                  className="absolute -top-px -left-px h-2 w-2 border-t border-l"
+                  className="absolute -top-px -left-px h-2 w-2 border-t border-l z-10"
                   style={{ borderColor: f.color }}
                 />
                 <span
-                  className="absolute -bottom-px -right-px h-2 w-2 border-b border-r"
+                  className="absolute -bottom-px -right-px h-2 w-2 border-b border-r z-10"
                   style={{ borderColor: f.color }}
                 />
-                <div className="mb-2 flex items-center justify-between sm:mb-3">
+                <div className="mb-2 flex items-center justify-between sm:mb-3 relative z-10">
                   <f.icon className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: f.color }} strokeWidth={1.6} />
                   <StatusDot color={f.color} />
                 </div>
-                <h4 className="font-display text-sm font-semibold text-white sm:text-base">
+                <h4 className="font-display text-sm font-semibold text-white sm:text-base relative z-10">
                   {f.title}
                 </h4>
-                <p className="mt-1.5 font-mono text-[11px] leading-relaxed text-white/55 sm:text-[12px]">
+                <p className="mt-1.5 font-mono text-[11px] leading-relaxed text-white/55 sm:text-[12px] relative z-10">
                   {f.body}
                 </p>
               </div>

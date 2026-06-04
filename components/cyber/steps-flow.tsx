@@ -3,11 +3,12 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import DecryptedText from "@/components/react-bits/DecryptedText";
-import LetterGlitch from "@/components/react-bits/LetterGlitch";
+import LetterGlitch from "@/components/ui/letter-glitch";
 import Shuffle from "@/components/react-bits/Shuffle";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 import TerminalFrame from "@/components/cyber/terminal-frame";
-import { Flower2, MapPin } from "lucide-react";
+import CpuArchitecture from "@/components/ui/cpu-architecture";
+import { Flower2, MapPin, MessageSquare } from "lucide-react";
 
 type Step = {
   num: string;
@@ -25,17 +26,15 @@ type Step = {
 const STEPS: Step[] = [
   {
     num: "01",
-    label: "INGRESS // SOCIAL_LAYER",
-    title: "Customer pings on Reddit or Telegram",
-    command: "open --channel=secure.dm",
+    label: "HANDSHAKE // REDDIT",
+    title: "Encrypted Initial Contact",
+    command: "contact --platform=reddit --secure",
     body: (
       <>
-        Customer messages first on Reddit or Telegram. Everything is discussed there — what
-        is needed, the arrangement, all comms. No phone numbers. No identity
-        required. Stay remote from the very first packet.
+        We initiate contact on Reddit. You reach out, we discuss the details and agree on the order. <span className="text-[var(--magenta)]">No other apps, no phone numbers.</span> Just Reddit for the handshake.
       </>
     ),
-    tags: ["SECURE_DMS", "FULLY_REMOTE", "NO_ID"],
+    tags: ["REDDIT_ONLY", "SECURE_DM", "NO_PHONES"],
     icon: (
       <div className="relative h-9 w-9 sm:h-12 sm:w-12">
         <Image src="/images/reddit.png" alt="Reddit" fill className="object-contain" />
@@ -43,22 +42,20 @@ const STEPS: Step[] = [
     ),
     color: "var(--magenta)",
     glow: "rgba(255,43,214,0.4)",
-    termTitle: "secure.dm",
+    termTitle: "reddit.handshake",
   },
   {
     num: "02",
-    label: "FINANCIAL // RAIL",
-    title: "Settle via Whish Money",
+    label: "FINANCIAL // WHISH_RAIL",
+    title: "Verify & Settle",
     command: "tx --rail=whish.lb --confirm",
     body: (
       <>
-        Once agreed, the customer wires the full amount through{" "}
-        <span className="text-[var(--acid)]">Whish Money</span> — Lebanon&apos;s
-        mobile payment rail. Payment first, then the order is provisioned.{" "}
-        <span className="text-[var(--blood)]">No tx → no order.</span>
+        No discounts, but <span className="text-[var(--blood)]">volume means freebies</span>. 
+        You wire the money via a Whish Money number. <strong>Once the money is transferred</strong>, I send you an invite link to my self-hosted private chat server. You join anonymously to coordinate the rest.
       </>
     ),
-    tags: ["PAY_FIRST", "RECEIPT_VERIFIED", "NO_REFUNDS"],
+    tags: ["PAY_FIRST", "PRIVATE_CHAT", "ANONYMOUS"],
     icon: (
       <div className="relative h-9 w-9 overflow-hidden sm:h-12 sm:w-12">
         <Image src="/images/whish.webp" alt="Whish Money" fill className="object-cover" />
@@ -70,37 +67,33 @@ const STEPS: Step[] = [
   },
   {
     num: "03",
-    label: "LOGISTICS // BEKAA_RUN",
-    title: "Bekaa pickup run",
-    command: "exec --route=bekaa --grade=AAA",
+    label: "LOGISTICS // SOURCE_RUN",
+    title: "Bekaa Procurement",
+    command: "exec --route=bekaa --fetch=premium",
     body: (
       <>
-        After the rail confirms, sourcing begins. Product comes from the{" "}
-        <span className="text-[var(--acid)]">Bekaa region</span> — the finest
-        grade available. Round trip takes a few hours. Customer plans for the
-        wait.
+        I make my move. I drive up to the <span className="text-[var(--acid)]">Bekaa Valley</span>, collect the premium guaranteed-purity product straight from the source, and drive back down to Beirut.
       </>
     ),
-    tags: ["BEKAA_LB", "AAA_GRADE", "ETA_HOURS"],
+    tags: ["BEKAA_VALLEY", "PREMIUM_QUALITY", "SOURCE_DIRECT"],
     icon: <Flower2 className="h-8 w-8 text-[var(--acid)] sm:h-10 sm:w-10" strokeWidth={1.5} />,
     color: "var(--acid)",
     glow: "rgba(198,255,58,0.4)",
-    termTitle: "logistics.run",
+    termTitle: "procurement.run",
   },
   {
     num: "04",
-    label: "DELIVERY // STASH_DROP",
-    title: "Secluded hidden drop-off",
-    command: "drop --geo=secluded --photo=true",
+    label: "DELIVERY // DEAD_DROP",
+    title: "Coordinate & Sayonara",
+    command: "drop --geo=custom --photo=true",
     body: (
       <>
-        On return, a private easy-to-find spot nearby is selected. Product is
-        stashed. A photo is sent for visual confirmation. Google Maps pin is
-        dropped if needed. Customer collects after the area is{" "}
-        <span className="text-[var(--toxic)]">fully clear</span>.
+        I message you on the chat app. We agree on a meeting spot—I can even deliver right under your building. 
+        I find a sweet, secluded hiding spot, <span className="text-[var(--toxic)]">snap a photo</span>, and sayonara. 
+        You collect when the coast is clear.
       </>
     ),
-    tags: ["HIDDEN_STASH", "PHOTO_PROOF", "PIN_DROP"],
+    tags: ["CUSTOM_LOCATION", "PHOTO_PROOF", "SAYONARA"],
     icon: <MapPin className="h-8 w-8 text-[var(--toxic)] sm:h-10 sm:w-10" strokeWidth={1.5} />,
     color: "var(--toxic)",
     glow: "rgba(0,255,163,0.4)",
@@ -136,12 +129,12 @@ function StepCard({ step, isLast }: { step: Step; isLast: boolean }) {
         {!isLast && (
           <div
             aria-hidden="true"
-            className="my-3 h-10 w-[2px]"
+            className="my-3 w-1.5 rounded-full"
             style={{
-              backgroundImage: `linear-gradient(180deg, ${step.color} 0 6px, transparent 6px 14px)`,
-              backgroundSize: "2px 14px",
-              backgroundRepeat: "repeat-y",
-              animation: "cy-flow-v 1.4s linear infinite",
+              height: "40px",
+              backgroundColor: step.color,
+              boxShadow: `0 0 10px ${step.color}, 0 0 20px ${step.color}`,
+              opacity: 0.8,
             }}
           />
         )}
@@ -151,15 +144,23 @@ function StepCard({ step, isLast }: { step: Step; isLast: boolean }) {
       <div className="hidden md:grid md:grid-cols-[80px_1fr] md:gap-6">
         <div className="relative flex flex-col items-center">
           <NodeBadge num={step.num} color={step.color} glow={step.glow} />
+          <div
+            aria-hidden="true"
+            className="absolute left-[calc(50%+28px)] top-7 h-[2px] w-[30px]"
+            style={{
+              backgroundColor: step.color,
+              boxShadow: `0 0 10px ${step.color}`,
+              opacity: 0.8,
+            }}
+          />
           {!isLast && (
             <div
               aria-hidden="true"
-              className="absolute left-1/2 -translate-x-1/2 top-14 bottom-0 w-[2px]"
+              className="absolute left-1/2 -translate-x-1/2 top-14 bottom-0 w-1.5 rounded-full"
               style={{
-                backgroundImage: `linear-gradient(180deg, ${step.color} 0 10px, transparent 10px 22px)`,
-                backgroundSize: "2px 22px",
-                backgroundRepeat: "repeat-y",
-                animation: "cy-flow-v 1.4s linear infinite",
+                background: `linear-gradient(180deg, ${step.color}, transparent)`,
+                boxShadow: `0 0 15px ${step.color}`,
+                opacity: 0.9,
               }}
             />
           )}
@@ -186,7 +187,8 @@ function CardBody({ step, compact = false }: { step: Step; compact?: boolean }) 
             glitchSpeed={50}
             centerVignette={true}
             outerVignette={false}
-            glitchColors={["var(--acid)", "var(--toxic)", "var(--magenta)"]}
+            colors={["var(--acid)", "var(--toxic)", "var(--magenta)"]}
+            density={0.8}
           />
         </div>
 
@@ -329,6 +331,10 @@ export default function StepsFlow() {
         {STEPS.map((s, i) => (
           <StepCard key={s.num} step={s} isLast={i === STEPS.length - 1} />
         ))}
+      </div>
+      
+      <div className="mt-8 flex justify-center w-full px-4 border border-[var(--toxic)]/20 bg-black/40 rounded-xl overflow-hidden py-4 shadow-xl shadow-[var(--toxic)]/5">
+        <CpuArchitecture height="150px" width="100%" className="text-[var(--acid)]" />
       </div>
     </section>
   );

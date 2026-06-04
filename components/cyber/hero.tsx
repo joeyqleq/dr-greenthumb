@@ -1,20 +1,18 @@
 "use client";
-
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import ShinyText from "@/components/react-bits/ShinyText";
 import DecryptedText from "@/components/react-bits/DecryptedText";
 import Shuffle from "@/components/react-bits/Shuffle";
 import { HudCorners, HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 
-const FaultyTerminal = dynamic(
-  () => import("@/components/react-bits/FaultyTerminal"),
-  { ssr: false }
-);
-
+import GridPixelateWipe from "@/components/ui/grid-pixelate-wipe";
+import LetterGlitch from "@/components/ui/letter-glitch";
+import PacmanSvg from "@/components/ui/pacman-svg";
 const KPIS = [
   { k: "FACE_TIME", v: "00:00:00", color: "var(--toxic)" },
   { k: "DELIVERY", v: "STASH/HIDDEN", color: "var(--acid)" },
-  { k: "ROUTE", v: "RDT → WSH → BKA → DRP", color: "var(--magenta)" },
+  { k: "ROUTE", v: "RDT → WSH → BKA → DRP", color: "var(--sky)" },
   { k: "TRACE", v: "ZERO", color: "var(--amber)" },
 ];
 
@@ -24,26 +22,23 @@ export default function Hero() {
       <div className="relative overflow-hidden border border-[var(--acid)]/20 bg-[var(--ink-2)]/60 backdrop-blur-md">
         <HudCorners />
 
-        {/* FaultyTerminal Background */}
-        <div className="absolute inset-0 z-0 opacity-40">
-          <FaultyTerminal
-            scale={1.2}
-            gridMul={[2, 1]}
-            digitSize={1.2}
-            timeScale={2}
-            pause={false}
-            scanlineIntensity={0.5}
-            glitchAmount={1}
-            flickerAmount={1}
-            noiseAmp={1}
-            chromaticAberration={0}
-            dither={0}
-            curvature={0.1}
-            tint="#5ad94a"
-            mouseReact
-            mouseStrength={0.5}
-            pageLoadAnimation
-            brightness={0.4}
+        {/* Background Pixelate Wipe -> Letter Glitch */}
+        <div className="absolute inset-0 z-0 opacity-80">
+          <GridPixelateWipe
+            from={<div className="bg-[#050505] w-full h-full" />}
+            to={
+              <LetterGlitch
+                speed={25}
+                glitchSpeed={50}
+                colors={["#781bf3", "#2ac77e", "#870c0c"]}
+                showOuterVignette={true}
+                showCenterVignette={true}
+              />
+            }
+            cols={16}
+            rows={10}
+            transitionDuration={2.5}
+            pattern="wave"
           />
         </div>
 
@@ -70,127 +65,100 @@ export default function Hero() {
         <div className="relative z-10 px-3 py-2 sm:px-5 sm:py-4 md:px-10 md:py-7 lg:px-12 lg:py-8">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(198,255,58,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(255,43,214,0.10),transparent_55%)]" />
 
-          <div className="relative">
-            <div className="mb-3 inline-flex items-center gap-2 border border-[var(--acid)]/30 bg-black/50 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--acid)] sm:mb-4 sm:gap-3 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-[0.3em]">
-              <StatusDot />
-              <span>encrypted · anonymous · ritual</span>
-              <span className="hidden text-white/30 sm:inline">// v4.2</span>
-            </div>
+          <div className="relative grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-6 items-center">
+            <div>
+              <div className="mb-3 inline-flex items-center gap-2 border border-[var(--acid)]/30 bg-black/50 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--acid)] sm:mb-4 sm:gap-3 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-[0.3em]">
+                <StatusDot />
+                <span>encrypted · anonymous · ritual</span>
+                <span className="hidden text-white/30 sm:inline">// v4.2</span>
+              </div>
 
-            <div className="mb-2 flex items-center gap-2 font-mono text-[10px] text-white/40 sm:gap-3 sm:text-xs">
-              <span className="text-[var(--magenta)]">$</span>
-              <DecryptedText
-                text="./initiate --mode=stealth --src=reddit"
-                animateOn="view"
-                speed={28}
-                maxIterations={14}
-                className="text-[var(--toxic)]"
-                encryptedClassName="text-white/30"
-              />
-              <span className="cy-caret text-[var(--acid)]">▌</span>
-            </div>
-
-            {/* MAIN HEADLINE — Shuffle animation */}
-            <h1 className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white">
-              <span className="block bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--magenta)] bg-clip-text text-transparent">
-                <Shuffle
-                  text="DR."
-                  shuffleDirection="right"
-                  duration={0.2}
-                  animationMode="evenodd"
-                  shuffleTimes={1}
-                  ease="back.out(1.1)"
-                  stagger={0.01}
-                  threshold={0.1}
-                  triggerOnce={true}
-                  triggerOnHover
-                  respectReducedMotion={true}
-                  loop
-                  loopDelay={0.4}
-                  tag="span"
-                  className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--magenta)] bg-clip-text text-transparent"
-                  style={{ textAlign: "left" }}
+              <div className="mb-2 flex items-center gap-2 font-mono text-[10px] text-white/40 sm:gap-3 sm:text-xs">
+                <span className="text-[var(--sky)]">$</span>
+                <DecryptedText
+                  text="./initiate --mode=stealth --src=reddit"
+                  animateOn="view"
+                  speed={28}
+                  maxIterations={14}
+                  className="text-[var(--toxic)]"
+                  encryptedClassName="text-white/30"
                 />
-              </span>
-              <span className="cy-glitch-line block" data-text="GREENTHUMB.">
-                <Shuffle
-                  text="GREENTHUMB."
-                  shuffleDirection="right"
-                  duration={0.2}
-                  animationMode="evenodd"
-                  shuffleTimes={1}
-                  ease="back.out(1.1)"
-                  stagger={0.01}
-                  threshold={0.1}
-                  triggerOnce={true}
-                  triggerOnHover
-                  respectReducedMotion={true}
-                  loop
-                  loopDelay={0.4}
-                  tag="span"
-                  className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight"
-                  style={{ textAlign: "left" }}
-                />
-              </span>
-            </h1>
+                <span className="cy-caret text-[var(--acid)]">▌</span>
+              </div>
 
-            {/* DEMOTED subhead */}
-            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-white/55 sm:mt-4 sm:text-[12px] md:text-[13px]">
-              <span className="text-[var(--acid)]">{"// "}</span>
-              private drop protocol runs
-            </p>
-
-            <p className="mt-3 max-w-2xl font-mono text-[11.5px] leading-relaxed text-white/55 sm:mt-4 sm:text-[13px] md:text-sm">
-              A four-step encrypted process — Reddit or Telegram handshake, Whish Money rail,
-              Bekaa pickup run, then a secluded hidden drop with photo proof and
-              optional GPS pin. No phones. No faces. No paper trail.
-            </p>
-
-            <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-5 sm:gap-3 md:grid-cols-4">
-              {KPIS.map((k) => (
-                <div
-                  key={k.k}
-                  className="group relative border border-[var(--acid)]/15 bg-black/40 p-2 backdrop-blur-sm transition hover:border-[var(--acid)]/50 sm:p-2.5 md:p-3"
-                >
-                  <span className="absolute -top-px -left-px h-2 w-2 border-t border-l" style={{ borderColor: k.color }} />
-                  <span className="absolute -bottom-px -right-px h-2 w-2 border-b border-r" style={{ borderColor: k.color }} />
-                  <HudLabel>{k.k}</HudLabel>
-                  <div
-                    className="mt-1.5 font-mono text-[11.5px] font-semibold tracking-tight sm:text-[13px] md:text-sm"
-                    style={{ color: k.color }}
+              {/* MAIN HEADLINE — Shuffle animation */}
+              <h1 className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white">
+                <span className="cy-glitch-line block" data-text="DR. GREENTHUMB.">
+                  <motion.h1
+                    className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[0.95] tracking-tight"
                   >
-                    <ShinyText
-                      text={k.v}
-                      speed={4}
-                      color={k.color}
-                      shineColor="#ffffff"
-                      spread={130}
+                    <Shuffle
+                      text="DR. GREENTHUMB."
+                      shuffleDirection="right"
+                      duration={0.3}
+                      shuffleTimes={1}
+                      ease="back.out(1.1)"
+                      triggerOnHover
+                      loop
+                      loopDelay={0.4}
+                      className="bg-gradient-to-r from-[var(--acid)] via-[var(--toxic)] to-[var(--sky)] bg-clip-text text-transparent"
                     />
-                  </div>
+                  </motion.h1>
+                </span>
+              </h1>
+
+              {/* DEMOTED subhead */}
+              <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-white/55 sm:mt-4 sm:text-[12px] md:text-[13px]">
+                <span className="text-[var(--acid)]">{"// "}</span>
+                facilitator of peace of mind
+              </p>
+
+              <p className="mt-3 max-w-2xl font-mono text-[11.5px] leading-relaxed text-white/55 sm:mt-4 sm:text-[13px] md:text-sm">
+                I procure premium products straight from the source in the Bekaa Valley and deliver them securely via dead-drop to your location. My service exists to provide unmatched quality, total convenience, and complete anonymity for both of us.
+              </p>
+
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3">
+                <div className="group relative border border-[var(--acid)]/15 bg-black/40 p-3 backdrop-blur-sm transition hover:border-[var(--acid)]/50 sm:p-4">
+                  <span className="absolute -top-px -left-px h-2 w-2 border-t border-l border-[var(--toxic)]" />
+                  <span className="absolute -bottom-px -right-px h-2 w-2 border-b border-r border-[var(--toxic)]" />
+                  <HudLabel>PILLAR_01</HudLabel>
+                  <h4 className="mt-2 font-display text-base font-semibold text-white">
+                    <DecryptedText text="Quality Source" speed={40} maxIterations={10} />
+                  </h4>
+                  <p className="mt-1 font-mono text-[11px] leading-relaxed text-white/50">
+                    Straight from the Bekaa Valley. No tainted Beirut street product. Only the finest grade, guaranteed purity.
+                  </p>
                 </div>
-              ))}
+                <div className="group relative border border-[var(--acid)]/15 bg-black/40 p-3 backdrop-blur-sm transition hover:border-[var(--acid)]/50 sm:p-4">
+                  <span className="absolute -top-px -left-px h-2 w-2 border-t border-l border-[var(--acid)]" />
+                  <span className="absolute -bottom-px -right-px h-2 w-2 border-b border-r border-[var(--acid)]" />
+                  <HudLabel>PILLAR_02</HudLabel>
+                  <h4 className="mt-2 font-display text-base font-semibold text-white">
+                    <DecryptedText text="Convenience" speed={40} maxIterations={10} />
+                  </h4>
+                  <p className="mt-1 font-mono text-[11px] leading-relaxed text-white/50">
+                    Why drive dangerous roads? I deliver directly to you. A dead-drop right under your home or office.
+                  </p>
+                </div>
+                <div className="group relative border border-[var(--acid)]/15 bg-black/40 p-3 backdrop-blur-sm transition hover:border-[var(--acid)]/50 sm:p-4">
+                  <span className="absolute -top-px -left-px h-2 w-2 border-t border-l border-[var(--sky)]" />
+                  <span className="absolute -bottom-px -right-px h-2 w-2 border-b border-r border-[var(--sky)]" />
+                  <HudLabel>PILLAR_03</HudLabel>
+                  <h4 className="mt-2 font-display text-base font-semibold text-white">
+                    <DecryptedText text="Anonymity" speed={40} maxIterations={10} />
+                  </h4>
+                  <p className="mt-1 font-mono text-[11px] leading-relaxed text-white/50">
+                    No face-to-face contact. You don&apos;t know me, I don&apos;t know you. A system built entirely for mutual safety.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* fake telemetry bars — only on lg+ to keep one viewport */}
-            <div className="mt-5 hidden grid-cols-3 gap-4 font-mono text-[10px] text-white/40 lg:mt-6 lg:grid lg:max-w-md">
-              {[
-                { l: "OPSEC", v: 98, c: "var(--toxic)" },
-                { l: "STEALTH", v: 100, c: "var(--acid)" },
-                { l: "TRUST", v: 87, c: "var(--magenta)" },
-              ].map((b) => (
-                <div key={b.l}>
-                  <div className="flex justify-between">
-                    <span>{b.l}</span>
-                    <span style={{ color: b.c }}>{b.v}%</span>
-                  </div>
-                  <div className="mt-1 h-1 w-full bg-white/5">
-                    <div
-                      className="h-full"
-                      style={{ width: `${b.v}%`, background: b.c, boxShadow: `0 0 8px ${b.c}` }}
-                    />
-                  </div>
-                </div>
-              ))}
+            {/* Right side: Pacman SVG Ghost */}
+            <div className="hidden md:flex flex-col justify-center relative h-full w-full min-h-[300px]">
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                <PacmanSvg />
+              </div>
             </div>
           </div>
         </div>

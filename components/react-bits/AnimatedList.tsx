@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useState, useEffect, useCallback, ReactNode, MouseEventHandler, UIEvent } from 'react';
-import { motion, useInView } from 'motion/react';
+import { motion, useInView } from 'framer-motion';
 import './AnimatedList.css';
 
 interface AnimatedItemProps {

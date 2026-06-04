@@ -248,11 +248,13 @@ export function Terminal({
     }
   }, [lines, phase]);
 
+  const host = title?.split(".")[0] || "drop";
+
   const prompt = (
     <span className="text-neutral-500">
       <span className="text-emerald-400">{username}</span>
       <span className="text-emerald-600">@</span>
-      <span className="text-sky-400">drop</span>
+      <span className="text-sky-400">{host}</span>
       <span className="text-neutral-500">:</span>
       <span className="text-neutral-500">$</span>{" "}
     </span>
@@ -263,54 +265,75 @@ export function Terminal({
       ref={containerRef}
       className={cn("w-full font-mono text-[11px] sm:text-xs", className)}
     >
-      <div className="overflow-hidden border border-emerald-500/30 bg-[#070809] shadow-[0_0_40px_-15px_rgba(0,255,163,0.4)]">
-        <div className="flex items-center gap-2 border-b border-emerald-500/20 bg-black/60 px-3 py-2">
-          <div className="flex items-center gap-1.5">
-            <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
-            <div className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
-            <div className="h-2.5 w-2.5 rounded-full bg-green-500" />
+      <div className="retro-terminal-shell">
+        <div className="retro-terminal-bezel">
+          <div className="retro-terminal-topbar">
+            <div className="retro-terminal-leds" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <div className="retro-terminal-title">
+              {title || `${username} / tty`}
+            </div>
+            <div className="retro-terminal-vents" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
           </div>
-          <div className="flex-1 text-center">
-            <span className="truncate text-[10px] tracking-[0.2em] text-emerald-400/70 uppercase">
-              {title || `${username} — bash`}
-            </span>
-          </div>
-          <div className="w-[44px]" />
-        </div>
-        <div
-          ref={contentRef}
-          className={cn("no-visible-scrollbar overflow-y-auto p-3 sm:p-4", height)}
-        >
-          {lines.map((line, i) => (
-            <div key={i} className="leading-relaxed whitespace-pre-wrap">
-              {line.type === "command" ? (
-                <span>
+          <div className="retro-terminal-screen-frame">
+            <div
+              ref={contentRef}
+              className={cn("retro-terminal-screen no-visible-scrollbar", height)}
+            >
+              {lines.map((line, i) => (
+                <div key={i} className="leading-relaxed whitespace-pre-wrap">
+                  {line.type === "command" ? (
+                    <span>
+                      {prompt}
+                      <SyntaxHighlightedText text={line.content} />
+                    </span>
+                  ) : (
+                    <span className="text-emerald-300/80">{line.content}</span>
+                  )}
+                </div>
+              ))}
+              {phase === "typing" && (
+                <div className="leading-relaxed whitespace-pre-wrap">
                   {prompt}
-                  <SyntaxHighlightedText text={line.content} />
-                </span>
-              ) : (
-                <span className="text-emerald-300/80">{line.content}</span>
+                  <SyntaxHighlightedText text={currentText} />
+                  <span className="ml-0.5 inline-block h-3.5 w-[7px] bg-emerald-300 align-middle" />
+                </div>
+              )}
+              {(phase === "done" ||
+                phase === "pausing" ||
+                phase === "outputting") && (
+                <div className="leading-relaxed whitespace-pre-wrap">
+                  {prompt}
+                  <span
+                    className={cn(
+                      "inline-block h-3.5 w-[7px] bg-emerald-300 align-middle transition-opacity",
+                      !cursorVisible && "opacity-0",
+                    )}
+                  />
+                </div>
               )}
             </div>
-          ))}
-          {phase === "typing" && (
-            <div className="leading-relaxed whitespace-pre-wrap">
-              {prompt}
-              <SyntaxHighlightedText text={currentText} />
-              <span className="ml-0.5 inline-block h-3.5 w-[7px] bg-emerald-300 align-middle" />
-            </div>
-          )}
-          {(phase === "done" || phase === "pausing" || phase === "outputting") && (
-            <div className="leading-relaxed whitespace-pre-wrap">
-              {prompt}
-              <span
-                className={cn(
-                  "inline-block h-3.5 w-[7px] bg-emerald-300 align-middle transition-opacity",
-                  !cursorVisible && "opacity-0",
-                )}
-              />
-            </div>
-          )}
+            <div className="retro-terminal-scanlines" aria-hidden="true" />
+            <div className="retro-terminal-glass" aria-hidden="true" />
+          </div>
+          <div className="retro-terminal-footer" aria-hidden="true">
+            <span>LINE 04</span>
+            <span>ACOUSTIC COUPLER</span>
+            <span>PHOSPHOR SYNC</span>
+          </div>
+        </div>
+        <div className="retro-terminal-base" aria-hidden="true">
+          <span />
+          <span />
+          <span />
         </div>
       </div>
     </div>
