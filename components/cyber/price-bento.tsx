@@ -104,6 +104,9 @@ export default function PriceBento() {
             <span className="flex items-center gap-2">
               <StatusDot color="var(--toxic)" /> Vacuum-sealed from source
             </span>
+            <span className="flex items-center gap-2">
+              <StatusDot color="var(--magenta)" /> Minimum order is $100
+            </span>
           </div>
         </div>
 
