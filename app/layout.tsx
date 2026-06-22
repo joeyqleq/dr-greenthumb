@@ -10,17 +10,54 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['400','500','6
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], weight: ['300','400','500','600','700'], variable: '--font-mono', display: 'swap' })
 
 export const metadata: Metadata = {
-  title: 'Dr. Greenthumb // Private Drop Protocol',
+  title: 'DR. GREENTHUMB // Private Drop Protocol',
   description: 'Encrypted four-step delivery protocol — Reddit handshake, Whish payment, Bekaa pickup, hidden drop. Zero face time.',
-  generator: 'v0.app',
+  keywords: ['delivery', 'protocol', 'encrypted', 'private', 'drop'],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://v0-dr-greenthumb.vercel.app',
+    siteName: 'DR. GREENTHUMB',
+    title: 'DR. GREENTHUMB // Private Drop Protocol',
+    description: 'Encrypted four-step delivery protocol — Reddit handshake, Whish payment, Bekaa pickup, hidden drop. Zero face time.',
+    images: [
+      {
+        url: 'https://v0-dr-greenthumb.vercel.app/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'DR. GREENTHUMB',
+        type: 'image/png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DR. GREENTHUMB // Private Drop Protocol',
+    description: 'Encrypted four-step delivery protocol — Reddit handshake, Whish payment, Bekaa pickup, hidden drop. Zero face time.',
+    images: ['https://v0-dr-greenthumb.vercel.app/og-image.png'],
+  },
   icons: {
     icon: [
       {
-        url: '/icon.svg',
+        url: '/favicon-32x32.svg',
+        sizes: '32x32',
+        type: 'image/svg+xml',
+      },
+      {
+        url: '/favicon-16x16.svg',
+        sizes: '16x16',
         type: 'image/svg+xml',
       },
     ],
-    apple: '/icon.svg',
+    apple: '/apple-touch-icon.png',
   },
 }
 
@@ -31,6 +68,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} bg-[#070809]`}>
+      <head>
+        <meta name="theme-color" content="#0a0a0a" />
+        <link rel="canonical" href="https://v0-dr-greenthumb.vercel.app" />
+      </head>
       <body className="font-sans antialiased">
         <AccessGate>{children}</AccessGate>
         <SiteAnalytics />
