@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/.next/'],
     },
-    sitemap: 'https://v0-dr-greenthumb.vercel.app/sitemap.xml',
+    sitemap: 'https://www.greenthumb.lol/sitemap.xml',
   }
 }
