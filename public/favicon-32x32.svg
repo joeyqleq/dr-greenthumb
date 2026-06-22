@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <style>
+      .acid { fill: #80ff00; }
+      .bg { fill: #0a0a0a; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect class="bg" width="32" height="32" rx="4" />
+  
+  <!-- Accent bar -->
+  <rect x="0" y="0" width="2" height="32" class="acid" rx="1" />
+  
+  <!-- Stylized leaf/plant icon -->
+  <g transform="translate(10, 8)">
+    <!-- Main stem -->
+    <line x1="6" y1="0" x2="6" y2="14" stroke="#80ff00" stroke-width="1.5" stroke-linecap="round" />
+    
+    <!-- Left leaves -->
+    <path d="M 6 4 Q 2 4 2 6 Q 2 8 6 8" fill="none" stroke="#80ff00" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M 6 8 Q 2 8 2 10 Q 2 12 6 12" fill="none" stroke="#80ff00" stroke-width="1.5" stroke-linecap="round" />
+    
+    <!-- Right leaves -->
+    <path d="M 6 5 Q 10 5 10 7 Q 10 9 6 9" fill="none" stroke="#00ffff" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M 6 9 Q 10 9 10 11 Q 10 13 6 13" fill="none" stroke="#00ffff" stroke-width="1.5" stroke-linecap="round" />
+  </g>
+</svg>
