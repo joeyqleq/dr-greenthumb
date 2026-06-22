@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - DR. GREENTHUMB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --acid: #80ff00;
+            --toxic: #0ff;
+            --magenta: #ff00ff;
+            --bg: #0a0a0a;
+            --border: rgba(128, 255, 0, 0.15);
+        }
+
+        body {
+            background: var(--bg);
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .cy-noise {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.2;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2' /%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            line-height: 1.2;
+        }
+
+        .logo-title {
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-title .acid {
+            color: var(--acid);
+        }
+
+        .logo-subtitle {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .last-updated {
+            font-family: 'Courier New', monospace;
+            color: var(--acid);
+            font-size: 12px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--acid);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        footer .links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        footer a {
+            color: var(--acid);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        footer a:hover {
+            color: var(--toxic);
+        }
+
+        .divider {
+            color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="cy-noise"></div>
+
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">
+                <div class="logo-img">
+                    <img src="/images/gt_logo.png" alt="Dr. Greenthumb Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-title">DR. GREENTHUMB<span class="acid">_</span></div>
+                    <div class="logo-subtitle">{"//"} private.drop.protocol</div>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Terms of Service</h1>
+        <div class="last-updated">// Last Updated: June 2026</div>
+
+        <h2>Acceptance of Terms</h2>
+        <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.</p>
+
+        <h2>Use License</h2>
+        <p>Permission is granted to temporarily download one copy of the materials (information or software) on our service for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+        <ul>
+            <li>Modify or copy the materials</li>
+            <li>Use the materials for any commercial purpose or for any public display</li>
+            <li>Attempt to reverse engineer, disassemble, or decompile any software</li>
+            <li>Remove any copyright or other proprietary notations from the materials</li>
+            <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+        </ul>
+
+        <h2>Disclaimer</h2>
+        <p>The materials on our service are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+
+        <h2>Limitations</h2>
+        <p>In no event shall our company or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our service.</p>
+
+        <h2>Accuracy of Materials</h2>
+        <p>The materials appearing on our service could include technical, typographical, or photographic errors. We do not warrant that any of the materials are accurate, complete, or current. We may make changes to the materials contained on our service at any time without notice.</p>
+
+        <h2>Materials and Content</h2>
+        <p>We do not review all materials posted to our service, but we reserve the right to remove any materials deemed inappropriate at our sole discretion.</p>
+
+        <h2>Links</h2>
+        <p>We have not reviewed all of the sites linked to our website and are not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by us of the site. Use of any such linked website is at the user's own risk.</p>
+
+        <h2>Modifications</h2>
+        <p>We may revise these terms of service for our service at any time without notice. By using this service, you are agreeing to be bound by the then current version of these terms of service.</p>
+
+        <h2>Governing Law</h2>
+        <p>These terms and conditions are governed by and construed in accordance with the laws of the United States and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+
+        <h2>User Accounts</h2>
+        <p>If you create an account on our service, you are responsible for maintaining the confidentiality of your account information and password and for restricting access to your computer. You agree to accept responsibility for all activities that occur under your account or password.</p>
+
+        <h2>Prohibited Activities</h2>
+        <p>You agree not to:</p>
+        <ul>
+            <li>Harass, threaten, defame, or abuse others</li>
+            <li>Engage in any unlawful conduct</li>
+            <li>Violate any intellectual property rights</li>
+            <li>Attempt to gain unauthorized access to our systems</li>
+            <li>Transmit viruses or harmful code</li>
+        </ul>
+
+        <h2>Contact</h2>
+        <p>For questions regarding these Terms of Service, please contact us at support@example.com.</p>
+
+        <footer>
+            <div class="links">
+                <a href="/">Home</a>
+                <span class="divider">·</span>
+                <a href="/privacy">Privacy</a>
+                <span class="divider">·</span>
+                <a href="/tos">Terms of Service</a>
+            </div>
+            <div>DR.GREENTHUMB <span class="divider">·</span> BEKAA → DROP <span class="divider">·</span> <span style="color: var(--magenta)">END_OF_FEED</span></div>
+        </footer>
+    </div>
+</body>
+</html>
