@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+      
+      .bg { fill: #0a0a0a; }
+      .title { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; fill: #ffffff; letter-spacing: -2px; }
+      .subtitle { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 400; fill: rgba(255,255,255,0.6); letter-spacing: 3px; }
+      .tagline { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 500; fill: rgba(255,255,255,0.8); }
+      .accent { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 600; fill: #80ff00; letter-spacing: 2px; }
+      .acid { fill: #80ff00; }
+      .toxic { fill: #00ffff; }
+      .magenta { fill: #ff00ff; }
+    </style>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" />
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(128,255,0,0.08)" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(128,255,0,0.1);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(0,255,255,0.1);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect class="bg" width="1200" height="630" />
+  <rect class="noise" width="1200" height="630" />
+  
+  <!-- Grid background -->
+  <rect width="1200" height="630" fill="url(#grid)" />
+  
+  <!-- Gradient overlay -->
+  <rect width="1200" height="630" fill="url(#grad)" />
+  
+  <!-- Left accent bar -->
+  <rect x="0" y="0" width="8" height="630" class="acid" />
+  
+  <!-- Content container -->
+  <g transform="translate(100, 120)">
+    <!-- Top label -->
+    <text x="0" y="40" class="accent" style="letter-spacing: 4px;">{"//"} PRIVATE.DROP.PROTOCOL</text>
+    
+    <!-- Main title with underscore -->
+    <tspan x="0" y="140" class="title">DR. GREENTHUMB</tspan>
+    <tspan class="acid" style="font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700;">_</tspan>
+    
+    <!-- Tagline -->
+    <text x="0" y="220" class="tagline">Encrypted Delivery Protocol</text>
+    
+    <!-- Description lines -->
+    <text x="0" y="285" class="subtitle" style="font-size: 20px; letter-spacing: 1px;">Reddit Handshake • Whish Payment</text>
+    <text x="0" y="320" class="subtitle" style="font-size: 20px; letter-spacing: 1px;">Bekaa Pickup • Hidden Drop</text>
+    
+    <!-- Bottom badge -->
+    <g transform="translate(0, 350)">
+      <rect x="0" y="0" width="320" height="60" fill="none" stroke="rgba(128,255,0,0.4)" stroke-width="2" />
+      <text x="20" y="40" class="accent" style="font-size: 18px; letter-spacing: 3px;">ZERO FACE TIME</text>
+    </g>
+  </g>
+  
+  <!-- Corner accents -->
+  <circle cx="1200" cy="0" r="80" fill="none" stroke="rgba(0,255,255,0.15)" stroke-width="2" opacity="0.5" />
+  <circle cx="0" cy="630" r="80" fill="none" stroke="rgba(255,0,255,0.15)" stroke-width="2" opacity="0.5" />
+  
+  <!-- Bottom right corner accent -->
+  <g transform="translate(1100, 550)">
+    <text class="acid" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 2px;">END_OF_FEED</text>
+  </g>
+</svg>
