@@ -131,8 +131,21 @@ export default function DitherCard({
             <div 
               className="relative h-16 w-16 shrink-0 cursor-pointer overflow-hidden rounded-md border border-white/20 transition-transform hover:scale-105 hover:border-[var(--acid)]"
               onClick={onImageClick}
+              title="Click to view full image"
             >
-              <img src={image} alt={title} className="h-full w-full object-cover" />
+              {/* loading="lazy" defers network fetch until the card is near
+                  the viewport. width/height tell the browser the display
+                  size so it can prioritise small images. The full-res URL
+                  is only requested when the lightbox opens in the parent. */}
+              <img
+                src={image}
+                alt={title}
+                width={64}
+                height={64}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             </div>
           )}
         </div>

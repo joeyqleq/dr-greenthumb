@@ -8,17 +8,20 @@ import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 import { useState } from "react";
 
 const PRICES = [
-  { color: "var(--toxic)", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "30 g", price: "$50", image: "/images/hash.jpeg" },
-  { color: "var(--acid)", label: "// SKU_02", title: "Bubble Hash", description: "Weed Resin Extract — Bekaa Valley", weight: "30 g", price: "$60", image: "/images/bubble_hash.png" },
-  { color: "var(--magenta)", label: "// SKU_03", title: "Weed / Marie", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "20 g", price: "$100", image: "/images/weed_buds.jpg" },
+  { color: "var(--toxic)", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "25 g", price: "$60", image: "/images/hash.jpeg" },
+  { color: "var(--acid)", label: "// SKU_02", title: "Bubble Hash", description: "Weed Resin Extract — Bekaa Valley", weight: "25 g", price: "$70", image: "/images/bubble_hash.png" },
+  { color: "var(--magenta)", label: "// SKU_03", title: "Weed / Marie", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "15 g", price: "$110", image: "/images/weed_buds.jpg" },
   { color: "#00E8ED", label: "// SKU_04", title: "Coke (90% Pure)", description: "90% Pure Bolivian Cocaine Hydrochloride", weight: "0.5 g", price: "$100", image: "/images/cocaine.jpg" },
-  { color: "#FFD800", label: "// SKU_05", title: "Freebase Cocaine (Bazz)", description: "90% Pure Bolivian Freebase Cocaine Hydrochloride", weight: "0.5 g", price: "$100", image: "/images/freebase.jpg" },
-  { color: "var(--amber)", label: "// SKU_06", title: "Crystal Meth", description: "Imported", weight: "1 g", price: "$60", image: "/images/crystal.jpg" },
-  { color: "#FF4500", label: "// SKU_07", title: "Buprenorphine", description: "Sublingual tablets", weight: "8 mg", price: "$25", image: "/images/bup.png" },
-  { color: "#8A2BE2", label: "// SKU_08", title: "Ketamine", description: "Liquid Vial", weight: "1 vial", price: "TBD", image: "/images/ketamine.jpg" },
-  { color: "#888888", label: "// SKU_09", title: "Available on demand", description: "Limited drop", weight: "—", price: "TBD", isCustomExplainer: true },
+  { color: "#FF4500", label: "// SKU_05", title: "Buprenorphine", description: "Sublingual tablets", weight: "8 mg", price: "$35", image: "/images/bup.png" },
+  { color: "#8A2BE2", label: "// SKU_06", title: "Ketamine", description: "Liquid Vial", weight: "1 vial", price: "TBD", image: "/images/ketamine.jpg" },
+  { color: "#888888", label: "// SKU_07", title: "Available on demand", description: "Limited drop", weight: "—", price: "TBD", isCustomExplainer: true },
 ];
 
+// Lazily fetch the full-res image only when the user clicks a thumbnail.
+// The <img> in DitherCard always renders a thumbnail (native browser
+// downscale via width/height hints) — the full-res URL is only loaded
+// imperatively by setting `expandedImage`, which mounts it in the
+// lightbox <img> for the first time.
 export default function PriceBento() {
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
 

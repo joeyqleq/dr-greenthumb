@@ -47,6 +47,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
+      },
+      {
         url: '/favicon-32x32.svg',
         sizes: '32x32',
         type: 'image/svg+xml',
@@ -57,7 +61,7 @@ export const metadata: Metadata = {
         type: 'image/svg+xml',
       },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: '/apple-icon.png',
   },
 }
 
@@ -71,6 +75,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#0a0a0a" />
         <link rel="canonical" href="https://v0-dr-greenthumb.vercel.app" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
       <body className="font-sans antialiased">
         <AccessGate>{children}</AccessGate>

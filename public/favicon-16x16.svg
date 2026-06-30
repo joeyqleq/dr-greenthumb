@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <style>
-      .acid { fill: #80ff00; }
-      .bg { fill: #0a0a0a; }
-    </style>
+    <linearGradient id="lg16" x1="4" y1="1" x2="12" y2="15" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="50%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="sg16" x1="8" y1="1" x2="8" y2="15" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
   </defs>
-  
-  <!-- Background -->
-  <rect class="bg" width="16" height="16" rx="2" />
-  
-  <!-- Accent bar -->
-  <rect x="0" y="0" width="1" height="16" class="acid" />
-  
-  <!-- Tiny leaf -->
-  <g transform="translate(5, 3)">
-    <line x1="3" y1="0" x2="3" y2="8" stroke="#80ff00" stroke-width="1" stroke-linecap="round" />
-    <path d="M 3 2 Q 1 2 1 3 Q 1 4 3 4" fill="none" stroke="#80ff00" stroke-width="0.8" stroke-linecap="round" />
-    <path d="M 3 5 Q 5 5 5 6 Q 5 7 3 7" fill="none" stroke="#00ffff" stroke-width="0.8" stroke-linecap="round" />
-  </g>
+  <!-- Right side of leaf -->
+  <path d="M8 1 C13 4 14 9 12 13 C10 15 9 15 8 15 Z" fill="url(#lg16)"/>
+  <!-- Left side of leaf -->
+  <path d="M8 1 C3 4 2 9 4 13 C6 15 7 15 8 15 Z" fill="url(#lg16)"/>
+  <!-- Depth overlay -->
+  <path d="M8 1 C3 4 2 9 4 13 C6 15 7 15 8 15 Z" fill="#047857" opacity="0.2"/>
+  <!-- Central vein -->
+  <path d="M8 1 Q8 8 8 15" stroke="url(#sg16)" stroke-width="0.6" stroke-linecap="round"/>
 </svg>

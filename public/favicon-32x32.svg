@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <style>
-      .acid { fill: #80ff00; }
-      .bg { fill: #0a0a0a; }
-    </style>
+    <linearGradient id="lg32" x1="8" y1="3" x2="24" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="50%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="sg32" x1="16" y1="3" x2="16" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
   </defs>
-  
-  <!-- Background -->
-  <rect class="bg" width="32" height="32" rx="4" />
-  
-  <!-- Accent bar -->
-  <rect x="0" y="0" width="2" height="32" class="acid" rx="1" />
-  
-  <!-- Stylized leaf/plant icon -->
-  <g transform="translate(10, 8)">
-    <!-- Main stem -->
-    <line x1="6" y1="0" x2="6" y2="14" stroke="#80ff00" stroke-width="1.5" stroke-linecap="round" />
-    
-    <!-- Left leaves -->
-    <path d="M 6 4 Q 2 4 2 6 Q 2 8 6 8" fill="none" stroke="#80ff00" stroke-width="1.5" stroke-linecap="round" />
-    <path d="M 6 8 Q 2 8 2 10 Q 2 12 6 12" fill="none" stroke="#80ff00" stroke-width="1.5" stroke-linecap="round" />
-    
-    <!-- Right leaves -->
-    <path d="M 6 5 Q 10 5 10 7 Q 10 9 6 9" fill="none" stroke="#00ffff" stroke-width="1.5" stroke-linecap="round" />
-    <path d="M 6 9 Q 10 9 10 11 Q 10 13 6 13" fill="none" stroke="#00ffff" stroke-width="1.5" stroke-linecap="round" />
-  </g>
+  <!-- Right side of leaf -->
+  <path d="M16 3 C25 9 28 18 24 26 C21 29 18 29 16 29 Z" fill="url(#lg32)"/>
+  <!-- Left side of leaf -->
+  <path d="M16 3 C7 9 4 18 8 26 C11 29 14 29 16 29 Z" fill="url(#lg32)"/>
+  <!-- Depth overlay -->
+  <path d="M16 3 C7 9 4 18 8 26 C11 29 14 29 16 29 Z" fill="#047857" opacity="0.2"/>
+  <!-- Central vein / stem -->
+  <path d="M16 3 Q16 16 16 29" stroke="url(#sg32)" stroke-width="1" stroke-linecap="round"/>
+  <!-- Side veins -->
+  <path d="M16 9 Q13 8 11 7" stroke="#a7f3d0" stroke-width="0.6" stroke-linecap="round" opacity="0.5"/>
+  <path d="M16 14 Q12 13 10 11" stroke="#a7f3d0" stroke-width="0.6" stroke-linecap="round" opacity="0.5"/>
+  <path d="M16 9 Q19 8 21 7" stroke="#ffffff" stroke-width="0.6" stroke-linecap="round" opacity="0.4"/>
+  <path d="M16 14 Q20 13 22 11" stroke="#ffffff" stroke-width="0.6" stroke-linecap="round" opacity="0.4"/>
 </svg>
