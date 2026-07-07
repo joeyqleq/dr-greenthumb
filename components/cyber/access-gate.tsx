@@ -306,7 +306,7 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
                   disabled={checking || !targetHash || !showInput}
                   autoComplete="off"
                   spellCheck={false}
-                  inputMode="numeric"
+                  inputMode="text"
                   className="retro-token-input w-full min-w-0 px-2 py-1.5 font-mono text-[12px] text-emerald-300 caret-emerald-300 outline-none placeholder:text-neutral-700 sm:flex-1 sm:text-[13px]"
                   placeholder="••••••"
                   aria-label="Access token"
