@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlutoIsChill Comment Profile and Sentiment Analysis</title>
+<style>
+:root {
+  --ink: #1a1511;
+  --muted: #675c53;
+  --paper: #f6efe3;
+  --panel: #fff9f1;
+  --line: #dacab7;
+  --accent: #0e6f5a;
+  --red: #9f4036;
+  --amber: #a66a1e;
+  --blue: #2f6284;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(14,111,90,.11), transparent 24rem),
+    radial-gradient(circle at 90% 18%, rgba(159,64,54,.08), transparent 24rem),
+    linear-gradient(135deg, #f1e0c8, var(--paper) 45%, #efe4d8);
+}
+header {
+  padding: 60px clamp(18px, 4vw, 72px) 28px;
+  border-bottom: 1px solid var(--line);
+}
+h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 5rem);
+  line-height: .94;
+  letter-spacing: -.055em;
+}
+.deck {
+  max-width: 1020px;
+  margin-top: 18px;
+  color: var(--muted);
+  font: 1rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+main { padding: 26px clamp(16px, 4vw, 72px) 80px; }
+section {
+  margin: 20px 0;
+  padding: clamp(18px, 3vw, 34px);
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 16px 42px rgba(50, 38, 20, .10);
+}
+h2 {
+  margin: 0 0 14px;
+  font-size: clamp(1.35rem, 2.8vw, 2.35rem);
+  letter-spacing: -.03em;
+}
+h3 { margin: 20px 0 10px; font-size: 1.25rem; }
+p, li { line-height: 1.62; font-size: 1rem; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+.metric {
+  grid-column: span 3;
+  padding: 16px;
+  background: #fff7e8;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.metric b {
+  display: block;
+  font: 700 1.75rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--accent);
+}
+.metric span { color: var(--muted); font-size: .86rem; }
+.tag {
+  display: inline-block;
+  margin: 4px 6px 0 0;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fffaf5;
+  font: .82rem/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.bar {
+  height: 9px;
+  background: #eadcc9;
+  border-radius: 999px;
+  overflow: hidden;
+  min-width: 80px;
+}
+.bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), #6f9f93);
+}
+table { width: 100%; border-collapse: collapse; }
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--line);
+}
+th {
+  font: .8rem/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+}
+.quote {
+  margin: 10px 0;
+  padding: 12px 14px;
+  background: #fffdf8;
+  border-left: 4px solid var(--accent);
+}
+.small { color: var(--muted); font-size: .85rem; }
+.warning {
+  background: #fff2e1;
+  border: 1px solid #d2a060;
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.pill {
+  display: inline-block;
+  margin-right: 6px;
+  margin-top: 4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font: .8rem/1.1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (max-width: 900px) {
+  .metric { grid-column: span 6; }
+}
+@media (max-width: 640px) {
+  .metric { grid-column: span 12; }
+}
+a { color: var(--blue); }
+</style>
+</head>
+<body>
+<header>
+  <h1>u/PlutoIsChill Comment Profile</h1>
+  <div class="deck">
+    Full available history analyzed from the provided Pluto JSONL dump. Comments are the primary evidence; posts are included as supporting context for profile prediction.
+  </div>
+</header>
+<main>
+  <section>
+    <h2>Investigation Brief</h2>
+    <p><b>Question.</b> What does PlutoIsChill’s full comment history suggest about tone, sentiment, habits, and likely profile?</p>
+    <p><b>Null hypothesis.</b> The account is an ordinary mixed-interest Reddit user whose comments are mostly random, low-signal replies with no coherent profile.</p>
+    <p><b>Boundary.</b> This report infers a public Reddit profile from behavior. It does not identify a real-world person or claim private identity beyond what the account itself says.</p>
+    <div class="warning"><b>Method note:</b> the local dump spans 2020-04-12 to 2026-04-20. The account is bursty rather than steady, so yearly volume matters more than raw total volume.</div>
+  </section>
+
+  <section>
+    <h2>Data Overview</h2>
+    <div class="grid">
+      <div class="metric"><b>26</b><span>comments</span></div>
+      <div class="metric"><b>20</b><span>posts</span></div>
+      <div class="metric"><b>2020-04-12 03:15 UTC</b><span>first observed activity</span></div>
+      <div class="metric"><b>2026-04-20 17:46 UTC</b><span>last observed activity</span></div>
+    </div>
+    <p class="small">Removed/moderated posts: <b>10</b>. Removed/opaque comments: <b>4</b>. Average comment length: <b>88.7</b> characters. Questions in comments: <b>5</b>. Emoji in comments: <b>6</b>. Arabizi markers in comments: <b>2</b>.</p>
+  </section>
+
+  <section>
+    <h2>Sentiment Summary</h2>
+    <div class="grid">
+      <div class="metric"><b>10</b><span>positive comments</span></div>
+      <div class="metric"><b>14</b><span>neutral comments</span></div>
+      <div class="metric"><b>2</b><span>negative comments</span></div>
+      <div class="metric"><b>0</b><span>mixed / cautionary</span></div>
+    </div>
+    <p>The account is <b>slightly positive but mostly neutral</b> in tone. The negative material is concentrated in a small number of political/defensive or removed posts, not in the comment stream as a whole.</p>
+    <h3>Yearly Activity</h3>
+    <table>
+      <thead><tr><th>Year</th><th>Comments</th><th>Posts</th><th>All activity</th><th>Bar</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>2020</td>
+          <td>4</td>
+          <td>3</td>
+          <td>7</td>
+          <td><div class="bar"><span style="width:50.0%"></span></div></td>
+        </tr>
+      
+        <tr>
+          <td>2021</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td><div class="bar"><span style="width:7.1%"></span></div></td>
+        </tr>
+      
+        <tr>
+          <td>2022</td>
+          <td>3</td>
+          <td>2</td>
+          <td>5</td>
+          <td><div class="bar"><span style="width:35.7%"></span></div></td>
+        </tr>
+      
+        <tr>
+          <td>2024</td>
+          <td>3</td>
+          <td>4</td>
+          <td>7</td>
+          <td><div class="bar"><span style="width:50.0%"></span></div></td>
+        </tr>
+      
+        <tr>
+          <td>2025</td>
+          <td>9</td>
+          <td>5</td>
+          <td>14</td>
+          <td><div class="bar"><span style="width:100.0%"></span></div></td>
+        </tr>
+      
+        <tr>
+          <td>2026</td>
+          <td>7</td>
+          <td>5</td>
+          <td>12</td>
+          <td><div class="bar"><span style="width:85.7%"></span></div></td>
+        </tr>
+      
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Topic Split</h2>
+    <div class="grid">
+      <div class="metric"><b>10</b><span>social / banter</span></div>
+      <div class="metric"><b>10</b><span>vehicles / powersports</span></div>
+      <div class="metric"><b>2</b><span>drug-related comments</span></div>
+      <div class="metric"><b>8</b><span>Lebanon / politics</span></div>
+    </div>
+    <p>
+      
+        <span class="tag">Vehicles / powersports: 10</span>
+      
+        <span class="tag">Technical / troubleshooting: 3</span>
+      
+        <span class="tag">Gaming / tech: 1</span>
+      
+        <span class="tag">Social / banter: 10</span>
+      
+        <span class="tag">General / conversational: 3</span>
+      
+        <span class="tag">Lebanon / politics: 8</span>
+      
+        <span class="tag">Youth / self: 10</span>
+      
+        <span class="tag">Drugs / psychedelics: 2</span>
+      
+    </p>
+  </section>
+
+  <section>
+    <h2>Comment Timeline</h2>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Subreddit</th><th>Topic(s)</th><th>Tone</th><th>Sentiment</th><th>Excerpt</th><th>Link</th></tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>2020-04-12 03:15 UTC</td>
+          <td>r/oculus</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Technical / troubleshooting</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>What are the specs that are required?</td>
+          <td><a href="https://reddit.com/r/oculus/comments/fzol58/should_i_get_oculus_quest_or_rift_s/fn5chuk/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2020-04-12 03:17 UTC</td>
+          <td>r/oculus</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Gaming / tech</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>I have a gtx 1050</td>
+          <td><a href="https://reddit.com/r/oculus/comments/fzol58/should_i_get_oculus_quest_or_rift_s/fn5cqel/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2020-04-12 04:45 UTC</td>
+          <td>r/oculus</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Social / banter</span></td>
+          <td>playful / supportive</td>
+          <td>positive</td>
+          <td>Thank you</td>
+          <td><a href="https://reddit.com/r/oculus/comments/fzol58/should_i_get_oculus_quest_or_rift_s/fn5jqlb/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2020-04-12 06:15 UTC</td>
+          <td>r/oculus</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Social / banter</span></td>
+          <td>playful / supportive</td>
+          <td>positive</td>
+          <td>Thanks</td>
+          <td><a href="https://reddit.com/r/oculus/comments/fzol58/should_i_get_oculus_quest_or_rift_s/fn5q3hw/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2022-05-24 20:32 UTC</td>
+          <td>r/IdiotsInCars</td>
+          <td><span class="pill">General / conversational</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>How exactly?</td>
+          <td><a href="https://reddit.com/r/IdiotsInCars/comments/uwwudp/fight_between_teenagers_woman_accidentally_slams/i9unblr/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2022-07-12 00:13 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Youth / self</span></td>
+          <td>neutral / conversational</td>
+          <td>positive</td>
+          <td>Ur insanely active here</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/vwjlw2/affordable_beaches/ifskldz/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2022-08-09 10:18 UTC</td>
+          <td>r/FreeKarma4You</td>
+          <td><span class="pill">Social / banter</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>Help me out</td>
+          <td><a href="https://reddit.com/r/FreeKarma4You/comments/wi7vbj/karma_if_you_upvote/ijk8cq2/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2024-07-09 13:11 UTC</td>
+          <td>r/Dirtbikes</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Youth / self</span></td>
+          <td>curious / exploratory</td>
+          <td>positive</td>
+          <td>because i have a house in the mountains and im gonna keep it there and the roads there aren’t as nice as the city so i want something that can handle it and also since im gonna take it on trails after i learn how to ride</td>
+          <td><a href="https://reddit.com/r/Dirtbikes/comments/1dyyors/best_first_bike/lccgpxc/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2024-11-30 18:02 UTC</td>
+          <td>r/ATV</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Technical / troubleshooting</span></td>
+          <td>technical / practical</td>
+          <td>neutral</td>
+          <td>it’s a segway snarler at6 i recently changed the belt and when i’m on a steep downhill and i let go it just becomes the sound of the belt spinning and not the engine</td>
+          <td><a href="https://reddit.com/r/ATV/comments/1h3hx50/atv_problems/lzqsqzh/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2024-11-30 18:09 UTC</td>
+          <td>r/ATV</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Technical / troubleshooting</span></td>
+          <td>neutral / conversational</td>
+          <td>positive</td>
+          <td>like it stalls i think that’s the word on downhills</td>
+          <td><a href="https://reddit.com/r/ATV/comments/1h3hx50/atv_problems/lzqu35p/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-01-13 15:26 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span></td>
+          <td>playful / supportive</td>
+          <td>positive</td>
+          <td>better than saad or any other candidate</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/1i0eq1c/nawaf_salam_the_53th_prime_minister_of_the/m6xjz25/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-06-21 14:32 UTC</td>
+          <td>r/UTV</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Youth / self</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>ikr especially in the second pic looks so agressive</td>
+          <td><a href="https://reddit.com/r/UTV/comments/1lgxieo/thoughts_on_the_new_segway_super_villain/myzpgul/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-06-22 11:47 UTC</td>
+          <td>r/UTV</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Youth / self</span></td>
+          <td>curious / exploratory</td>
+          <td>negative</td>
+          <td>ohh i might have a problem on the tall people thing i’m 16 and 6,4 and still growing ill test drive it and let yall know how it goes</td>
+          <td><a href="https://reddit.com/r/UTV/comments/1lgxieo/thoughts_on_the_new_segway_super_villain/mz4zyw5/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-07-02 20:33 UTC</td>
+          <td>r/UTV</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Youth / self</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>It’s an absolute monster I can’t wait to get my hands on it</td>
+          <td><a href="https://reddit.com/r/UTV/comments/1lnipvm/segway_super_villain_jump/n109rk6/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-07-05 01:14 UTC</td>
+          <td>r/lebanonmemes</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Social / banter</span></td>
+          <td>playful / supportive</td>
+          <td>positive</td>
+          <td>Bros talking to me like i made it 🥀</td>
+          <td><a href="https://reddit.com/r/lebanonmemes/comments/1lrnvpk/beirut_in_a_nutshell/n1eg8q6/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-07-05 10:06 UTC</td>
+          <td>r/lebanonmemes</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Social / banter</span></td>
+          <td>playful / supportive</td>
+          <td>neutral</td>
+          <td>U can scroll bro 🥀</td>
+          <td><a href="https://reddit.com/r/lebanonmemes/comments/1lrnvpk/beirut_in_a_nutshell/n1g4s0h/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-07-05 11:21 UTC</td>
+          <td>r/lebanonmemes</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Social / banter</span></td>
+          <td>playful / supportive</td>
+          <td>neutral</td>
+          <td>Jobs bro jobs 🥀</td>
+          <td><a href="https://reddit.com/r/lebanonmemes/comments/1lrnvpk/beirut_in_a_nutshell/n1gcqxl/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-07-05 11:24 UTC</td>
+          <td>r/lebanonmemes</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Social / banter</span></td>
+          <td>playful / supportive</td>
+          <td>positive</td>
+          <td>Jobs bro jobs, do you not have anything better to do?🤣</td>
+          <td><a href="https://reddit.com/r/lebanonmemes/comments/1lrnvpk/beirut_in_a_nutshell/n1gd2fs/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-08-24 03:40 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Drugs / psychedelics</span><span class="pill">Youth / self</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>Sure bud I think you can grow more of your shrooms in a Muslim area because it’s dirtier = more bacteria 😂</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/1mwnsie/some_people_are_still_living_in_the_civil_war/nacvnu6/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 14:40 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">General / conversational</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>Sounds crazy what are the odds the security system still worked all those years later</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn28hz/whats_that_one_story_you_always_bring_up_when/ogj2wux/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 14:54 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">Drugs / psychedelics</span><span class="pill">Social / banter</span><span class="pill">Youth / self</span></td>
+          <td>neutral / conversational</td>
+          <td>positive</td>
+          <td>I’ll also include my story I was 16 at with my friends on a rooftop trying to roll a hash spliff for the first time took us like 40 minutes to figure it out we puff puff passed between the 3 of us and had the time of our lives laughing non stop, I was the fir…</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn5p6f/how_was_your_first_time_getting_high_or_first/ogj68gl/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 14:56 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">Youth / self</span></td>
+          <td>curious / exploratory</td>
+          <td>positive</td>
+          <td>No kidding? like actual visual hallucinations or mental imagery</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn5p6f/how_was_your_first_time_getting_high_or_first/ogj6hcv/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 14:56 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">Youth / self</span></td>
+          <td>neutral / conversational</td>
+          <td>negative</td>
+          <td>Was it hard faking sobriety infront of teachers and other students</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn5p6f/how_was_your_first_time_getting_high_or_first/ogj6og5/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 14:57 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">General / conversational</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>Did you try it alone</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn5p6f/how_was_your_first_time_getting_high_or_first/ogj6qa6/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 15:01 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">Social / banter</span><span class="pill">Youth / self</span></td>
+          <td>playful / supportive</td>
+          <td>neutral</td>
+          <td>Were u able to complete the homework? 🤣</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn5p6f/how_was_your_first_time_getting_high_or_first/ogj7sdm/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-20 17:46 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Social / banter</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>However this isn’t anything new nor is it a cult it is quite literally in their 3aqeeda to do this, and if you have a problem with the way of their religions I suggest for you to express it in dahye lol because this is like Sunday church for the Christians, t…</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/1sqodja/behind_the_scenes_of_a_terrorist_organization/oharl1q/">source</a></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Supporting Posts</h2>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Subreddit</th><th>Topic(s)</th><th>Tone</th><th>Sentiment</th><th>Excerpt</th><th>Link</th></tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>2020-04-12 02:46 UTC</td>
+          <td>r/oculus</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Gaming / tech</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>Should i get oculus quest or rift s [View Poll](https://www.reddit.com/poll/fzol58)</td>
+          <td><a href="https://reddit.com/r/oculus/comments/fzol58/should_i_get_oculus_quest_or_rift_s/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2020-05-08 15:43 UTC</td>
+          <td>r/ksi</td>
+          <td><span class="pill">Gaming / tech</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>Not me if this is on his video whats up</td>
+          <td><a href="https://reddit.com/r/ksi/comments/gfvhpr/not_me_if_this_is_on_his_video_whats_up/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2020-06-15 03:57 UTC</td>
+          <td>r/oculus</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Gaming / tech</span><span class="pill">Social / banter</span><span class="pill">Technical / troubleshooting</span></td>
+          <td>curious / exploratory</td>
+          <td>positive</td>
+          <td>Help me out I dont have a pc that can run rift s so should i get an oculus quest if yes wheres the cheapest place to get it</td>
+          <td><a href="https://reddit.com/r/oculus/comments/h98i5o/help_me_out/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2021-03-31 16:23 UTC</td>
+          <td>r/VALORANT</td>
+          <td><span class="pill">Gaming / tech</span></td>
+          <td>removed / opaque</td>
+          <td>negative</td>
+          <td>idk why this happend [removed]</td>
+          <td><a href="https://reddit.com/r/VALORANT/comments/mh9qu1/idk_why_this_happend/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2022-05-19 10:04 UTC</td>
+          <td>r/teenagers</td>
+          <td><span class="pill">Social / banter</span><span class="pill">Youth / self</span></td>
+          <td>removed / opaque</td>
+          <td>negative</td>
+          <td>I’m growing a unibrow [removed]</td>
+          <td><a href="https://reddit.com/r/teenagers/comments/ut01go/im_growing_a_unibrow/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2022-08-09 10:14 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Technical / troubleshooting</span></td>
+          <td>removed / opaque</td>
+          <td>neutral</td>
+          <td>Best internet in Lebanon? [removed]</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/wjzkv1/best_internet_in_lebanon/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2024-07-09 10:05 UTC</td>
+          <td>r/Dirtbikes</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Youth / self</span></td>
+          <td>playful / supportive</td>
+          <td>positive</td>
+          <td>best first bike? for context i’m 15, 6.1ft and around 175 lbs and mostly gonna do on road driving and some trail and maybe track if i get good enough im just looking for a bike that i can start on that won’t kill me and…</td>
+          <td><a href="https://reddit.com/r/Dirtbikes/comments/1dyyors/best_first_bike/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2024-11-13 14:04 UTC</td>
+          <td>r/u_PlutoIsChill</td>
+          <td><span class="pill">Youth / self</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>And Ephraim is as an heifer that is taught, And Ephraim is as an heifer that is taught, and loveth to tread out the cor ; but I passed over upon her fair neck: I will make Ephraim to ride; Judah shall plow, and Jacob sh…</td>
+          <td><a href="https://reddit.com/r/u_PlutoIsChill/comments/1gqdlgo/and_ephraim_is_as_an_heifer_that_is_taught/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2024-11-13 14:07 UTC</td>
+          <td>r/u_PlutoIsChill</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Social / banter</span><span class="pill">Youth / self</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>O Israel, thou hast destroyed thyself; but in me O Israel, thou hast destroyed thyself; but in me is thine help.I will be thy king: where is any other that may save thee in all thy cities? and thy judges of whom thou sa…</td>
+          <td><a href="https://reddit.com/r/u_PlutoIsChill/comments/1gqdno9/o_israel_thou_hast_destroyed_thyself_but_in_me/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2024-11-30 17:43 UTC</td>
+          <td>r/ATV</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Youth / self</span><span class="pill">Technical / troubleshooting</span></td>
+          <td>technical / practical</td>
+          <td>negative</td>
+          <td>Atv problems i was driving on a steep downhill and let go of my gas and could feel my belt let go and then my atv shut off and wouldn’t start again</td>
+          <td><a href="https://reddit.com/r/ATV/comments/1h3hx50/atv_problems/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-01-12 21:09 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span><span class="pill">Youth / self</span></td>
+          <td>removed / opaque</td>
+          <td>negative</td>
+          <td>My dads a “wazir” ask me about anything [removed]</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/1hzx1ri/my_dads_a_wazir_ask_me_about_anything/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-06-21 14:12 UTC</td>
+          <td>r/UTV</td>
+          <td><span class="pill">Vehicles / powersports</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>Thoughts on the new Segway Super Villain? packed with 330hp look insane honestly i’m thinking of getting one what are your thoughts? I already have had a segway ATV for 2 years and no problems whatsoever ever</td>
+          <td><a href="https://reddit.com/r/UTV/comments/1lgxieo/thoughts_on_the_new_segway_super_villain/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-06-29 16:22 UTC</td>
+          <td>r/UTV</td>
+          <td><span class="pill">Vehicles / powersports</span><span class="pill">Youth / self</span></td>
+          <td>curious / exploratory</td>
+          <td>positive</td>
+          <td>Segway Super Villain jump actual insanity, segway as a brand is looking promising these days can’t wait to drive this baby and see what the future hold for them</td>
+          <td><a href="https://reddit.com/r/UTV/comments/1lnipvm/segway_super_villain_jump/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-07-04 17:05 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>Beirut in a nutshell</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/1lrnv92/beirut_in_a_nutshell/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2025-07-04 17:06 UTC</td>
+          <td>r/lebanonmemes</td>
+          <td><span class="pill">Lebanon / politics</span></td>
+          <td>neutral / conversational</td>
+          <td>neutral</td>
+          <td>Beirut in a nutshell</td>
+          <td><a href="https://reddit.com/r/lebanonmemes/comments/1lrnvpk/beirut_in_a_nutshell/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 05:57 UTC</td>
+          <td>r/lebanon</td>
+          <td><span class="pill">Lebanon / politics</span></td>
+          <td>removed / opaque</td>
+          <td>negative</td>
+          <td>Brave words spoken on AlJadeed [removed]</td>
+          <td><a href="https://reddit.com/r/lebanon/comments/1smuxdr/brave_words_spoken_on_aljadeed/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 12:34 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">Social / banter</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>What’s that one story you always bring up when among new people?</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn28hz/whats_that_one_story_you_always_bring_up_when/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 14:47 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">Drugs / psychedelics</span><span class="pill">Youth / self</span></td>
+          <td>curious / exploratory</td>
+          <td>positive</td>
+          <td>Where and what was your first time getting high or first drug use in general like?</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn5o6q/where_and_what_was_your_first_time_getting_high/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-16 14:48 UTC</td>
+          <td>r/AskReddit</td>
+          <td><span class="pill">Drugs / psychedelics</span><span class="pill">Youth / self</span></td>
+          <td>curious / exploratory</td>
+          <td>neutral</td>
+          <td>How was your first time getting high or first drug use? And how old were you?</td>
+          <td><a href="https://reddit.com/r/AskReddit/comments/1sn5p6f/how_was_your_first_time_getting_high_or_first/">source</a></td>
+        </tr>
+        
+        <tr>
+          <td>2026-04-20 16:04 UTC</td>
+          <td>r/AmItheAsshole</td>
+          <td><span class="pill">Youth / self</span></td>
+          <td>removed / opaque</td>
+          <td>negative</td>
+          <td>AITA for punching and breaking my friend’s car mirror because he was disrespecting me? [removed]</td>
+          <td><a href="https://reddit.com/r/AmItheAsshole/comments/1sqto7r/aita_for_punching_and_breaking_my_friends_car/">source</a></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Profile Prediction</h2>
+    <ul>
+      <li><b>Core profile.</b> Youth-coded, male-coded, Lebanese-rooted or Lebanon-adjacent user. That is most strongly supported by the Lebanon subreddits, the Arabizi/Lebanese phrasing, and self-disclosed teen ages in the vehicle posts.</li>
+      <li><b>Primary interests.</b> Vehicles and powersports are the clearest durable interest, followed by gaming/VR and then cannabis/psychedelics curiosity.</li>
+      <li><b>Social style.</b> Short, reactive, emoji-aware, and meme-literate. The account uses banter more than argumentation and rarely writes long analytical posts.</li>
+      <li><b>Emotional style.</b> Mostly light or neutral. It becomes defensive when challenged on Lebanon/politics or personal behavior, but otherwise reads as playful and supportive.</li>
+      <li><b>Likely habits.</b> Bursty engagement, topic-hopping, quick replies, and preference for prompt-driven threads like AskReddit, vehicle help, and local meme/politics topics.</li>
+      <li><b>Confidence.</b> High on interests and tone, medium on Lebanon-rooted background, low-medium on exact age and real-world identity.</li>
+    </ul>
+    <p class="small">If you want, the next report can turn this into a tighter “persona card” or a deeper thread-by-thread style analysis.</p>
+  </section>
+
+  <section>
+    <h2>What Would Break This</h2>
+    <ul>
+      <li>A larger export proving the self-stated teen ages were roleplay, bait, or reused text from another account.</li>
+      <li>Missing context that flips the political or defensive comments into irony.</li>
+      <li>Evidence of shared account use by multiple people with distinct styles.</li>
+      <li>A broader archive showing a very different dominant topic stack than the local dump suggests.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
