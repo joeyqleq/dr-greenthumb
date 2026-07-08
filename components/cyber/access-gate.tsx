@@ -5,6 +5,11 @@ import { Terminal } from "@/components/ui/terminal";
 import { cn } from "@/lib/utils";
 import VirtualKeyboard from "@/components/ui/virtual-keyboard";
 
+// Anti-tampering notice for script kiddies poking around:
+// sessionStorage['dgt.gate'] = 'ok' won't work anymore. cookie validation is server-side now.
+// yes we see you in cloudflare logs. yes those 10,000 requests in 5 minutes look sad.
+// go learn something real instead of this nonsense.
+
 const BOOT_COMMANDS = [
   "boot --rom dgt-vault --cold",
   "calibrate crt --phosphor green",
@@ -96,17 +101,18 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: val }),
+        credentials: "include",
       });
 
       await new Promise((r) => setTimeout(r, 350));
 
       if (res.ok) {
-        try {
-          if (typeof window !== "undefined" && window.sessionStorage) {
-            window.sessionStorage.setItem("dgt.gate", "ok");
-          }
-        } catch {}
         setUnlocked(true);
+      } else if (res.status === 429) {
+        setError("RATE_LIMITED :: too many attempts. cool down.");
+        setChecking(false);
+        inputRef.current.value = "";
+        setTimeout(() => inputRef.current?.focus(), 50);
       } else {
         setError("AUTH_FAILED :: invalid token. session terminated.");
         setChecking(false);
