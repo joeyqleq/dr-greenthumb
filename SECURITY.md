@@ -7,23 +7,24 @@
 - **Rate limiting**: 5 attempts per IP per minute
 - **Middleware**: Protected routes require valid cookie to access
 
-## Cloudflare WAF Rules (Configure in Cloudflare Dashboard)
+## Cloudflare WAF Rules
+
+**NOTE:** Free plan cannot add custom WAF rulesets. Upgrade to Pro/Business to enable Cloudflare WAF.
+
+When available, configure:
 
 1. **Block source map requests**
-   - Expression: `(uri.path contains ".map")`
+   - Expression: `(http.request.uri.path contains ".map")`
    - Action: Block
+   - Custom response: `403 - lmao nice try`
 
 2. **Block common reconnaissance**
-   - Expression: `(uri.path contains "node_modules" OR uri.path contains ".env" OR uri.path contains "config.json")`
+   - Expression: `(http.request.uri.path contains "node_modules") or (http.request.uri.path contains ".env") or (http.request.uri.path contains "config.json")`
    - Action: Block
 
-3. **Rate limit auth endpoint**
-   - Expression: `(http.request.uri.path eq "/api/auth/gate")`
-   - Action: Challenge (JavaScript) after 10 requests per minute
-
-4. **Geographic blocks** (optional)
-   - Block VPN/Proxy traffic
-   - Block specific high-threat countries
+3. **Challenge auth endpoint**
+   - Expression: `(http.request.uri.path eq "/api/auth/gate") and (http.request.method eq "POST")`
+   - Action: Challenge (JavaScript)
 
 ## Vercel Environment
 
