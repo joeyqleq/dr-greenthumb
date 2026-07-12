@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { Analytics } from '@vercel/analytics/next'
 import SiteAnalytics from '@/components/cyber/analytics'
+import TianjiTracker from '@/components/cyber/tianji-tracker'
 import AccessGate from '@/components/cyber/access-gate'
 import './globals.css'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
@@ -78,6 +79,7 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
       <body className="font-sans antialiased">
+        <TianjiTracker />
         <AccessGate>{children}</AccessGate>
         <SiteAnalytics />
         {process.env.NODE_ENV === 'production' && <Analytics />}

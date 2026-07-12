@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Terminal } from "@/components/ui/terminal";
 import { cn } from "@/lib/utils";
 import VirtualKeyboard from "@/components/ui/virtual-keyboard";
+import { trackGateEntry, trackAuthSuccess, trackAuthFailure, trackMainPageAccess } from "@/lib/analytics";
 
 // Anti-tampering notice for script kiddies poking around:
 // sessionStorage['dgt.gate'] = 'ok' won't work anymore. cookie validation is server-side now.
@@ -107,6 +108,7 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
       await new Promise((r) => setTimeout(r, 350));
 
       if (res.ok) {
+        trackAuthSuccess();
         setUnlocked(true);
       } else if (res.status === 429) {
         setError("RATE_LIMITED :: too many attempts. cool down.");
@@ -114,6 +116,7 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
         inputRef.current.value = "";
         setTimeout(() => inputRef.current?.focus(), 50);
       } else {
+        trackAuthFailure();
         setError("AUTH_FAILED :: invalid token. session terminated.");
         setChecking(false);
         inputRef.current.value = "";
@@ -159,7 +162,14 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
     );
   }
 
-  if (unlocked) return <>{children}</>;
+  if (unlocked) {
+    trackMainPageAccess();
+    return <>{children}</>;
+  }
+
+  useEffect(() => {
+    trackGateEntry();
+  }, [mounted]);
 
   return (
     <div className="gate-wall fixed inset-0 z-[200] flex items-start justify-center overflow-x-hidden overflow-y-auto bg-[var(--ink)] px-3 py-4 sm:px-4 sm:py-7">

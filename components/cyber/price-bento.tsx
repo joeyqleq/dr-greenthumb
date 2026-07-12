@@ -6,6 +6,7 @@ import Shuffle from "@/components/react-bits/Shuffle";
 import { Send } from "lucide-react";
 import { HudLabel, StatusDot } from "@/components/cyber/hud-frame";
 import { useState } from "react";
+import { trackSkuThumbnailClick } from "@/lib/analytics";
 
 const PRICES = [
   { color: "var(--toxic)", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "25 g", price: "$60", image: "/images/hash.jpeg" },
@@ -116,7 +117,16 @@ export default function PriceBento() {
         {/* the bento itself */}
         <div className="relative mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {PRICES.map((item, i) => (
-            <DitherCard key={i} {...item} onImageClick={() => item.image && setExpandedImage(item.image)} />
+            <DitherCard
+              key={i}
+              {...item}
+              onImageClick={() => {
+                if (item.image) {
+                  trackSkuThumbnailClick(item.label, item.title);
+                  setExpandedImage(item.image);
+                }
+              }}
+            />
           ))}
         </div>
 
