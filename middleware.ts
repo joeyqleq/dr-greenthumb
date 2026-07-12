@@ -17,21 +17,19 @@ const BLOCKED_PATTERNS = [
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Allow public routes
-  if (PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
-    return NextResponse.next();
-  }
-
   // Block common reconnaissance requests
   if (BLOCKED_PATTERNS.some((pattern) => pathname.includes(pattern))) {
     return NextResponse.next();
   }
 
-  // Check for gate cookie on protected routes
+  // Check for gate cookie on protected routes (skip for root and API)
+  if (pathname === '/' || pathname.startsWith('/api/auth')) {
+    return NextResponse.next();
+  }
+
   const hasAuth = request.cookies.get('dgt.auth')?.value === 'authorized';
 
   if (!hasAuth) {
-    // Redirect to root (which has the gate component)
     return NextResponse.redirect(new URL('/', request.url));
   }
 
