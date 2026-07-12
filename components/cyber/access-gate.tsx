@@ -89,6 +89,12 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
     if (showInput && inputRef.current) inputRef.current.focus();
   }, [showInput]);
 
+  useEffect(() => {
+    if (mounted && !unlocked) {
+      trackGateEntry();
+    }
+  }, [mounted, unlocked]);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (checking || !targetHash) return;
@@ -166,10 +172,6 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
     trackMainPageAccess();
     return <>{children}</>;
   }
-
-  useEffect(() => {
-    trackGateEntry();
-  }, [mounted]);
 
   return (
     <div className="gate-wall fixed inset-0 z-[200] flex items-start justify-center overflow-x-hidden overflow-y-auto bg-[var(--ink)] px-3 py-4 sm:px-4 sm:py-7">
