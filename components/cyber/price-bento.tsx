@@ -9,11 +9,11 @@ import { useState } from "react";
 import { trackSkuThumbnailClick } from "@/lib/analytics";
 
 const PRICES = [
-  { color: "var(--toxic)", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "25 g", price: "$60", image: "/images/hash.jpeg" },
-  { color: "var(--acid)", label: "// SKU_02", title: "Bubble Hash", description: "Weed Resin Extract — Bekaa Valley", weight: "25 g", price: "$70", image: "/images/bubble_hash.png" },
-  { color: "var(--magenta)", label: "// SKU_03", title: "Weed / Marie", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "15 g", price: "$110", image: "/images/weed_buds.jpg" },
-  { color: "#00E8ED", label: "// SKU_04", title: "Coke (90% Pure)", description: "90% Pure Bolivian Cocaine Hydrochloride", weight: "0.5 g", price: "$100", image: "/images/cocaine.jpg" },
-  { color: "#FF4500", label: "// SKU_05", title: "Buprenorphine", description: "Sublingual tablets", weight: "8 mg", price: "$35", image: "/images/bup.png" },
+  { color: "var(--toxic)", label: "// SKU_01", title: "Hash / Bezre", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "25 g", price: "$70", image: "/images/hash.jpeg" },
+  { color: "var(--acid)", label: "// SKU_02", title: "Bubble Hash", description: "Weed Resin Extract — Bekaa Valley", weight: "25 g", price: "$80", image: "/images/bubble_hash.png" },
+  { color: "var(--magenta)", label: "// SKU_03", title: "Weed / Marie", description: "2026 harvest — Yammouneh, Bekaa Valley", weight: "15 g", price: "$120", image: "/images/weed_buds.jpg" },
+  { color: "#00E8ED", label: "// SKU_04", title: "Coke (90% Pure)", description: "90% Pure Bolivian Cocaine Hydrochloride", weight: "0.5 g", price: "$110", image: "/images/cocaine.jpg" },
+  { color: "#FF4500", label: "// SKU_05", title: "Buprenorphine", description: "Sublingual tablets", weight: "8 mg", price: "$45", image: "/images/bup.png" },
   { color: "#8A2BE2", label: "// SKU_06", title: "Ketamine", description: "Liquid Vial", weight: "1 vial", price: "TBD", image: "/images/ketamine.jpg" },
   { color: "#888888", label: "// SKU_07", title: "Available on demand", description: "Limited drop", weight: "—", price: "TBD", isCustomExplainer: true },
 ];
