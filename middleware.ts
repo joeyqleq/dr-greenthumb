@@ -22,7 +22,22 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check for gate cookie on protected routes (skip for root and API)
+  // Forensic report routes — require dgt.forensic cookie
+  if (pathname === '/cedar-bound/report' || pathname === '/based_joey/report') {
+    const hasForensicAuth = request.cookies.get('dgt.forensic')?.value === 'authorized';
+    if (!hasForensicAuth) {
+      const gate = pathname.startsWith('/cedar-bound') ? '/cedar-bound' : '/based_joey';
+      return NextResponse.redirect(new URL(gate, request.url));
+    }
+    return NextResponse.next();
+  }
+
+  // Forensic gate pages — always public
+  if (pathname === '/cedar-bound' || pathname === '/based_joey') {
+    return NextResponse.next();
+  }
+
+  // Other public routes
   if (pathname === '/' || pathname.startsWith('/api/auth') || pathname.startsWith('/forensics')) {
     return NextResponse.next();
   }

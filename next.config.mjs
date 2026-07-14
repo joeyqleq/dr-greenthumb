@@ -14,7 +14,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://numbers.trumpstein.me; connect-src 'self' https://numbers.trumpstein.me; style-src 'self' 'unsafe-inline'; img-src 'self' data:;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://numbers.trumpstein.me; connect-src 'self' https://numbers.trumpstein.me; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;",
           },
           {
             key: 'X-Content-Type-Options',

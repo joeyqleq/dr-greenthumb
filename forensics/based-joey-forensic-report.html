@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forensic Psychological Profile — u/based_joey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow+Condensed:wght@500;600;700&family=Barlow+Semi+Condensed:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --surface: #111318;
+    --surface2: #181b24;
+    --border-vis: #1e2330;
+    --accent: #6aaec8;
+    --accent-dim: rgba(106,174,200,0.10);
+    --accent2: #b89450;
+    --red: #cc4f4f;
+    --red-dim: rgba(204,79,79,0.10);
+    --green: #4fa87a;
+    --green-dim: rgba(79,168,122,0.10);
+    --yellow: #c4a93c;
+    --yellow-dim: rgba(196,169,60,0.10);
+    --text: #d8e0f0;
+    --text-secondary: #9aa3b8;
+    --muted: #5a6478;
+    --tag-bg: #181d2a;
+    --font-body: 'Barlow', system-ui, sans-serif;
+    --font-display: 'Barlow Condensed', system-ui, sans-serif;
+    --font-ui: 'Barlow Semi Condensed', system-ui, sans-serif;
+    --font-mono: 'Courier New', 'Courier', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.72;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--accent); transition: opacity 0.15s; }
+  a:hover { opacity: 0.75; }
+
+  /* TOPNAV */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(11,13,18,0.92);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-vis);
+    display: flex; align-items: center; gap: 0;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.5px;
+  }
+  .topnav span { padding: 10px 18px; }
+  .topnav .nav-label { color: var(--muted); border-right: 1px solid var(--border-vis); white-space: nowrap; }
+  .topnav .nav-subject { color: var(--accent); font-weight: 600; letter-spacing: 1px; }
+  .topnav .nav-stamp { margin-left: auto; color: var(--muted); border-left: 1px solid var(--border-vis); }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(160deg, #0b0d12 0%, #101520 60%, #0d1318 100%);
+    border-bottom: 1px solid var(--border-vis);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 350px;
+    background: radial-gradient(ellipse, rgba(106,174,200,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .header .label {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 3px;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 18px; opacity: 0.8;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 600; color: #f0f4ff;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    margin-bottom: 10px; text-wrap: balance;
+  }
+  .header h1 span { color: var(--accent); }
+  .header .sub {
+    color: var(--muted); font-family: var(--font-ui);
+    font-size: 13px; letter-spacing: 0.5px; margin-bottom: 36px;
+  }
+  .header .meta-row {
+    display: flex; justify-content: center;
+    gap: 40px; flex-wrap: wrap;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--border-vis);
+  }
+  .header .meta-item { text-align: center; }
+  .header .meta-item .val {
+    font-family: var(--font-display); font-size: 1.5rem;
+    font-weight: 600; color: var(--accent);
+    display: block; letter-spacing: 0.02em;
+  }
+  .header .meta-item .key {
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: 1.5px; opacity: 0.8;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 48px 32px 96px; }
+
+  /* TOC */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border-vis);
+    border-top: 1px solid var(--accent);
+    padding: 24px 28px; margin-bottom: 56px;
+    border-radius: 0 0 3px 3px;
+  }
+  .toc h3 {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px; opacity: 0.8;
+  }
+  .toc ol { columns: 2; column-gap: 40px; list-style: none; counter-reset: toc; }
+  .toc li {
+    counter-increment: toc; margin-bottom: 7px;
+    font-family: var(--font-ui); font-size: 13px;
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero) " ";
+    color: var(--accent); font-family: var(--font-mono);
+    font-size: 10px; opacity: 0.7;
+  }
+  .toc a { color: var(--text-secondary); text-decoration: none; transition: color 0.12s; }
+  .toc a:hover { color: var(--text); }
+
+  /* SECTIONS */
+  .section { margin-bottom: 72px; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 28px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-vis);
+  }
+  .section-num {
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--accent); letter-spacing: 2px;
+    opacity: 0.7; white-space: nowrap;
+  }
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    font-weight: 600; color: #e8edf8;
+    letter-spacing: 0.02em; text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface); border: 1px solid var(--border-vis);
+    border-radius: 3px; padding: 20px 24px; margin-bottom: 14px;
+  }
+  .card p { max-width: 72ch; }
+  .card-accent {
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+    border-color: color-mix(in srgb, var(--accent) 22%, var(--border-vis));
+  }
+  .card-red { background: var(--red-dim); border-color: color-mix(in srgb, var(--red) 22%, var(--border-vis)); }
+  .card-blue {
+    background: color-mix(in srgb, var(--accent2) 7%, var(--surface));
+    border-color: color-mix(in srgb, var(--accent2) 22%, var(--border-vis));
+  }
+  .card-green { background: var(--green-dim); border-color: color-mix(in srgb, var(--green) 22%, var(--border-vis)); }
+  .card h3 {
+    font-family: var(--font-mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent); margin-bottom: 10px; opacity: 0.85;
+  }
+
+  /* BLOCKQUOTE */
+  blockquote {
+    background: color-mix(in srgb, var(--accent) 6%, var(--surface2));
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border-vis));
+    padding: 13px 18px; margin: 12px 0; border-radius: 3px;
+    font-style: italic; color: #c4ccdc; font-size: 14px;
+    font-family: var(--font-body); line-height: 1.65;
+  }
+  blockquote .cite {
+    display: block; font-style: normal; font-size: 10px;
+    color: var(--muted); margin-top: 7px;
+    font-family: var(--font-mono); letter-spacing: 0.5px;
+  }
+
+  /* STATEMENTS */
+  .statement {
+    background: var(--surface); border: 1px solid var(--border-vis);
+    border-radius: 3px; padding: 22px 26px; margin-bottom: 18px;
+    position: relative; transition: border-color 0.15s;
+  }
+  .statement:hover { border-color: color-mix(in srgb, var(--accent) 30%, var(--border-vis)); }
+  .statement .stmt-num {
+    position: absolute; top: 14px; right: 16px;
+    font-family: var(--font-display); font-size: 28px;
+    color: color-mix(in srgb, var(--accent) 12%, transparent);
+    font-weight: 700; line-height: 1; letter-spacing: -0.02em;
+    user-select: none;
+  }
+  .statement blockquote { margin: 0 0 12px 0; }
+  .statement .stmt-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tag {
+    background: var(--tag-bg); border: 1px solid var(--border-vis);
+    border-radius: 2px; padding: 2px 9px; font-size: 10px;
+    color: var(--muted); font-family: var(--font-mono);
+    white-space: nowrap; letter-spacing: 0.3px;
+  }
+  .tag.sub { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 25%, var(--border-vis)); }
+  .tag.score-high { color: var(--green); border-color: color-mix(in srgb, var(--green) 25%, var(--border-vis)); }
+  .tag.score-neg { color: var(--red); }
+  .statement .reading {
+    font-size: 14px; color: var(--text-secondary);
+    line-height: 1.72; max-width: 68ch;
+  }
+
+  /* GRIDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; font-family: var(--font-ui); }
+  th {
+    background: var(--surface2); color: var(--accent);
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 9px 14px; text-align: left;
+    border-bottom: 1px solid var(--border-vis); opacity: 0.85;
+  }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border-vis); vertical-align: top; color: var(--text-secondary); }
+  td:first-child { color: var(--text); font-weight: 500; }
+  tr:hover td { background: var(--surface2); }
+
+  /* RISK METER */
+  .risk-row {
+    display: grid; grid-template-columns: 180px 1fr 100px;
+    align-items: center; gap: 16px;
+    padding: 11px 0; border-bottom: 1px solid var(--border-vis);
+  }
+  .risk-row:last-child { border-bottom: none; }
+  .risk-label { font-size: 13px; color: var(--text); font-family: var(--font-ui); font-weight: 500; }
+  .risk-bar-wrap { background: var(--surface2); height: 6px; border-radius: 3px; overflow: hidden; }
+  .risk-bar { height: 100%; border-radius: 3px; }
+  .risk-vlow { background: var(--green); width: 6%; }
+  .risk-low { background: var(--green); width: 12%; }
+  .risk-medium { background: var(--yellow); width: 42%; }
+  .risk-level { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; text-align: right; text-transform: uppercase; }
+  .risk-level.vlow, .risk-level.low { color: var(--green); }
+  .risk-level.medium { color: var(--yellow); }
+
+  /* TRAIT CARDS */
+  .trait-card {
+    background: var(--surface); border: 1px solid var(--border-vis);
+    border-radius: 3px; padding: 18px 20px;
+  }
+  .trait-card h4 {
+    font-family: var(--font-mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent); margin-bottom: 8px; opacity: 0.85;
+  }
+  .trait-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .trait-card blockquote { margin: 10px 0 0 0; font-size: 13px; }
+
+  /* ANOMALY */
+  .anomaly {
+    background: var(--yellow-dim);
+    border: 1px solid color-mix(in srgb, var(--yellow) 22%, var(--border-vis));
+    border-radius: 3px; padding: 18px 22px; margin-bottom: 12px;
+  }
+  .anomaly h4 {
+    font-family: var(--font-mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--yellow); margin-bottom: 8px;
+  }
+  .anomaly p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+  /* FINGERPRINT */
+  .fingerprint-item {
+    display: flex; gap: 20px; padding: 13px 0;
+    border-bottom: 1px solid var(--border-vis); font-size: 14px;
+  }
+  .fingerprint-item:last-child { border-bottom: none; }
+  .fp-key {
+    min-width: 150px; color: var(--accent);
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding-top: 2px; opacity: 0.85; flex-shrink: 0;
+  }
+  .fp-val { color: var(--text-secondary); line-height: 1.65; }
+
+  /* BAR CHART */
+  .bar-chart { margin-bottom: 6px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 7px; font-size: 12px; }
+  .bar-name { width: 190px; text-align: right; color: var(--muted); flex-shrink: 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3px; }
+  .bar-track { flex: 1; background: var(--surface2); height: 16px; border-radius: 2px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; background: var(--accent); border-radius: 2px;
+    display: flex; align-items: center; padding-left: 8px;
+    font-size: 10px; color: #0b0d12; font-weight: 600;
+    font-family: var(--font-mono); min-width: 32px;
+  }
+
+  /* SYNTHESIS */
+  .synthesis {
+    background: var(--surface); border: 1px solid var(--border-vis);
+    border-top: 1px solid var(--accent);
+    border-radius: 0 0 3px 3px; padding: 32px 36px;
+  }
+  .synthesis p {
+    font-size: 15.5px; line-height: 1.88; color: var(--text);
+    margin-bottom: 20px; max-width: 70ch; text-wrap: pretty;
+  }
+  .synthesis p:last-child { margin-bottom: 0; }
+
+  /* CONTRAST NOTE */
+  .contrast-note {
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface2));
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border-vis));
+    border-radius: 3px; padding: 16px 20px; margin-top: 20px;
+    font-size: 13px; color: var(--text-secondary);
+  }
+  .contrast-note strong { color: var(--text); }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border-vis);
+    padding: 24px 32px; text-align: center;
+    font-size: 11px; color: var(--muted);
+    font-family: var(--font-mono); letter-spacing: 0.5px;
+  }
+
+  /* MOTION */
+  @media (prefers-reduced-motion: no-preference) {
+    .section { opacity: 0; transform: translateY(12px); transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+    .section.visible { opacity: 1; transform: none; }
+    .statement { opacity: 0; transform: translateY(8px); transition: opacity 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.15s; }
+    .statement.visible { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section, .statement { opacity: 1; transform: none; }
+  }
+
+  /* PRINT */
+  @media print {
+    .topnav { display: none; }
+    body { background: #fff; color: #111; font-size: 12px; }
+    .header { background: #f4f4f4; border-bottom: 2px solid #ccc; padding: 32px; }
+    .header h1 { color: #111; font-size: 2rem; }
+    .card, .statement, .trait-card { background: #fafafa; border-color: #ddd; }
+    blockquote { background: #f7f7f7; border-color: #ccc; color: #333; }
+    .anomaly { background: #fffbf0; border-color: #e8d9a0; }
+    .synthesis { background: #fafafa; border-color: #ddd; }
+    .section, .statement { opacity: 1 !important; transform: none !important; }
+    a { color: inherit; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .toc ol { columns: 1; }
+    .header h1 { font-size: clamp(1.4rem, 5vw, 2rem); }
+    .header .meta-row { gap: 18px; }
+    .risk-row { grid-template-columns: 140px 1fr 80px; }
+    .container { padding: 32px 20px 64px; }
+    .bar-name { width: 130px; }
+  }
+  @media (max-width: 480px) {
+    .risk-row { grid-template-columns: 1fr 70px; }
+    .risk-bar-wrap { display: none; }
+    .fingerprint-item { flex-direction: column; gap: 6px; }
+    .fp-key { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="nav-label">FORENSIC REPORT</span>
+  <span class="nav-subject">u/based_joey</span>
+  <span class="nav-stamp">CONFIDENTIAL</span>
+</nav>
+<div style="height:41px;"></div>
+
+<div class="header">
+  <div class="label">Forensic Psychological Report &nbsp;|&nbsp; Confidential</div>
+  <h1>u/<span>based_joey</span></h1>
+  <div class="sub">Reddit Activity Analysis &nbsp;·&nbsp; 2026</div>
+  <div class="meta-row">
+    <div class="meta-item"><span class="val">135</span><span class="key">Comments</span></div>
+    <div class="meta-item"><span class="val">10</span><span class="key">Posts</span></div>
+    <div class="meta-item"><span class="val">564</span><span class="key">Total Karma</span></div>
+    <div class="meta-item"><span class="val">3.89</span><span class="key">Avg Score</span></div>
+    <div class="meta-item"><span class="val">58%</span><span class="key">r/ForbiddenBromance</span></div>
+    <div class="meta-item"><span class="val">VERY LOW</span><span class="key">Forensic Risk</span></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#s1">Executive Summary</a></li>
+      <li><a href="#s2">Macro Behavioral Analysis</a></li>
+      <li><a href="#s3">Psychological Profile — Core Traits</a></li>
+      <li><a href="#s4">Micro-Level Analysis — Statements</a></li>
+      <li><a href="#s5">Anomaly Detection</a></li>
+      <li><a href="#s6">Relationship Dynamics</a></li>
+      <li><a href="#s7">Life Circumstances Inference</a></li>
+      <li><a href="#s8">Forensic Risk Indicators</a></li>
+      <li><a href="#s9">Linguistic Fingerprint</a></li>
+      <li><a href="#s10">Synthesis — Who Is based_joey</a></li>
+    </ol>
+  </nav>
+
+  <!-- SECTION 1 -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2>Executive Summary</h2>
+    </div>
+    <div class="card card-accent">
+      <p>u/based_joey presents as a young Lebanese male (estimated 17–19 years old), currently navigating the end of his secondary education while deeply stressed about his academic and professional future in a crisis-stricken Lebanon. Operating largely on r/ForbiddenBromance, r/Sat, and r/civilengineering, his digital footprint reflects a highly sociable, peace-seeking, and anxious individual who uses humor and enthusiastic digital socialization to cope with significant real-world instability.</p>
+    </div>
+    <div class="card">
+      <p>Psychologically, Joey exhibits high empathy, an anxious-preoccupied attachment style marked by intense validation-seeking and rapid rapport building, and a pronounced avoidance of conflict. Politically, he aligns with Lebanese Christian/secular right-wing sentiments (Lebanese Forces, Kataeb), staunchly opposing Hezbollah and enthusiastically advocating for normalization and peace with Israel — using shared Levantine culture (food, humor, geography) as his primary diplomatic currency.</p>
+    </div>
+    <div class="card card-green">
+      <p>Despite living in a high-stress environment of economic collapse and recurring military conflict, Joey's forensic risk profile is remarkably low. He channels geopolitical trauma into radical coexistence rather than extremism. His crisis language is entirely localized to personal academic pressures — the SATs, career viability — not violence or radicalization.</p>
+    </div>
+    <div class="grid-3" style="margin-top:18px;">
+      <div class="card card-accent">
+        <h3>Top Trait #1</h3>
+        <p>Radical coexistence — uses digital platforms to bypass physical borders and build peace through personal connection, food, and humor.</p>
+      </div>
+      <div class="card card-blue">
+        <h3>Top Trait #2</h3>
+        <p>Academic anxiety — significant insecurity about SAT scores and career viability; uses Gen-Z hyperbole to process real existential stress.</p>
+      </div>
+      <div class="card card-green">
+        <h3>Top Trait #3</h3>
+        <p>Conflict avoidance — almost never initiates or sustains aggressive arguments; defaults to empathy, humor, and de-escalation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2>Macro Behavioral Analysis</h2>
+    </div>
+
+    <div class="card card-accent" style="margin-bottom:20px;">
+      <h3>Subreddit Activity Distribution</h3>
+      <div class="bar-chart">
+        <div class="bar-row"><span class="bar-name">r/ForbiddenBromance</span><div class="bar-track"><div class="bar-fill" style="width:58%">84 · 57.9%</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/Sat</span><div class="bar-track"><div class="bar-fill" style="width:19%">28 · 19.3%</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/civilengineering</span><div class="bar-track"><div class="bar-fill" style="width:14%">21 · 14.5%</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/AUB_Lebanon</span><div class="bar-track"><div class="bar-fill" style="width:5.5%">8 · 5.5%</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/lebanon + r/DeveloperJobs</span><div class="bar-track"><div class="bar-fill" style="width:2.7%">4</div></div></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Temporal Patterns</h3>
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:10px;">Activity concentrated April–July 2026, spikes aligning with regional news events and academic milestones.</p>
+        <table>
+          <tr><th>UTC Window</th><th>Pattern</th></tr>
+          <tr><td>05:00–07:00</td><td>Morning study session</td></tr>
+          <tr><td>14:00–18:00</td><td>After school peak</td></tr>
+          <tr><td>Late June</td><td style="color:var(--accent)">Spike — rumored peace deal</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Score / Karma Metrics</h3>
+        <table>
+          <tr><th>Metric</th><th>Value</th></tr>
+          <tr><td>Total karma</td><td style="color:var(--accent)">564</td></tr>
+          <tr><td>Average per item</td><td>3.89</td></tr>
+          <tr><td>Maximum score</td><td style="color:var(--green)">121</td></tr>
+          <tr><td>Minimum score</td><td style="color:var(--red)">−2</td></tr>
+          <tr><td>Edited items</td><td style="color:var(--green)">0 (posts impulsively)</td></tr>
+          <tr><td>Deleted items</td><td>Low</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h3>Language &amp; Code-Switching</h3>
+      <p style="font-size:14px; color:var(--text-secondary);">Casual internet English heavily seasoned with Gen-Z slang ("bruh," "cooked," "xddd," "fr"). Frequent code-switching into Lebanese Arabic transliterations ("inshallah," "yala," "habibii"). Heavy emoji use as punctuation (💔 😭 😍 💀). Minor grammatical/spelling errors typical of a non-native English speaker typing quickly on mobile ("dept" for debt, "hight" for high, "Lebabon" for Lebanon).</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2>Psychological Profile — Core Traits</h2>
+    </div>
+    <div class="grid-2">
+
+      <div class="trait-card">
+        <h4>Attachment Style</h4>
+        <p>Anxious-preoccupied but prosocial. Craves connection and reassurance, rapidly escalating digital intimacy with strangers. Shares personal vulnerabilities (exam anxiety, career fears) very quickly.</p>
+        <blockquote>"MWAHHHH ❤️"<span class="cite">r/ForbiddenBromance — to a stranger after brief rapport</span></blockquote>
+        <blockquote>"You will let me sleep next to you right ?"<span class="cite">Rapid warmth escalation</span></blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Conflict Style</h4>
+        <p>Highly avoidant and de-escalatory. Almost never initiates arguments. Uses empathy, humor, or validation to defuse tension rather than engaging directly.</p>
+        <blockquote>"Calm down take a break do not have a crisis"<span class="cite">r/Sat — responding to a stressed peer</span></blockquote>
+        <blockquote>"I dont think he's doing something bad he's just telling me advice however yeah its disrespectful"<span class="cite">Balanced, non-combative framing</span></blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Self-Esteem Markers</h4>
+        <p>Significant insecurity regarding intellect and professional future. Uses self-deprecating Gen-Z humor to process real feelings of inadequacy. His self-esteem is highly conditional on academic performance.</p>
+        <blockquote>"Bro be happy im shiting on my pant right now"<span class="cite">r/Sat — visceral exam anxiety</span></blockquote>
+        <blockquote>"Damn why everyone have a hight score i just want 1000+ 😭"<span class="cite">r/Sat — comparison anxiety</span></blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Political Identity</h4>
+        <p>Lebanese Christian, pro-normalization with Israel, firmly anti-Hezbollah. Explicitly aligns with Lebanese Forces, Kataeb, and NLP factions. Views Hezbollah as an occupying terrorist force — not as representative of Lebanon.</p>
+        <blockquote>"Hezeb@llah isnt a representative of Lebanon but a terrorist group"<span class="cite">r/ForbiddenBromance</span></blockquote>
+        <blockquote>"all the Christian militia or party (LF,kataeb,NLP,etc...) are pro-israelie for maintaining the independence of lebanon against Iran"<span class="cite">r/ForbiddenBromance</span></blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Tribal Identity</h4>
+        <p>Strongly identifies with Levantine and Lebanese Christian identity. Uses food and geography as primary bonding tools — falafel, arak, Dekwene — rather than political or religious doctrine.</p>
+        <blockquote>"Go to the Christan zone . It's the best and safer"<span class="cite">Sectarian spatial awareness as care</span></blockquote>
+        <blockquote>"We usually don't drink whiskey we drink Arak its better and tastier and made in Lebanon"<span class="cite">Culinary identity as diplomacy</span></blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Humor Style</h4>
+        <p>Gen-Z hyperbolic. Uses absurdist escalation and crude metaphor to handle both personal stress and geopolitical tension. Humor is his primary social lubricant, not his primary intellectual register.</p>
+        <blockquote>"Socrate leave this guy body alone O_O"<span class="cite">Absurdist deflection</span></blockquote>
+        <blockquote>"Remove ur plate and be a true lebanese 😂 you think we drive with a licence plate"<span class="cite">Self-deprecating national humor</span></blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Empathy Indicators</h4>
+        <p>Genuinely high empathy across sectarian and national lines. Responds to strangers' grief, academic stress, and geopolitical pain with warmth. Does not weaponize empathy — it reads as authentic.</p>
+        <blockquote>"That so sad.. god bless you and I hope everything will be fine"<span class="cite">To a stranger sharing hardship</span></blockquote>
+        <blockquote>"God bless ur daughter amen"<span class="cite">Unprompted blessing across religious lines</span></blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Anxiety / Stressors</h4>
+        <p>Dual-track anxiety: academic (SAT performance, AUB admission) and existential (career viability in a collapsed economy, looming war). Both are real and age-appropriate. He processes them through dark humor rather than withdrawal.</p>
+        <blockquote>"sadly my country is in dept and there is no works"<span class="cite">r/civilengineering — economic fatalism</span></blockquote>
+        <blockquote>"Im cooked 💔"<span class="cite">Fatalistic humor about career prospects</span></blockquote>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04 —</span>
+      <h2>Micro-Level Analysis — Notable Statements</h2>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">01</span>
+      <blockquote>"WE DID IT... For the first time since the 1948 Palestinian Nakba, the Lebanese state officially recognizes Israel"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-27</span>
+        <span class="tag score-high">Score: 121 — highest post</span>
+      </div>
+      <p class="reading">Deep emotional investment in regional peace — his all-caps eruption signals genuine euphoria, not performative posturing. This is the post that defines his Reddit identity: a teenager who wants the war to simply be over. The fact that this is his most-upvoted post by far confirms that his audience shares the feeling.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">02</span>
+      <blockquote>"You will taste falafel in beirut soon enough dont worry"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-27</span>
+        <span class="tag score-high">Score: 39</span>
+      </div>
+      <p class="reading">His most revealing diplomatic act in the corpus. Food is the entire vehicle through which he conceptualizes peace — not politics, not theology, not history. "Come eat with us" is his complete peace framework. At 17–18, that's both naive and emotionally profound.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">03</span>
+      <blockquote>"Bro be happy im shiting on my pant right now"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/Sat</span>
+        <span class="tag">2026-06-23</span>
+      </div>
+      <p class="reading">Visceral performance anxiety rendered in the crudest possible Gen-Z register. The disproportionate physical reaction (bowel fear) to an exam score is a tell for someone whose self-worth is heavily tied to academic outcomes. He uses hyperbole to acknowledge the fear without admitting it directly.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">04</span>
+      <blockquote>"A student called the isralie to bombard his/her own school 💔 | What's going on with Lebanese student"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-04-28</span>
+        <span class="tag score-high">Score: 17</span>
+      </div>
+      <p class="reading">Genuine sorrow over the normalization of extreme violence in daily Lebanese student life. The broken-heart emoji is not decorative — it's doing real emotional work. He cannot process this event through humor; he's simply sad. This moment reveals his baseline sensitivity beneath the online persona.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">05</span>
+      <blockquote>"Im lost.. It is a good thing to majoring in civil engineering nowdays ? ... Im a young student and im thinking about doing it but with this reviews im lost"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/civilengineering</span>
+        <span class="tag">2026-06-18</span>
+        <span class="tag score-high">Score: 11</span>
+      </div>
+      <p class="reading">Classic adolescent anxiety about irreversible life decisions. He relies heavily on community consensus for major personal choices — a pattern of external locus of control. He is genuinely lost, not performing. The word "lost" appears repeatedly in his corpus at moments of real decision-making stress.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">06</span>
+      <blockquote>"Hezeb@llah isnt a representative of Lebanon but a terrorist group and officially said by the prime minister Nawaf salam"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-28</span>
+      </div>
+      <p class="reading">Firm ideological conviction delivered with the confidence of someone who has held this view his entire conscious life. Cites state authority (Nawaf Salam) to validate the position — showing he understands that his personal opinion needs institutional backing to be credible to outsiders. More sophisticated than his general register suggests.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">07</span>
+      <blockquote>"Israel won't withdraw from the south and im sure they will keep expanding their territory next year... the worst is coming"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-28</span>
+      </div>
+      <p class="reading">His most revealing political statement. Despite the celebratory tone of his peace-normalization posts hours earlier, he harbors cold, realistic fears about the geopolitical trajectory consuming his country. This is not despair — it is accurate threat assessment from a teenager who has lived through actual bombardment. The optimism and the fatalism coexist without contradiction in his worldview.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">08</span>
+      <blockquote>"As a lebanese/israelie we call ourselves mizrahi jews, mizrahi mean the levant (Lebanon syria,jordan and israel)"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-29</span>
+        <span class="tag score-high">Score: 13</span>
+      </div>
+      <p class="reading">A notable anomaly — he is a Lebanese Christian, not a Mizrahi Jew. He is almost certainly attempting to construct a shared indigenous framework ("we are all Levantine") to assert common ground with his Israeli interlocutors. The claim is ethnographically incorrect but emotionally sincere: he wants to be the same as them, not different from them. This is bridge-building through imprecise categorization.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">09</span>
+      <blockquote>"Yes the LF kataeb or the NLP want peace with israel and they are mostly Christians, if you want to know more you can dms me"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-18</span>
+      </div>
+      <p class="reading">Functions as a willing political ambassador who actively seeks private communication to continue the education. This is not just opinionating — he wants to be a resource, a guide, a bridge. At 17–18, the impulse to be the person who explains Lebanon to outsiders is psychologically significant: he needs Lebanon to be understood correctly.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">10</span>
+      <blockquote>"Remove ur plate and be a true lebanese 😂 you think we drive with a licence plate or a certificate that we are a driver?"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-28</span>
+      </div>
+      <p class="reading">Self-deprecating national humor about Lebanon's chaotic infrastructure, delivered to an Israeli interlocutor. He bonds over his country's dysfunction rather than defending it — a psychologically healthy and socially effective move. Self-deprecation as diplomacy.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">11</span>
+      <blockquote>"Calm down take a break do not have a crisis"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/Sat</span>
+        <span class="tag">2026-06-30</span>
+        <span class="tag score-neg">Score: −1</span>
+      </div>
+      <p class="reading">Acts as a stabilizing force for stressed peers — offering the exact reassurance he needs himself, to someone else. This is projection-as-generosity: he tells others not to spiral because he knows the feeling intimately. Negative score indicates the peer didn't want advice — but his impulse to comfort was genuine.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">12</span>
+      <blockquote>"Ai isn't here to take jobs but reducing the routine task of people by becoming ur right hand"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/DeveloperJobs</span>
+        <span class="tag">2026-06-18</span>
+      </div>
+      <p class="reading">Pragmatic and nuanced AI stance for a teenager. Shows he is actively consuming tech discourse and trying to position himself optimistically relative to labor market threats. This is a young person doing genuine career threat-modeling, not naive techno-optimism.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">13</span>
+      <blockquote>"Habibii come to Lebabon 😍"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+        <span class="tag">2026-06-28</span>
+      </div>
+      <p class="reading">The misspelling of Lebanon and the heart-eyes emoji underscore completely uninhibited enthusiasm. He is not performing cosmopolitan warmth — he genuinely wants this person to visit. This is the most nakedly joyful moment in his corpus, and it happens in the context of Israeli-Lebanese digital diplomacy.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">14</span>
+      <blockquote>"sadly my country is in dept and there is no works"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/civilengineering</span>
+        <span class="tag">2026-06-18</span>
+      </div>
+      <p class="reading">Quiet, unguarded admission of existential economic despair. No humor, no deflection. He is genuinely scared about whether there will be a functional economy for him to enter as an adult. This is the most unmediated expression of his situation in the corpus — not for an audience, just true.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">15</span>
+      <blockquote>"That so sad.. god bless you and I hope everything will be fine"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/ForbiddenBromance</span>
+      </div>
+      <p class="reading">Pure empathy with no instrumental purpose. He responds to a stranger's grief with a genuine blessing. No agenda, no bridge-building, no humor. This is who he is when stripped of performance — a teenager who cares about other people.</p>
+    </div>
+
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05 —</span>
+      <h2>Anomaly Detection</h2>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚡ Mizrahi Identity Claim</h4>
+      <p>He identifies as "Lebanese/Israelie" calling himself "mizrahi" in a post, where Mizrahi specifically refers to Jewish communities of Middle Eastern origin. He is a Lebanese Christian. This is almost certainly a semantic attempt to establish a shared Levantine indigenous framework with Israeli interlocutors, not a factual identity claim. It reveals the depth of his desire for common ground — he will stretch categories to find it.</p>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚡ Euphoria / Fatalism Whiplash</h4>
+      <p>On June 27, he posts ecstatic celebration about a rumored peace deal (Score: 121). On June 28, hours later, he states flatly "the worst is coming" about Israeli territorial expansion. This is not inconsistency — it is what living through Lebanon's news cycle looks like from the inside. The bipolar swing is contextually accurate, not psychologically pathological.</p>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚡ Zero Edits</h4>
+      <p>Unlike most Reddit users, he has edited zero posts. He posts impulsively and authentically, with no attempt to curate his image retroactively. This is unusual and significant — it means what you read is exactly what he thought in the moment, unmediated by second-guessing. His record is unusually transparent.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06 —</span>
+      <h2>Relationship Dynamics</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card card-green">
+        <h3>Collaborative (~95%)</h3>
+        <p style="font-size:14px; color:var(--text-secondary);">Embraces agreement with warmth and enthusiasm. On r/ForbiddenBromance he acts as an enthusiastic Lebanese host, offering food, geography tips, and affection to Israeli strangers. On r/Sat and r/civilengineering he seeks mentorship and reciprocates by comforting peers experiencing the same stress.</p>
+      </div>
+      <div class="card" style="background:var(--yellow-dim); border-color:color-mix(in srgb,var(--yellow) 22%,var(--border-vis));">
+        <h3>Combative (~5%)</h3>
+        <p style="font-size:14px; color:var(--text-secondary);">Almost never engages in direct conflict. When challenged politically, he responds with facts and a DM offer rather than argument. The few negative scores in his corpus come from advice being unwelcome, not from aggression.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07 —</span>
+      <h2>Life Circumstances Inference</h2>
+    </div>
+    <table>
+      <tr><th>Factor</th><th>Inference</th><th>Confidence</th><th>Evidence</th></tr>
+      <tr><td>Age</td><td>17–19</td><td style="color:var(--green)">HIGH</td><td>Preparing for SATs, asking about university majors, student schedule</td></tr>
+      <tr><td>Gender</td><td>Male</td><td style="color:var(--green)">HIGH</td><td>Self-presentation patterns, username</td></tr>
+      <tr><td>Geography</td><td>Beirut/Mount Lebanon — "Christian zone," Dekwene area</td><td style="color:var(--green)">HIGH</td><td>"shawarma joseph in dekwene," specific neighborhood knowledge</td></tr>
+      <tr><td>Occupation</td><td>High school student preparing for AUB application</td><td style="color:var(--green)">HIGH</td><td>r/AUB_Lebanon activity, SAT prep, major selection anxiety</td></tr>
+      <tr><td>Faith</td><td>Lebanese Christian (Maronite likely)</td><td style="color:var(--green)">HIGH</td><td>Explicit political alignment with Christian parties, "Christian zone" spatial identity</td></tr>
+      <tr><td>Financial</td><td>Middle-class, economically stressed</td><td style="color:var(--yellow)">MEDIUM</td><td>Concern about job market, "my country is in dept" — personal, not academic</td></tr>
+      <tr><td>Relationships</td><td>Single, socially extroverted</td><td style="color:var(--yellow)">MEDIUM</td><td>Rapid digital intimacy, flirtatious patterns, no mentions of a partner</td></tr>
+    </table>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08 —</span>
+      <h2>Forensic Risk Indicators</h2>
+    </div>
+    <div class="card" style="padding:26px 30px;">
+      <div class="risk-row">
+        <span class="risk-label">Hostility Escalation</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-vlow"></div></div>
+        <span class="risk-level vlow">VERY LOW</span>
+      </div>
+      <div class="risk-row">
+        <span class="risk-label">Targeted Fixation</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-vlow"></div></div>
+        <span class="risk-level vlow">VERY LOW</span>
+      </div>
+      <div class="risk-row">
+        <span class="risk-label">Crisis Language</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-medium"></div></div>
+        <span class="risk-level medium">MODERATE</span>
+      </div>
+      <div class="risk-row">
+        <span class="risk-label">Radicalization Markers</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-vlow"></div></div>
+        <span class="risk-level vlow">VERY LOW</span>
+      </div>
+    </div>
+    <div class="card card-green" style="margin-top:14px;">
+      <h3>Risk Assessment Note</h3>
+      <p style="font-size:14px; color:var(--text-secondary);">The "Moderate" crisis language score reflects academic panic ("shiting on my pant," "Im cooked 💔"), not violence indicators. This is age-normative stress expression, not a forensic concern. His radicalization trajectory is actively <em>inverse</em> — he responds to geopolitical trauma by building friendships across the conflict line. The risk floor here is essentially zero.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09 —</span>
+      <h2>Linguistic Fingerprint</h2>
+    </div>
+    <div class="card">
+      <div class="fingerprint-item">
+        <span class="fp-key">Repeated Phrases</span>
+        <span class="fp-val">"Bro" · "Damn" · "xddd" · "fr" · "alright alright" · "Im lost" · "Im cooked"</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Vocabulary Level</span>
+        <span class="fp-val">Below his apparent intelligence. Heavy reliance on Gen-Z slang as emotional shorthand. More sophisticated political analysis emerges when he drops the register (e.g., Hezbollah/Wilaya analysis, AI labor market commentary).</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Emoji Usage</span>
+        <span class="fp-val">💔 for genuine sadness · 😭 for stress/anxiety · 😍 for enthusiasm · 😂 for self-deprecating humor · 💀 for "this is killing me" hyperbole. Emojis are not decorative — they carry the primary emotional signal.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Spelling Errors</span>
+        <span class="fp-val">"dept" (debt) · "hight" (high) · "Lebabon" (Lebanon) · "isralie" (Israeli) — consistent with mobile typing, not illiteracy. Errors cluster on proper nouns and cognates.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Arabic Markers</span>
+        <span class="fp-val">"inshallah" · "yala" · "habibii" · "arak" — used naturally, not for cultural performance. These are his first-language intrusions rather than code-switching choices.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Trailing Ellipsis</span>
+        <span class="fp-val">Frequent use of "..." to indicate hesitation, trailing thought, or unresolved anxiety. Appears most often in career/academic anxiety posts — signals genuine uncertainty, not confidence.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 10 -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10 —</span>
+      <h2>Synthesis — Who Is based_joey</h2>
+    </div>
+    <div class="synthesis">
+      <p>u/based_joey is a young Lebanese student standing on the precipice of adulthood in a country that has never quite stopped collapsing. Plagued by the relatable anxieties of his age — SAT scores, university admissions, whether civil engineering is a viable degree in a $50-billion-in-debt economy — he channels his stress into hyper-social digital engagement. He is not escaping reality; he is building a parallel one where the war simply does not happen, where falafel replaces grenades as the primary unit of cultural exchange.</p>
+      <p>Rather than succumbing to the sectarian radicalism endemic to his region, Joey aggressively pursues the opposite: radical coexistence through embarrassingly earnest digital diplomacy. He invites strangers to Beirut. He misspells his own country's name in his enthusiasm. He claims (incorrectly) to share an ethnic identity with his Israeli interlocutors because he wants so badly to be the same as them that taxonomy becomes an obstacle. This is not naivety — it is the specific form of hope that takes root in teenagers who have lived through things adults try to protect children from.</p>
+      <p>His forensic risk is essentially zero. He is too busy anxiously memorizing SAT vocabulary and inviting strangers to eat arak in the Christian zone to radicalize. He represents a generation that inherited a failed state and decided, by some combination of temperament and exhaustion, to try a completely different approach: being extremely nice to people on the internet and hoping it helps.</p>
+    </div>
+
+    <div class="contrast-note">
+      <strong>Analyst note:</strong> At 17–19, based_joey's psychological profile is still forming. The traits observed here — conflict avoidance, anxious attachment, academic insecurity, radical empathy — are developmental in nature, not fixed. His geopolitical optimism is likely to be stress-tested by events outside his control. How those events reshape his worldview is the open question this corpus cannot answer.
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  FORENSIC REPORT — u/based_joey &nbsp;·&nbsp; 145 records analyzed &nbsp;·&nbsp; Generated 2026-07-15 &nbsp;·&nbsp; CONFIDENTIAL
+</div>
+
+<script>
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.section, .statement').forEach(function(el, i) {
+    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      el.style.transitionDelay = Math.min(i * 0.02, 0.12) + 's';
+    }
+    observer.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
