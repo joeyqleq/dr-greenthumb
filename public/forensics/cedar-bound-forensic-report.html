@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forensic Psychological Profile — u/Cedar-Bound</title>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161d;
+    --surface2: #1a1e28;
+    --border: #252a38;
+    --accent: #c8a96e;
+    --accent2: #7eb8d4;
+    --red: #e05c5c;
+    --green: #5cb88a;
+    --yellow: #d4b95e;
+    --text: #dde3ef;
+    --muted: #7a849a;
+    --tag-bg: #1f2535;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Georgia', serif;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  a { color: var(--accent2); }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a1628 60%, #0d1520 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(200,169,110,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header .label {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-size: 2.4rem;
+    font-weight: normal;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .header h1 span { color: var(--accent); }
+  .header .sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  .header .meta-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .header .meta-item {
+    text-align: center;
+  }
+  .header .meta-item .val {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--accent);
+    display: block;
+    font-family: 'Courier New', monospace;
+  }
+  .header .meta-item .key {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  /* NAV */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    padding: 24px 28px;
+    margin-bottom: 48px;
+    border-radius: 0 0 4px 4px;
+  }
+  .toc h3 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-family: 'Courier New', monospace;
+  }
+  .toc ol {
+    columns: 2;
+    column-gap: 32px;
+    list-style: none;
+    counter-reset: toc;
+  }
+  .toc li {
+    counter-increment: toc;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .toc li::before {
+    content: "0" counter(toc) " — ";
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+  }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 64px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+  .section h2 {
+    font-size: 1.3rem;
+    font-weight: normal;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+  }
+  .card-accent {
+    background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  }
+  .card-red {
+    background: color-mix(in srgb, var(--red) 6%, var(--surface));
+    border-color: color-mix(in srgb, var(--red) 30%, var(--border));
+  }
+  .card-blue {
+    background: color-mix(in srgb, var(--accent2) 6%, var(--surface));
+    border-color: color-mix(in srgb, var(--accent2) 30%, var(--border));
+  }
+  .card-green {
+    background: color-mix(in srgb, var(--green) 6%, var(--surface));
+    border-color: color-mix(in srgb, var(--green) 30%, var(--border));
+  }
+  .card h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* QUOTE */
+  blockquote {
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface2));
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+    padding: 14px 20px;
+    margin: 14px 0;
+    border-radius: 4px;
+    font-style: italic;
+    color: #c8d0e0;
+    font-size: 14px;
+  }
+  blockquote .cite {
+    display: block;
+    font-style: normal;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* MICRO STATEMENTS */
+  .statement {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .statement .stmt-num {
+    position: absolute;
+    top: 16px; right: 18px;
+    font-family: 'Courier New', monospace;
+    font-size: 22px;
+    color: var(--border);
+    font-weight: bold;
+    line-height: 1;
+  }
+  .statement blockquote {
+    margin: 0 0 14px 0;
+  }
+  .statement .stmt-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 10px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+  }
+  .tag.sub { color: var(--accent2); }
+  .tag.score-high { color: var(--green); }
+  .tag.score-neg { color: var(--red); }
+  .statement .reading {
+    font-size: 14px;
+    color: #b8c4d8;
+    line-height: 1.7;
+  }
+
+  /* GRID */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: var(--surface2); }
+
+  /* RISK METER */
+  .risk-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .risk-row:last-child { border-bottom: none; }
+  .risk-label { font-size: 13px; color: var(--text); }
+  .risk-bar-wrap {
+    background: var(--surface2);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .risk-bar {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .risk-low { background: var(--green); width: 15%; }
+  .risk-medium { background: var(--yellow); width: 45%; }
+  .risk-high { background: var(--red); width: 80%; }
+  .risk-level {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-align: right;
+  }
+  .risk-level.low { color: var(--green); }
+  .risk-level.medium { color: var(--yellow); }
+  .risk-level.high { color: var(--red); }
+
+  /* TRAIT CARDS */
+  .trait-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .trait-card h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+  }
+  .trait-card p { font-size: 13px; color: #b8c4d8; line-height: 1.65; }
+  .trait-card blockquote {
+    margin: 10px 0 0 0;
+    font-size: 13px;
+  }
+
+  /* ANOMALY */
+  .anomaly {
+    background: color-mix(in srgb, var(--red) 6%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--red) 30%, var(--border));
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .anomaly h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--red);
+    margin-bottom: 8px;
+    font-family: 'Courier New', monospace;
+  }
+  .anomaly p { font-size: 14px; color: #b8c4d8; }
+
+  /* FINGERPRINT */
+  .fingerprint-item {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .fingerprint-item:last-child { border-bottom: none; }
+  .fp-key {
+    min-width: 160px;
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .fp-val { color: #b8c4d8; }
+
+  /* DRUGS SECTION */
+  .split-verdict {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* SYNTHESIS */
+  .synthesis {
+    background: linear-gradient(135deg, #13161d, #1a1628);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 32px 36px;
+  }
+  .synthesis p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #c8d4e8;
+    margin-bottom: 18px;
+  }
+  .synthesis p:last-child { margin-bottom: 0; }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Courier New', monospace;
+  }
+
+  /* BAR CHART */
+  .bar-chart { margin-bottom: 8px; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .bar-name {
+    width: 200px;
+    text-align: right;
+    color: var(--muted);
+    flex-shrink: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+  }
+  .bar-track {
+    flex: 1;
+    background: var(--surface2);
+    height: 18px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #7eb8d4);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 10px;
+    color: #0d0f14;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    min-width: 30px;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; color: #000; }
+    .header { background: #f5f5f5; }
+    .card, .statement, .trait-card, .anomaly { background: #fafafa; border-color: #ddd; }
+    blockquote { background: #f0f0f0; border-color: #999; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .grid-2, .grid-3, .split-verdict { grid-template-columns: 1fr; }
+    .toc ol { columns: 1; }
+    .header h1 { font-size: 1.6rem; }
+    .header .meta-row { gap: 20px; }
+    .risk-row { grid-template-columns: 1fr 60px; }
+    .risk-bar-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div style="position:fixed;top:0;left:0;right:0;z-index:999;background:#0d0f14;border-bottom:1px solid #252a38;display:flex;gap:0;font-family:'Courier New',monospace;font-size:12px;">
+  <a href="/forensics" style="padding:10px 20px;color:#7a849a;text-decoration:none;border-right:1px solid #252a38;">← INDEX</a>
+  <a href="/forensics/report" style="padding:10px 20px;color:#7a849a;text-decoration:none;border-right:1px solid #252a38;">BEHAVIORAL REPORT</a>
+  <a href="/forensics/profile" style="padding:10px 20px;color:#c8a96e;text-decoration:none;background:#13161d;font-weight:bold;">PSYCH PROFILE</a>
+</div>
+<div style="height:40px;"></div>
+
+<div class="header">
+  <div class="label">Forensic Psychological Report &nbsp;|&nbsp; Confidential</div>
+  <h1>u/<span>Cedar-Bound</span></h1>
+  <div class="sub">Reddit Activity Analysis &nbsp;·&nbsp; 2025–2026</div>
+  <div class="meta-row">
+    <div class="meta-item">
+      <span class="val">1,431</span>
+      <span class="key">Comments</span>
+    </div>
+    <div class="meta-item">
+      <span class="val">81</span>
+      <span class="key">Posts</span>
+    </div>
+    <div class="meta-item">
+      <span class="val">12,054</span>
+      <span class="key">Total Karma</span>
+    </div>
+    <div class="meta-item">
+      <span class="val">7.97</span>
+      <span class="key">Avg Score</span>
+    </div>
+    <div class="meta-item">
+      <span class="val">89%</span>
+      <span class="key">r/lebanon Activity</span>
+    </div>
+    <div class="meta-item">
+      <span class="val">LOW</span>
+      <span class="key">Forensic Risk</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#s1">Executive Summary</a></li>
+      <li><a href="#s2">Macro Behavioral Analysis</a></li>
+      <li><a href="#s3">Psychological Profile — Core Traits</a></li>
+      <li><a href="#s4">Micro-Level Analysis — 25 Statements</a></li>
+      <li><a href="#s5">Anomaly Detection</a></li>
+      <li><a href="#s6">Relationship Dynamics</a></li>
+      <li><a href="#s7">Life Circumstances Inference</a></li>
+      <li><a href="#s8">Forensic Risk Indicators</a></li>
+      <li><a href="#s9">Cannabis & Drug Outlook</a></li>
+      <li><a href="#s10">Linguistic Fingerprint</a></li>
+      <li><a href="#s11">Synthesis — Who Is Cedar-Bound</a></li>
+    </ol>
+  </nav>
+
+  <!-- =========== SECTION 1 =========== -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2>Executive Summary</h2>
+    </div>
+    <div class="card card-accent">
+      <p>Cedar-Bound is a 26-year-old Lebanese Christian male — educated in Europe, returned to Lebanon at 18 — who operates almost exclusively within Lebanon's digital Reddit ecosystem (89% of all activity in r/lebanon). He presents as a civic institutionalist: fiercely patriotic, anti-militia, pro-Lebanese Army, and deeply invested in state legitimacy over sectarian identity.</p>
+    </div>
+    <div class="card">
+      <p>He exhibits a striking psychological duality: profound empathy for individuals in distress (grief, illness, confusion) paired with clinical coldness toward perceived ideological threats. He provides medical advice to strangers, moderates communities with warmth, and apologizes to foreign nations on behalf of his country — yet can fire a romantic partner mid-dinner without losing sleep, advocate mass deportation of refugees without hesitation, and dismiss ideological opponents with <em>"your barking is music."</em></p>
+    </div>
+    <div class="card">
+      <p>His Reddit usage functions as a control mechanism — digitally constructing the functional, peaceful Lebanon he cannot have in reality. This is not escapism; it is civic engineering displaced into a digital medium.</p>
+    </div>
+    <div class="grid-3" style="margin-top:20px;">
+      <div class="card card-accent">
+        <h3>Top Trait #1</h3>
+        <p>Civic Institutionalism — unconditional loyalty to the Lebanese state apparatus as the only legitimate sovereign authority.</p>
+      </div>
+      <div class="card card-blue">
+        <h3>Top Trait #2</h3>
+        <p>Empathy Asymmetry — intense in-group protectiveness, clinical detachment toward perceived ideological threats.</p>
+      </div>
+      <div class="card card-green">
+        <h3>Top Trait #3</h3>
+        <p>Intellectual Authority Drive — operates as a natural leader in every context, assuming advisory and moderating roles unprompted.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== SECTION 2 =========== -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2>Macro Behavioral Analysis</h2>
+    </div>
+
+    <div class="card card-accent" style="margin-bottom:24px;">
+      <h3>Subreddit Activity Distribution</h3>
+      <div class="bar-chart">
+        <div class="bar-row"><span class="bar-name">r/lebanon</span><div class="bar-track"><div class="bar-fill" style="width:89%">1,344 · 88.9%</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/lebanonLounge</span><div class="bar-track"><div class="bar-fill" style="width:4.4%">66</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/boxingcirclejerk</span><div class="bar-track"><div class="bar-fill" style="width:1%">14</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/AMA</span><div class="bar-track"><div class="bar-fill" style="width:1%">14</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/cockatiel</span><div class="bar-track"><div class="bar-fill" style="width:0.9%">13</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/rolex</span><div class="bar-track"><div class="bar-fill" style="width:0.7%">10</div></div></div>
+        <div class="bar-row"><span class="bar-name">r/jordan + r/cyprus</span><div class="bar-track"><div class="bar-fill" style="width:0.8%">12</div></div></div>
+        <div class="bar-row"><span class="bar-name">Others</span><div class="bar-track"><div class="bar-fill" style="width:1.2%">19</div></div></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Temporal Activity (UTC)</h3>
+        <p style="font-size:13px; color:#b8c4d8; margin-bottom:10px;">Peak windows align with Beirut timezone (UTC+3).</p>
+        <table>
+          <tr><th>UTC Window</th><th>Local Time</th><th>Volume</th></tr>
+          <tr><td>11:00–13:00</td><td>14:00–16:00</td><td style="color:var(--accent)">215 interactions</td></tr>
+          <tr><td>16:00–21:00</td><td>19:00–00:00</td><td style="color:var(--accent)">500+ interactions</td></tr>
+          <tr><td>03:00–06:00</td><td>06:00–09:00</td><td style="color:var(--muted)">Near zero (sleep)</td></tr>
+        </table>
+        <p style="font-size:12px; color:var(--muted); margin-top:8px;">Most active days: Tuesday & Saturday. Slight dip Fridays/Sundays.</p>
+      </div>
+
+      <div class="card">
+        <h3>Score / Karma Metrics</h3>
+        <table>
+          <tr><th>Metric</th><th>Value</th></tr>
+          <tr><td>Total karma</td><td style="color:var(--accent)">12,054</td></tr>
+          <tr><td>Average per item</td><td style="color:var(--accent)">7.97</td></tr>
+          <tr><td>Maximum score</td><td style="color:var(--green)">468</td></tr>
+          <tr><td>Minimum score</td><td style="color:var(--red)">−33</td></tr>
+          <tr><td>Edited items</td><td>130 (8.6%)</td></tr>
+          <tr><td>Deleted/removed</td><td style="color:var(--yellow)">167 (11%)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>Content Type Taxonomy</h3>
+      <div class="grid-3">
+        <div>
+          <p style="font-size:24px; font-weight:bold; color:var(--accent); font-family:'Courier New',monospace;">94.6%</p>
+          <p style="font-size:12px; color:var(--muted);">Comments — reactive, conversational, debating</p>
+        </div>
+        <div>
+          <p style="font-size:24px; font-weight:bold; color:var(--accent2); font-family:'Courier New',monospace;">2.7%</p>
+          <p style="font-size:12px; color:var(--muted);">Text posts — civic campaigns, moderation, personal advice</p>
+        </div>
+        <div>
+          <p style="font-size:24px; font-weight:bold; color:var(--green); font-family:'Courier New',monospace;">2.6%</p>
+          <p style="font-size:12px; color:var(--muted);">Link/media posts — news, Lebanese Army updates, memes</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>Language & Code-Switching</h3>
+      <p style="font-size:14px; color:#b8c4d8;">Fluent trilingual: English (primary), Lebanese Arabic in Latin script (Arabizi), occasional French. Deliberately uses Arabic to reject elitist posturing among Westernized Lebanese. Uses Arabic conjunctions (<em>aw, w, la</em>) mid-English sentence as cultural anchoring. Views linguistic code-switching as identity, not deficiency.</p>
+      <blockquote>
+        "Aa rase kellna mnehke a second language, ma me3neto hada msa2af aktar aw byefham zyede iza ma byehko ella English/French..."
+        <span class="cite">r/lebanon — criticizing Lebanese who refuse to speak Arabic</span>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- =========== SECTION 3 =========== -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2>Psychological Profile — Core Traits</h2>
+    </div>
+    <div class="grid-2">
+
+      <div class="trait-card">
+        <h4>Attachment Style</h4>
+        <p>Secure but guarded. Willing to be vulnerable in romantic contexts but terminates toxic dynamics with zero hesitation. Screens partners psychologically before committing.</p>
+        <blockquote>"I'm just too picky when it comes to dating because I only do so if I see myself marrying the girl tbh. I'm over the whole cat&amp;mouse/push-pull methods..."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Conflict Style</h4>
+        <p>Assertive and confrontational. Does not negotiate under ideological challenge — dismisses rather than engages. Brick wall posture under pressure.</p>
+        <blockquote>"nbahkom tarab [your barking is music]."</blockquote>
+        <blockquote>"I piss on both equally yalla ya3tikoun l3afye."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Self-Esteem</h4>
+        <p>High, authoritative. Assumes natural leadership in every context — medical, moderation, debate. Does not beg for validation.</p>
+        <blockquote>"As a MD and a second year resident I rarely engage or give any advice online... however you seem to really be upset so I couldn't really just read it and move on."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Political Identity</h4>
+        <p>Civic nationalist. Anti-Hezbollah, anti-pan-Arabism, pro-Lebanese Army as the ONLY legitimate armed force. Views foreign militias as existential threats to sovereignty.</p>
+        <blockquote>"Our country is protected by its army and its legitimacy."</blockquote>
+        <blockquote>"I spit on pan-arabism and all the dictators it brought..."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Tribal Identity</h4>
+        <p>Christian Lebanese pragmatist. Practices what he preaches — previously dated a Shi'a woman for 2 years (ended due to her parents' sectarian objections), which hardened his anti-sectarian conviction.</p>
+        <blockquote>"I also noticed that a lot of people are not religious at all, yet the word atheism still scares them..."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Humor Style</h4>
+        <p>Sarcastic and weaponized. Humor is deployed to belittle ideologies or individuals he disrespects, not for warmth or bonding.</p>
+        <blockquote>"When the clown moves into a castle he doesn't become a king, the castle becomes a circus."</blockquote>
+        <blockquote>"Labbis el kherye ta2m betdal kherye [Dress shit in a suit, it remains shit]."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Empathy Pattern</h4>
+        <p>Intense for in-group (Lebanese civilians, animals, distressed individuals), absent for out-group (political enemies, refugees). The empathy is real — but bounded by tribal lines.</p>
+        <blockquote>"I'm beyond devastated I feel like I failed him. Diablo was 6 years old... it breaks my heart knowing that I'll never be able to hug him..."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Faith &amp; Morality</h4>
+        <p>Self-identified ex-atheist who consciously returned to Christianity. His faith is chosen, not inherited — making it foundational rather than cultural. Uses scripture as moral anchor against retaliatory violence.</p>
+        <blockquote>"Jesus is king... two wrongs don't make a right."</blockquote>
+        <blockquote>"...forgive them father for they know not what they do."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Narcissistic vs. Prosocial</h4>
+        <p>Highly prosocial despite commanding tone. Organizes blood donation drives, gives detailed medical advice to strangers, runs Discord watch parties for community. Genuine communal investment.</p>
+        <blockquote>"By donating blood, you have the power to make a life saving difference."</blockquote>
+      </div>
+
+      <div class="trait-card">
+        <h4>Locus of Control</h4>
+        <p>Strongly internal. Despises victimhood and learned helplessness. Demands personal accountability from himself and projects it onto the entire Lebanese nation.</p>
+        <blockquote>"Lebanon doesn't have a sectarian problem, we have a victim mentality problem... Until Lebanese people stop outsourcing blame... nothing will change."</blockquote>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========== SECTION 4 =========== -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04 —</span>
+      <h2>Micro-Level Analysis — 25 Significant Statements</h2>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">01</span>
+      <blockquote>"I (26M) have been with my gf (24F)... I'm an owner of a family business... I told her she can no longer be part of the HR team and will be transferred... I excused myself and went to sleep."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/AITAH</span>
+        <span class="tag">2025-12-06</span>
+        <span class="tag">Score: 3</span>
+      </div>
+      <p class="reading">Fires or demotes his romantic partner mid-dinner for a professional boundary violation, then sleeps peacefully. Demonstrates extreme compartmentalization — duty and legacy take absolute precedence over romantic attachment. He experiences no visible internal conflict about this.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">02</span>
+      <blockquote>"I would ally with Satan himself if enemies were at my gates and surrounding me from all directions."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-01-05</span>
+        <span class="tag score-high">Score: 44</span>
+      </div>
+      <p class="reading">Pure Machiavellian survivalism. Despite his explicit Christian moralism, he openly endorses "ends justify means" logic under existential threat. This reveals a pragmatism that can temporarily suspend his ethical framework — a trait that co-exists uneasily with his anti-civil-war stance.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">03</span>
+      <blockquote>"Many Lebanese miss the ideological core of Hezbollah's link to Iran... For true believers, there is no Lebanon vs. Iran. There is only the Wilaya and its leader."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-01-29</span>
+        <span class="tag score-high">Score: 81</span>
+      </div>
+      <p class="reading">The highest analytical insight in the corpus. Rather than simply insulting political enemies, he accurately dissects their theological-psychological framework. He views opponents with cold clinical precision — he understands them to better defeat them, not to empathize with them.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">04</span>
+      <blockquote>"My baby passed away... I think my neighbours had poisoned him... Diablo was 6 years old and the goofiest bird... it breaks my heart knowing that I'll never be able to hug him..."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/cockatiel</span>
+        <span class="tag">2025-11-16</span>
+        <span class="tag">Score: 15</span>
+      </div>
+      <p class="reading">The most emotionally raw moment in 1,512 records. Every other expression of grief in his corpus is geopolitical or abstract. This is purely personal — complete vulnerability, explicit guilt ("I feel like I failed him"), and grief for a non-human relationship. Reveals the soft nurturing core beneath his authoritative exterior.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">05</span>
+      <blockquote>"Lebanon doesn't have a sectarian problem, we have a victim mentality problem... Until Lebanese people stop outsourcing blame to history or foreign entities... nothing will change."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-01-22</span>
+        <span class="tag score-high">Score: 40</span>
+      </div>
+      <p class="reading">A direct projection of his personal psychology onto his nation. He despises learned helplessness in himself and cannot tolerate it at national scale. Strong internal locus of control operating as a civic philosophy.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">06</span>
+      <blockquote>"As a Lebanese person, I just want to say that many of us are truly sorry for the attack on your country that came from our land... we don't want conflict with our neighbors."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/cyprus</span>
+        <span class="tag">2026-03-08</span>
+        <span class="tag score-high">Score: 156 — highest post</span>
+      </div>
+      <p class="reading">He acts as an unsolicited national ambassador. This is the highest-scoring post in his entire dataset. His need to separate Lebanese national identity from militia violence is acute — almost compulsive. He cannot tolerate his country being judged by the actions of groups he despises.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">07</span>
+      <blockquote>"I used to always drop the bomb question of 'If you were to blame yourself for one thing in your past relationship, what would that be?' It seems to always shock people... yet their answer would say a lot about them."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-04-21</span>
+      </div>
+      <p class="reading">Uses psychological testing techniques in dating. He screens partners for self-awareness and accountability before committing. This is not casual conversation — it is a calibrated psychological assessment tool deployed in romantic contexts.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">08</span>
+      <blockquote>"RIP Bozo 💯🚬 rest in piss you wont be missed 🤣"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-03-08</span>
+      </div>
+      <p class="reading">Complete empathy shutdown and targeted schadenfreude at a political enemy's death — the same person who prays for Lebanese civilians' wellbeing. His empathy is tribal: inside the boundary it is profound; outside it is zero. Morality is conditional on group membership.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">09</span>
+      <blockquote>"That's what differentiate us from animal species, critical thinking during hard times... you're associating yourself with murderers the moment you pick up a weapon."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-12-15</span>
+        <span class="tag">Score: 2</span>
+      </div>
+      <p class="reading">His core ethical statement. He equates violence with the loss of human intellect. Rational restraint is his highest human virtue — which is precisely why he finds militias, regardless of flag, so viscerally repugnant. His anti-war stance is not passive; it is a deeply held superiority claim.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">10</span>
+      <blockquote>"Ex-atheist here... I also noticed that a lot of people are not religious at all, yet the word atheism still scares them even though they share similar views."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-01-24</span>
+        <span class="tag">Score: 9</span>
+      </div>
+      <p class="reading">He was intellectually honest enough to abandon faith, then intellectually honest enough to return to it. His Christianity is chosen rather than inherited — making it load-bearing rather than ceremonial. His moral absolutism has the intensity characteristic of converts.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">11</span>
+      <blockquote>"Their war is over a long time ago. Why isn't the government rushing their safe return... Our economy is already struggling... put everyone back in a bus and send them back."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-12-08</span>
+        <span class="tag score-high">Score: 49</span>
+      </div>
+      <p class="reading">Utilitarian and coldly nationalist on the Syrian refugee question. Empathy is bounded by national preservation. The same person who apologizes to Cyprus for Lebanon's actions cannot extend humanitarian concern across the Syrian border. Reveals the hard limits of his in-group.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">12</span>
+      <blockquote>"I confessed my feelings over dinner when she dropped the 'what are we?' question... We ended up dating for 2 years until her parents protested, hard, because she was Shi'ia and I'm Christian."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-12-08</span>
+      </div>
+      <p class="reading">He lived his anti-sectarian beliefs in his personal life. The failure of this relationship due to parental pressure likely serves as a personal case study for his hatred of sectarianism — it is not abstract political theory; it cost him a two-year relationship.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">13</span>
+      <blockquote>"I piss on both equally yalla ya3tikoun l3afye."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-04-02</span>
+        <span class="tag score-high">Score: 28</span>
+      </div>
+      <p class="reading">Refuses to be forced into binary geopolitical choices (Israel vs Hezbollah). Declares total independence from both narratives in one contemptuous sentence. Characteristic of his political self-conception as above tribal allegiances while being deeply tribal in practice.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">14</span>
+      <blockquote>"Personally I spend a lot but not everything, for example as a watch enthusiast... I've spent more than 10k on them."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-01-06</span>
+        <span class="tag">Score: 0</span>
+      </div>
+      <p class="reading">Casual, unapologetic disclosure of significant disposable income. Material success is a given for him, not a flex. This comment was unsolicited — he volunteered it to contextualize a financial opinion. Signals affluent upper-middle-class background.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">15</span>
+      <blockquote>"I'm praying for the complete end of this war as soon as possible... I oppose Hezb... but I would never call upon their death or so."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-06-03</span>
+      </div>
+      <p class="reading">Despite intense hatred for Hezbollah as a political-military entity, he refuses to wish death upon their human constituents. This is a significant moral distinction — he hates the ideology, not the people. Consistent with his Christian moral anchor and his general revulsion at calls for violence.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">16</span>
+      <blockquote>"You will never know if it was worth it or not, I grew up outside and came to Lebanon at 18... And remember the days are long but the years are short."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-12-29</span>
+      </div>
+      <p class="reading">Stoic, philosophical counsel to an expat considering return. Reflects his own processing of an irrevocable life choice. The phrase "the days are long but the years are short" is not borrowed — it reads as hard-earned personal wisdom from someone who made that exact choice.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">17</span>
+      <blockquote>"The decision of peace should take precedence, and again don't mix normalization with peace."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-12-06</span>
+      </div>
+      <p class="reading">Highly nuanced geopolitical thinking at age 26. He distinguishes peace (cessation of violence) from normalization (cultural/economic integration), accepting the former while firmly refusing the latter. This is not a common distinction in Lebanese political discourse — it is a considered, original position.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">18</span>
+      <blockquote>"Hit the gym, join the discord server... find a topic you find interesting and read about it... trust there is light at the end of this tunnel."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-11-20</span>
+      </div>
+      <p class="reading">His solution to depression or aimlessness: immediate physical and intellectual mobilization. No wallowing, no validation of inertia. This is the advice he would give himself — and probably does. Action-orientation as a coping mechanism, not just rhetoric.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">19</span>
+      <blockquote>"The civil war remains a very shameful era of our history that we should all condemn and move forward from."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-12-15</span>
+        <span class="tag score-high">Score: 38</span>
+      </div>
+      <p class="reading">Rejects the romanticization of wartime militias across all sectarian lines. Positions himself explicitly as part of a post-war generation that refuses to inherit their parents' tribal justifications. His moral clarity here is total — no exceptions made for "his side."</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">20</span>
+      <blockquote>"What I'm sure of is that it wouldn't be a tea party on the border for them if they decide to cross the border. Our country is protected by its army..."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2026-02-05</span>
+        <span class="tag score-high">Score: 21</span>
+      </div>
+      <p class="reading">Fierce territorial defensiveness combined with absolute trust in state institutions. He warns foreign adversaries with supreme confidence — not the confidence of someone who owns weapons, but of someone who genuinely believes the Lebanese Army can and will defend the country.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">21</span>
+      <blockquote>"When the clown moves into a castle he doesn't become a king, the castle becomes a circus."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">2025-12-22</span>
+      </div>
+      <p class="reading">Views corrupt leaders not just as evil but as fundamentally incompetent and pathetic. His contempt is architectural — he doesn't fear these figures, he pities and mocks them. Characteristic of high self-efficacy individuals who genuinely cannot understand how people accept poor leadership.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">22</span>
+      <blockquote>"I don't think it would be an accurate representation to r/lebanonLounge... think of this place as a cozy Lebanese lounge for personal topics."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanonLounge</span>
+        <span class="tag">2026-06-26</span>
+      </div>
+      <p class="reading">As a moderator, he is actively protecting community culture — creating a safe, warm space explicitly distinct from r/lebanon's toxic political debates. He values emotional safety in personal-topic communities even while being combative in political ones. Shows emotional range across contexts.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">23</span>
+      <blockquote>"No hash?"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">Thread: "what helps you relax when stressed?"</span>
+      </div>
+      <p class="reading">Single-sentence reply to a stress-relief thread. Zero moralizing, zero hedging. He treats cannabis as an obvious, culturally normal stress-relief option that he expected to see on the list. Consistent with educated Beirut youth culture — casual normalization without advocacy.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">24</span>
+      <blockquote>"No it will not lol. This is purely H.A propaganda to justify its presence in Beka'a where they used to smuggle drugs and arms in and out our country."</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag score-high">Score: 12</span>
+      </div>
+      <p class="reading">Ties drug trafficking directly to Hezbollah criminality and state sovereignty violation. The "drug problem" for him is not chemical or moral — it is geopolitical. This allows him to advocate against trafficking while being personally relaxed about recreational use. Clean internal consistency once the frame is understood.</p>
+    </div>
+
+    <div class="statement">
+      <span class="stmt-num">25</span>
+      <blockquote>"Me after the third joint"</blockquote>
+      <div class="stmt-meta">
+        <span class="tag sub">r/lebanon</span>
+        <span class="tag">Dropped mid-political thread about Hezbollah</span>
+      </div>
+      <p class="reading">Casual self-referential humor about personal cannabis use, dropped mid-political debate. The lack of self-consciousness is telling — he does not feel any contradiction between being a medical professional, a Christian, a civic nationalist, and someone who smokes recreationally. These categories simply don't conflict in his worldview.</p>
+    </div>
+
+  </div>
+
+  <!-- =========== SECTION 5 =========== -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05 —</span>
+      <h2>Anomaly Detection</h2>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚠ Critical — Persona Contradiction</h4>
+      <p>He claims to be simultaneously a 2nd-year medical resident AND the owner/operator of an inherited corporate family business — both full-time roles. At 26 this is implausible. The medical identity carries more specificity (references specific doctors at AUBMC by name, gives precise clinical advice) and is likely primary. The business owner identity may be exaggerated for authority in a specific argument (the r/AITAH post), or he manages the business in a passive ownership capacity while actively practicing medicine.</p>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚠ The Empathy Gap</h4>
+      <p>He displays massive, proactive empathy for Cypriots following a geopolitical threat (Score: 156) and deep empathy for Lebanese civilians in the South. When discussing Syrian refugees, his empathy vanishes entirely, replaced by cold economic utilitarianism ("send them back"). The boundary of his moral circle is sharp and national — not universal humanist despite his individual-level warmth.</p>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚠ Ideological Paradox</h4>
+      <p>He repeatedly condemns the Lebanese Civil War as fought by "thugs thirsty for blood" — then openly states "I would ally with Satan himself if enemies were at my gates." He hates the logic of civil war but endorses it in extremis. This is not hypocrisy — it is survivalism that hasn't yet been tested in reality, which he may not recognize.</p>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚠ Religious Evolution</h4>
+      <p>He self-identifies as an ex-atheist who returned to Christianity. The transition from intellectual atheism to quoting the Gospel of John and declaring "Jesus is king" suggests a major identity restructuring event in his early-to-mid 20s. Converts tend toward moral absolutism — their faith is argued, not inherited, and therefore more load-bearing.</p>
+    </div>
+
+    <div class="anomaly">
+      <h4>⚠ Emotional Spike — Diablo</h4>
+      <p>The death of his 6-year-old cockatiel (suspected neighbor poisoning) is the only moment in 1,512 records where his authoritative armor completely dissolves. "I feel like I failed him." This event stands completely alone in emotional register — a buried capacity for unconditional attachment that does not appear anywhere in his political or romantic discourse.</p>
+    </div>
+  </div>
+
+  <!-- =========== SECTION 6 =========== -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06 —</span>
+      <h2>Relationship Dynamics</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-green">
+        <h3>Collaborative Mode (~70%)</h3>
+        <p style="font-size:14px; color:#b8c4d8;">When agreed with or asked for advice, he is warm, generous, and detailed. Gives comprehensive car-buying advice, medical referrals, mental health encouragement. Signs off with "All love" and "Stay safe." This is his default mode with non-threatening interlocutors.</p>
+      </div>
+      <div class="card card-red">
+        <h3>Combative Mode (~30%)</h3>
+        <p style="font-size:14px; color:#b8c4d8;">Triggered exclusively by: Hezbollah apologism, Israeli normalization advocates, Syrian refugee sympathy, pan-Arabism. In this mode he becomes a brick wall — dismisses, mocks, refuses to engage substantively. Does not lose; he exits.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>Community Behavior</h3>
+      <p style="font-size:14px; color:#b8c4d8; margin-bottom:12px;">He treats Reddit's Lebanese community as a real civic community, not a forum. He organizes Discord servers for World Cup watch parties, pins blood donation drives, creates tourist welcome posts. As a moderator of r/lebanonLounge, he enforces rules consistently while maintaining a warmly protective community ethos — explicitly positioning the space as a "cozy lounge" apart from r/lebanon's toxicity.</p>
+      <p style="font-size:14px; color:#b8c4d8;">He shows deep respect for structural authority — praises moderators for their "unwavering commitment," respects subreddit rules across platforms, and actively enforces them when moderating. This is consistent with his civic institutionalism: rules and structures deserve respect when they serve legitimate ends.</p>
+    </div>
+  </div>
+
+  <!-- =========== SECTION 7 =========== -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07 —</span>
+      <h2>Life Circumstances Inference</h2>
+    </div>
+    <table>
+      <tr>
+        <th>Factor</th>
+        <th>Inference</th>
+        <th>Confidence</th>
+        <th>Evidence</th>
+      </tr>
+      <tr>
+        <td>Age</td>
+        <td>26</td>
+        <td style="color:var(--green)">HIGH</td>
+        <td>Self-reported explicitly: "I (26M)"</td>
+      </tr>
+      <tr>
+        <td>Gender</td>
+        <td>Male</td>
+        <td style="color:var(--green)">HIGH</td>
+        <td>Self-reported</td>
+      </tr>
+      <tr>
+        <td>Geographic</td>
+        <td>Lebanese, raised in Europe, returned at 18, currently Beirut/Mount Lebanon</td>
+        <td style="color:var(--green)">HIGH</td>
+        <td>"Lebanese-European" self-descriptor; familiarity with local hospitals, driving routes</td>
+      </tr>
+      <tr>
+        <td>Occupation</td>
+        <td>2nd-year medical resident (primary) + possible family business role</td>
+        <td style="color:var(--yellow)">MEDIUM</td>
+        <td>Specificity of medical advice (references AUBMC physicians); conflicting business owner claim</td>
+      </tr>
+      <tr>
+        <td>Financial</td>
+        <td>Affluent upper-middle class</td>
+        <td style="color:var(--green)">HIGH</td>
+        <td>10k+ watch collection, European travel, car ownership, casual luxury spending</td>
+      </tr>
+      <tr>
+        <td>Relationship</td>
+        <td>Single; recently ended serious relationship with a coworker</td>
+        <td style="color:var(--green)">HIGH</td>
+        <td>r/AITAH post details; pattern of discussing breakups and dating philosophy</td>
+      </tr>
+      <tr>
+        <td>Faith</td>
+        <td>Christian (ex-atheist, deliberate return)</td>
+        <td style="color:var(--green)">HIGH</td>
+        <td>Explicit self-identification in multiple posts</td>
+      </tr>
+      <tr>
+        <td>Pets</td>
+        <td>Owned a 6-year-old cockatiel named Diablo (deceased, suspected poisoning)</td>
+        <td style="color:var(--green)">HIGH</td>
+        <td>r/cockatiel grief post</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- =========== SECTION 8 =========== -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08 —</span>
+      <h2>Forensic Risk Indicators</h2>
+    </div>
+    <div class="card" style="padding:28px 32px;">
+      <div class="risk-row">
+        <span class="risk-label">Hostility Escalation</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-low"></div></div>
+        <span class="risk-level low">LOW</span>
+      </div>
+      <div class="risk-row">
+        <span class="risk-label">Targeted Fixation</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-medium"></div></div>
+        <span class="risk-level medium">MODERATE</span>
+      </div>
+      <div class="risk-row">
+        <span class="risk-label">Crisis Language</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-low"></div></div>
+        <span class="risk-level low">LOW</span>
+      </div>
+      <div class="risk-row">
+        <span class="risk-label">Radicalization Markers</span>
+        <div class="risk-bar-wrap"><div class="risk-bar risk-low"></div></div>
+        <span class="risk-level low">LOW</span>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card card-green">
+        <h3>Why Low Risk</h3>
+        <p style="font-size:13px; color:#b8c4d8;">His extreme nationalism paradoxically insulates him from radicalization. He believes only the Lebanese Armed Forces are legally permitted to carry weapons — rejecting vigilante justice, militias, and civil war logic at a foundational level. He preaches against violence repeatedly and explicitly. His aggressive rhetoric is verbal and ideological only.</p>
+      </div>
+      <div class="card" style="background:color-mix(in srgb,var(--yellow) 6%,var(--surface));border-color:color-mix(in srgb,var(--yellow) 30%,var(--border));">
+        <h3>Moderate Watch — Fixation</h3>
+        <p style="font-size:13px; color:#b8c4d8;">His deep, recurring obsession with Hezbollah and Iranian influence in Lebanon is persistent and emotionally charged. He views them as an existential threat and comments on this issue relentlessly. Not a violence risk, but worth noting as the sole area where his analysis can tip into obsessive territory.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== SECTION 9 =========== -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09 —</span>
+      <h2>Cannabis &amp; Drug Outlook</h2>
+    </div>
+    <div class="split-verdict">
+      <div class="card card-green">
+        <h3>Personal Use — Relaxed</h3>
+        <p style="font-size:14px; color:#b8c4d8; margin-bottom:12px;">Treats cannabis as a culturally normal stress-relief option. Zero moralizing language about recreational use.</p>
+        <blockquote>"No hash?" <span class="cite">r/lebanon — reply to "what helps you relax when stressed?"</span></blockquote>
+        <blockquote>"Me after the third joint" <span class="cite">r/lebanon — dropped mid-political thread, self-referential</span></blockquote>
+      </div>
+      <div class="card card-red">
+        <h3>Drug Trafficking — Criminalized</h3>
+        <p style="font-size:14px; color:#b8c4d8; margin-bottom:12px;">Ties drug trafficking to Hezbollah criminality and sovereignty violation. Posted Lebanese Army drug seizure video (Score: 70). As mod of r/lebanonLounge, banned content that "promotes illegal drugs."</p>
+        <blockquote>"H.A propaganda to justify its presence in Beka'a where they used to smuggle drugs and arms in and out our country." <span class="cite">r/lebanon — Score: 12</span></blockquote>
+      </div>
+    </div>
+    <div class="card card-blue">
+      <h3>Bottom Line</h3>
+      <p style="font-size:14px; color:#b8c4d8;">The distinction is clean and internally consistent: personal recreational use = culturally unremarkable for educated Beirut youth. Drug <em>trafficking</em> = Hezbollah's crime against Lebanese sovereignty. The "drug problem" is geopolitical, not chemical. He almost certainly smokes hash socially and experiences zero moral conflict about it — his Christian identity and his recreational habits occupy entirely separate mental compartments.</p>
+    </div>
+  </div>
+
+  <!-- =========== SECTION 10 =========== -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10 —</span>
+      <h2>Linguistic Fingerprint</h2>
+    </div>
+    <div class="card">
+      <div class="fingerprint-item">
+        <span class="fp-key">Syntax Style</span>
+        <span class="fp-val">Structures arguments like medical or legal briefs — numbered lists, conditional logic, "if X then Y." Paragraphs are clean, declarative, conclusion-first. No hedging, no qualifiers unless genuinely uncertain.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Code-Switching</span>
+        <span class="fp-val">Seamlessly blends English with Arabizi. Uses Arabic conjunctions (<em>aw</em>, <em>w</em>, <em>la</em>) mid-English sentence as cultural anchoring, not as deficiency. French appears occasionally as a third register.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Repeated Phrases</span>
+        <span class="fp-val">"Two wrongs don't make a right" · "All love" · "Stay safe" · "I will try to sum it up" · "Labbis el kherye ta2m betdal kherye" · "Stop dooming"</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Punctuation Tic</span>
+        <span class="fp-val">Overuses the ellipsis (...) to trail thoughts — implies his conclusion is obvious and he is sparing you the obviousness of completing it. Characteristic of someone who believes he is ahead of the conversation.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Signature</span>
+        <span class="fp-val">Frequently signs off personal/supportive posts with a single red heart emoji ❤️. Never uses it in political discourse.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Vocabulary Level</span>
+        <span class="fp-val">High. Uses words like "pragmatic," "ideological," "sovereignty," "Wilaya," "utilitarianism" in casual conversation without definition. Assumes a literate, educated audience.</span>
+      </div>
+      <div class="fingerprint-item">
+        <span class="fp-key">Non-English Phrases</span>
+        <span class="fp-val">"Dawle aw moteur?" · "ya3tikoun l3afye" · "ma2tou3" · "nbahkom tarab" · "Mabrouk el unban" · "La walla" — all Lebanese Arabic in Latin script</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== SECTION 11 =========== -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11 —</span>
+      <h2>Synthesis — Who Is Cedar-Bound</h2>
+    </div>
+    <div class="synthesis">
+      <p>Cedar-Bound is the quintessential manifestation of Lebanon's modern, educated, post-war youth — caught between a deep, patriotic love for his homeland and a boiling resentment toward the sectarian warlords and foreign militias that hold it hostage. Raised partially in Europe, he brought a Westernized, secular pragmatism back to Lebanon at 18. He is highly affluent, intellectually arrogant in the best sense, and supremely confident in a worldview that has been stress-tested by personal experience: a cross-sectarian relationship ended by family prejudice, a country that repeatedly fails to become what he knows it can be, and a daily commute through institutions that barely function.</p>
+      <p>Psychologically, he operates on logic and absolute moral principles anchored by his deliberate return to Christianity from atheism. This moral rigidity makes him an incredibly loyal ally and a ruthlessly cold adversary. He is capable of immense empathy — grieving deeply for a pet bird, apologizing to a foreign nation for his country's transgressions, giving detailed medical advice to anonymous strangers at midnight — yet he can detach his emotions entirely to fire a romantic partner over professional principle, or advocate for the mass deportation of refugees without a second thought. These are not contradictions in his psychology; they are the same mechanism (principle over sentiment) operating at different scales and toward different groups.</p>
+      <p>Ultimately, Cedar-Bound uses Reddit as a surrogate parliament. By moderating forums, dispensing medical advice, organizing civic events, and fiercely debating state sovereignty, he is digitally simulating the organized, functional, and peaceful Lebanon he desperately wishes to inhabit. He is not a risk for violence; he is a civic institutionalist waiting — with diminishing patience — for institutions to finally work.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  FORENSIC REPORT — u/Cedar-Bound &nbsp;·&nbsp; 1,512 records analyzed &nbsp;·&nbsp; Generated 2026-07-15 &nbsp;·&nbsp; CONFIDENTIAL
+</div>
+
+</body>
+</html>

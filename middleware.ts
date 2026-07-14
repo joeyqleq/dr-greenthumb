@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Check for gate cookie on protected routes (skip for root and API)
-  if (pathname === '/' || pathname.startsWith('/api/auth')) {
+  if (pathname === '/' || pathname.startsWith('/api/auth') || pathname.startsWith('/forensics')) {
     return NextResponse.next();
   }
 
