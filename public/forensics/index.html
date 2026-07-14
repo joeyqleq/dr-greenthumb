@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forensic Intelligence File — u/Cedar-Bound</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow+Condensed:wght@500;600;700&family=Barlow+Semi+Condensed:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --surface: #111318;
+    --surface2: #181b24;
+    --border: #1e2330;
+    --accent: #b89450;
+    --accent2: #6aaec8;
+    --red: #cc4f4f;
+    --green: #4fa87a;
+    --text: #d8e0f0;
+    --muted: #5a6478;
+    --text-secondary: #9aa3b8;
+    --font-body: 'Barlow', system-ui, sans-serif;
+    --font-display: 'Barlow Condensed', system-ui, sans-serif;
+    --font-mono: 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.72;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  a { color: var(--accent2); text-decoration: none; }
+  a:hover { opacity: 0.75; }
+
+  /* COVER */
+  .cover {
+    background: linear-gradient(160deg, #0b0d12 0%, #131620 55%, #0d1118 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 90px 60px 70px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(184,148,80,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cover-stamp {
+    display: inline-block;
+    border: 2px solid rgba(204,79,79,0.6);
+    color: rgba(204,79,79,0.7);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    padding: 5px 16px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    transform: rotate(-1.5deg);
+  }
+  .cover-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover .cover-sub {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cover-meta {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item .val {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent);
+  }
+  .cover-meta-item .key {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* CONTENT */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 32px 80px;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 60px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  p { color: var(--text-secondary); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  /* METHODOLOGY STEPS */
+  .steps { counter-reset: step; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+  }
+  .steps li::before {
+    content: "0" counter(step);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    min-width: 28px;
+    padding-top: 2px;
+  }
+  .steps li span { color: var(--text-secondary); font-size: 14px; line-height: 1.65; }
+
+  /* CLASSIFICATION ROW */
+  .classify-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .classify-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 4px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .classify-chip.red { color: var(--red); border-color: rgba(204,79,79,0.3); }
+  .classify-chip.gold { color: var(--accent); border-color: rgba(184,148,80,0.3); }
+  .classify-chip.blue { color: var(--accent2); border-color: rgba(106,174,200,0.3); }
+
+  /* PURPOSE HIGHLIGHT */
+  .purpose-block {
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 14px;
+    color: #c8d0e0;
+    font-style: italic;
+    line-height: 1.8;
+  }
+  .purpose-block strong { color: var(--accent); font-style: normal; }
+
+  /* REPORTS INDEX */
+  .reports-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  @media (max-width: 600px) { .reports-grid { grid-template-columns: 1fr; } }
+  .report-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .report-card:hover { border-color: var(--accent); opacity: 1; }
+  .report-card .rc-type {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .report-card .rc-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .report-card .rc-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .report-card .rc-arrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .report-card.primary { border-top: 2px solid var(--accent); }
+  .report-card.secondary { border-top: 2px solid var(--accent2); }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 32px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-stamp">Confidential — Internal Use Only</div>
+  <div class="cover-label">// Forensic Intelligence File</div>
+  <h1>u/<span>Cedar-Bound</span></h1>
+  <p class="cover-sub">Reddit behavioral analysis and psychological profiling compiled for operational risk assessment and contact suitability evaluation.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span class="val">2</span><span class="key">Reports</span></div>
+    <div class="cover-meta-item"><span class="val">HIGH</span><span class="key">Confidence</span></div>
+    <div class="cover-meta-item"><span class="val">2026</span><span class="key">Filed</span></div>
+    <div class="cover-meta-item"><span class="val">ACTIVE</span><span class="key">Status</span></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- CLASSIFICATION -->
+  <div class="classify-row">
+    <span class="classify-chip red">Restricted</span>
+    <span class="classify-chip gold">Cannabis Acquisition Profile</span>
+    <span class="classify-chip blue">Behavioral Intelligence</span>
+    <span class="classify-chip">Reddit OSINT</span>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2>Purpose &amp; Context</h2>
+    </div>
+    <p>This file was assembled to evaluate whether the subject, identified by the Reddit handle <strong style="color:#fff">u/Cedar-Bound</strong>, presents credible behavioral indicators consistent with regular cannabis use and — more specifically — an active interest in procuring cannabis through non-traditional channels.</p>
+    <div class="purpose-block">
+      The core operational question: <strong>does this individual's posting history, linguistic patterns, and community engagement suggest they are a viable candidate for discreet cannabis acquisition?</strong> Secondary to this, the file evaluates psychological stability, risk tolerance, and the likelihood of maintaining discretion in a transactional relationship.
+    </div>
+    <p>The reports do not rely on any single data point. Instead, they triangulate across hundreds of individual posts and comments, cross-referencing subreddit affiliations, self-disclosure patterns, tone under stress, and implicit signaling behaviors to arrive at a high-confidence composite picture.</p>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2>Methodology</h2>
+    </div>
+    <p>All source data was pulled from publicly accessible Reddit activity. No proprietary tools, no account access, no private data. The methodology is reproducible and follows standard open-source intelligence practices applied to social behavioral analysis.</p>
+    <ul class="steps">
+      <li><span><strong style="color:#fff">Data collection.</strong> Full post and comment history scraped and archived. Activity timestamped and subreddit-mapped to identify thematic clusters and engagement patterns over time.</span></li>
+      <li><span><strong style="color:#fff">Thematic clustering.</strong> Posts grouped by subject matter — substance-adjacent communities, lifestyle indicators, risk-tolerance signals, and geographic/logistical disclosures. Cannabis-related or harm-reduction subreddits weighted heavily.</span></li>
+      <li><span><strong style="color:#fff">Linguistic analysis.</strong> Writing style profiled for consistency, emotional range, and coded language. Evasiveness, minimization, and implicit self-disclosure patterns extracted and scored.</span></li>
+      <li><span><strong style="color:#fff">Psychological profiling.</strong> Behavioral profile synthesized from communication style under conflict, responses to authority or challenge, and expressed value systems. Suitability for discreet engagement assessed.</span></li>
+      <li><span><strong style="color:#fff">Risk scoring.</strong> Final composite score produced across dimensions: acquisition likelihood, discretion reliability, escalation risk, and operational exposure risk.</span></li>
+    </ul>
+  </div>
+
+  <!-- REPORTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2>Reports in This File</h2>
+    </div>
+    <div class="reports-grid">
+      <a class="report-card primary" href="/forensics/report">
+        <span class="rc-type">Vol. I — Behavioral</span>
+        <span class="rc-title">Reddit Behavioral Analysis</span>
+        <span class="rc-desc">Full OSINT breakdown of posting history, subreddit affiliations, substance signals, and engagement patterns. Includes raw quote analysis and risk scoring.</span>
+        <span class="rc-arrow">Open Report →</span>
+      </a>
+      <a class="report-card secondary" href="/forensics/profile">
+        <span class="rc-type">Vol. II — Psychological</span>
+        <span class="rc-title">Forensic Psychological Profile</span>
+        <span class="rc-desc">Deep-dive personality assessment, communication style, stress response analysis, and operational suitability evaluation for discreet contact.</span>
+        <span class="rc-arrow">Open Profile →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="card">
+    <h3>// Scope &amp; Limitations</h3>
+    <p style="margin:0;font-size:13px;">All conclusions are probabilistic, not absolute. The subject has not been interviewed or directly contacted. This file reflects behavioral inference from public data only. Assessments should be treated as indicators for further evaluation, not as definitive determinations. The subject may have maintained separate accounts or deliberately managed their public persona.</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  forensic intelligence file &nbsp;|&nbsp; u/cedar-bound &nbsp;|&nbsp; internal use only &nbsp;|&nbsp; 2026
+</div>
+
+</body>
+</html>
