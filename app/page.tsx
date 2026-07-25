@@ -8,6 +8,7 @@ import PriceBento from "@/components/cyber/price-bento";
 import PixelBlastBg from "@/components/cyber/pixel-blast-bg";
 import { StatusDot } from "@/components/cyber/hud-frame";
 import { Leaf } from "lucide-react";
+import TelegramCTA from "@/components/cyber/telegram-cta";
 
 export default function Page() {
   return (
@@ -65,6 +66,9 @@ export default function Page() {
       </div>
 
       <PriceBento />
+
+      {/* TELEGRAM CTA */}
+      <TelegramCTA />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 pb-10 md:px-6">
         <footer className="mt-14 border-t border-[var(--acid)]/15 pt-6 font-mono text-[11px] text-white/40">

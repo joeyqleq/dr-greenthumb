@@ -48,21 +48,17 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-      {
-        url: '/favicon-32x32.svg',
+        url: '/favicon-32x32.png',
         sizes: '32x32',
-        type: 'image/svg+xml',
+        type: 'image/png',
       },
       {
-        url: '/favicon-16x16.svg',
+        url: '/favicon-16x16.png',
         sizes: '16x16',
-        type: 'image/svg+xml',
+        type: 'image/png',
       },
     ],
-    apple: '/apple-icon.png',
+    apple: '/apple-touch-icon.png',
   },
 }
 
@@ -76,7 +72,8 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#0a0a0a" />
         <link rel="canonical" href="https://v0-dr-greenthumb.vercel.app" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="font-sans antialiased">
         <TianjiTracker />

@@ -272,6 +272,12 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
             />
           </div>
 
+          {/* ANNOUNCEMENT BANNER */}
+          <div className="mt-5 border border-amber-500/30 bg-amber-500/5 px-4 py-3 font-mono text-[11px] leading-relaxed text-amber-300/80 sm:text-[12px]">
+            <span className="mb-1 block text-amber-400/60 text-[10px] uppercase tracking-[0.2em]">// sys.notice</span>
+            Both Reddit accounts have been suspended. Laying low until a new communication channel is established. If you have the password — log in. Inside you'll find a Telegram QR code to reach me directly.
+          </div>
+
           <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.25em] text-white/35 sm:text-[10px] sm:tracking-[0.3em]">
             {"// "}restricted · authorized only
           </p>
