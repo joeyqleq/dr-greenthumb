@@ -5,6 +5,7 @@ import { Terminal } from "@/components/ui/terminal";
 import { cn } from "@/lib/utils";
 import VirtualKeyboard from "@/components/ui/virtual-keyboard";
 import { trackGateEntry, trackAuthSuccess, trackAuthFailure, trackMainPageAccess } from "@/lib/analytics";
+import SeizedPage from "@/components/cyber/seized-page";
 
 // Anti-tampering notice for script kiddies poking around:
 // sessionStorage['dgt.gate'] = 'ok' won't work anymore. cookie validation is server-side now.
@@ -54,6 +55,8 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
   const [showInput, setShowInput] = useState(false);
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [showCable, setShowCable] = useState(false);
+  // gateMode: true only when ?gate=1 is present in the URL
+  const [gateMode, setGateMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -66,10 +69,20 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
       console.warn("sessionStorage not accessible:", e);
     }
 
+    // Check if visitor arrived via the secret tree link
+    const params = new URLSearchParams(window.location.search);
+    const hasGateParam = params.get("gate") === "1";
+    setGateMode(hasGateParam);
+
     setMounted(true);
 
     if (isUnlocked) {
       setUnlocked(true);
+      return;
+    }
+
+    if (!hasGateParam) {
+      // Not in gate mode — show seized page, skip all timers
       return;
     }
 
@@ -90,10 +103,10 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
   }, [showInput]);
 
   useEffect(() => {
-    if (mounted && !unlocked) {
+    if (mounted && !unlocked && gateMode) {
       trackGateEntry();
     }
-  }, [mounted, unlocked]);
+  }, [mounted, unlocked, gateMode]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -171,6 +184,11 @@ export default function AccessGate({ children }: { children: React.ReactNode }) 
   if (unlocked) {
     trackMainPageAccess();
     return <>{children}</>;
+  }
+
+  // No ?gate=1 — show the seized page. Tree click will navigate to /?gate=1.
+  if (!gateMode) {
+    return <SeizedPage />;
   }
 
   return (

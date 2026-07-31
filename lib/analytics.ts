@@ -46,3 +46,15 @@ export function trackMainPageAccess() {
     visitor_type: 'authorized',
   });
 }
+
+export function trackSeizedPageView() {
+  trackEvent('seized_page_view', {
+    visitor_type: 'unauthenticated',
+  });
+}
+
+export function trackCedarTreeClick() {
+  trackEvent('cedar_tree_click', {
+    src: 'seized_gate',
+  });
+}
