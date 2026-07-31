@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>This domain has been seized</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#000;overflow:hidden}
+
+/* Full-screen background — image renders before any JS, no flash */
+.bg{
+  position:fixed;inset:0;
+  background:#000 url('/seized_desktop.webp') no-repeat center top / cover;
+}
+@media(max-width:767px){
+  .bg{background-image:url('/seized_mobile.webp')}
+}
+
+/* ── Cedar tree SVG overlay ──────────────────────────────────────────────────
+   Positioned over the empty top arc of the ISF (قوى الأمن الداخلي) blue badge.
+
+   Desktop (1920×1081):
+     ISF badge: x=735–954, y=480–731  →  badge-left=38.3%, badge-top=44.4%, w=11.4%
+     Tree arc sits in top 22% of badge height = y 480–535
+     Tree SVG center x=820 (42.7%), top=47.2%, visual width ≈5.1% of image
+
+   Mobile (941×1672):
+     ISF badge: x=77–388, y=780–1119  →  badge-left=8.2%, badge-top=46.6%, w=33%
+     Tree arc: top 22% → y 780–854
+     Tree SVG center x=233 (24.8%), top=46.6%, visual width ≈14.8% of image
+
+   The SVG is a raster PNG embedded as base64 (250×203 intrinsic, aspect 250:203).
+   mix-blend-mode:screen blends white tree pixels with the blue badge underneath.
+   Opacity 0.88 keeps it subtle — looks like part of the badge detail.
+   ──────────────────────────────────────────────────────────────────────────── */
+.tree{
+  position:fixed;
+  /* Center the SVG over the badge arc */
+  left:39.4%;           /* (820 - 98/2) / 1920  where 98 = 5.1% of 1920 */
+  top:44.4%;            /* badge top */
+  width:5.1%;           /* ≈98px on 1920 wide */
+  aspect-ratio:250/203;
+  z-index:10;
+  pointer-events:none;  /* clicks fall through to the btn div below */
+}
+.tree img{
+  width:100%;height:auto;display:block;
+  mix-blend-mode:screen;
+  opacity:0.88;
+  filter:brightness(1.05);
+  transition:none;
+}
+@media(max-width:767px){
+  .tree{
+    left:17.0%;   /* (162) / 941  */
+    top:46.6%;    /* badge top */
+    width:14.8%;  /* ≈139px on 941 wide */
+  }
+}
+
+/* Invisible click zone — covers ISF badge top arc, no visual cue */
+.tree-btn{
+  position:fixed;
+  left:38.3%;top:44.4%;
+  width:11.4%;height:8.2%;
+  z-index:20;
+  cursor:default;
+  background:transparent;
+  -webkit-tap-highlight-color:transparent;
+  outline:none;
+  border:none;
+  /* pointer cursor would be a dead giveaway — keep default arrow */
+}
+@media(max-width:767px){
+  .tree-btn{
+    left:8.2%;top:46.6%;
+    width:33.0%;height:7.2%;
+  }
+}
+
+/* Subtle glow: 0.85s pulse, opacity only — no transform, no color shift */
+@keyframes cedar-pulse{
+  0%  {opacity:.88}
+  45% {opacity:1;filter:brightness(1.35) saturate(1.05)}
+  100%{opacity:.88;filter:brightness(1.05)}
+}
+.tree img.pulse{
+  animation:cedar-pulse .85s ease-in-out forwards;
+}
+</style>
+<script async defer src="https://numbers.trumpstein.me/tracker.js" data-website-id="cmrhmhqv2000blftpn3fyhjte"></script>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<!-- Cedar tree SVG rendered over the empty badge arc -->
+<div class="tree">
+  <img src="/tree_logo.svg" alt="" id="tree-img" draggable="false">
+</div>
+
+<!-- Invisible click zone — entire ISF badge top arc -->
+<div class="tree-btn" id="tree-btn" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var btn    = document.getElementById('tree-btn');
+  var treeEl = document.getElementById('tree-img');
+  var gone   = false;
+
+  /* ── Analytics: same retry logic as the app ── */
+  function track(name, data){
+    var go = function(n){
+      var u = window.umami;
+      if(u && u.trackEvent){ u.trackEvent(name, data||{}); }
+      else if(n<8){ setTimeout(function(){go(n+1);},150); }
+    };
+    go(0);
+  }
+  track('seized_page_view',{referrer:document.referrer||'direct'});
+
+  /* ── Subtle random pulse on the tree ── */
+  function pulse(){
+    treeEl.classList.remove('pulse');
+    void treeEl.offsetWidth; /* reflow to restart animation */
+    treeEl.classList.add('pulse');
+    treeEl.addEventListener('animationend',function cb(){
+      treeEl.classList.remove('pulse');
+      treeEl.removeEventListener('animationend',cb);
+    });
+    schedule();
+  }
+  function schedule(){
+    /* 8–18 s gap between pulses; first pulse 5–10 s after load */
+    setTimeout(pulse, 8000 + Math.random()*10000);
+  }
+  setTimeout(schedule, 5000 + Math.random()*5000);
+
+  /* ── Tree click → go to password gate ── */
+  function go(e){
+    if(e && e.preventDefault) e.preventDefault();
+    if(gone) return;
+    gone = true;
+    track('cedar_tree_click',{src:'seized_gate'});
+    setTimeout(function(){ window.location.href='/?gate=1'; },120);
+  }
+  btn.addEventListener('click', go);
+  btn.addEventListener('touchend', go);
+})();
+</script>
+</body>
+</html>

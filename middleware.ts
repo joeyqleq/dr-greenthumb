@@ -37,8 +37,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Root: unauthenticated visitors without ?gate=1 get the seized page immediately
+  // (static HTML — no React overhead, correct title, no flash)
+  if (pathname === '/') {
+    const hasAuth = request.cookies.get('dgt.auth')?.value === 'authorized';
+    const hasGate = request.nextUrl.searchParams.get('gate') === '1';
+    if (!hasAuth && !hasGate) {
+      return NextResponse.redirect(new URL('/seized.html', request.url));
+    }
+    return NextResponse.next();
+  }
+
   // Other public routes
-  if (pathname === '/' || pathname.startsWith('/api/auth') || pathname.startsWith('/forensics')) {
+  if (pathname.startsWith('/api/auth') || pathname.startsWith('/forensics')) {
     return NextResponse.next();
   }
 
