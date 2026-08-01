@@ -37,6 +37,16 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Seized page static assets — always public, never auth-checked
+  if (
+    pathname === '/seized.html' ||
+    pathname === '/seized_desktop.webp' ||
+    pathname === '/seized_mobile.webp' ||
+    pathname === '/tree_logo.svg'
+  ) {
+    return NextResponse.next();
+  }
+
   // Root: unauthenticated visitors without ?gate=1 get the seized page immediately
   // (static HTML — no React overhead, correct title, no flash)
   if (pathname === '/') {
