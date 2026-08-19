@@ -37,24 +37,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Seized page static assets — always public, never auth-checked
-  if (
-    pathname === '/seized.html' ||
-    pathname === '/seized_desktop.webp' ||
-    pathname === '/seized_mobile.webp' ||
-    pathname === '/tree_logo.svg'
-  ) {
-    return NextResponse.next();
-  }
-
-  // Root: unauthenticated visitors without ?gate=1 get the seized page immediately
-  // (static HTML — no React overhead, correct title, no flash)
+  // Root — always public (password gate rendered by Next.js)
   if (pathname === '/') {
-    const hasAuth = request.cookies.get('dgt.auth')?.value === 'authorized';
-    const hasGate = request.nextUrl.searchParams.get('gate') === '1';
-    if (!hasAuth && !hasGate) {
-      return NextResponse.redirect(new URL('/seized.html', request.url));
-    }
     return NextResponse.next();
   }
 
